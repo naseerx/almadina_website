@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import QuoteDialog from "./QuoteDialog";
+import logo from "@/assets/logo-rm.png";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -46,9 +47,10 @@ const Header = () => {
               e.preventDefault();
               scrollToSection("#home");
             }}
-            className="text-2xl font-bold text-primary hover:opacity-80 transition-opacity"
+            className="flex items-center"
+            aria-label="Home"
           >
-            Al-Madina
+            <img src={logo} alt="Almadina logo" className="h-8 md:h-10 lg:h-12 object-contain" />
           </a>
 
           {/* Desktop Navigation */}

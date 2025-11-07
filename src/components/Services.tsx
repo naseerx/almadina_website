@@ -48,14 +48,14 @@ const Services = () => {
                 key={index}
                 className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-border"
               >
-                <CardHeader>
+                <CardHeader className="flex flex-col items-center text-center">
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                     <Icon className="w-6 h-6 text-primary" />
                   </div>
                   <CardTitle className="text-xl">{service.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-base">
+                  <CardDescription className="text-base text-center">
                     {service.description}
                   </CardDescription>
                 </CardContent>

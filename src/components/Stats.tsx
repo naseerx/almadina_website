@@ -46,32 +46,42 @@ const Stats = () => {
 
   useEffect(() => {
     if (!isVisible) return;
+    // Smooth, single-loop animation using requestAnimationFrame.
+    // Faster duration and ease-out curve produce a smooth, non-laggy animation.
+    const duration = 900; // shorter duration (ms) for snappier feel
+    let raf = 0 as number;
+    const start = performance.now();
+    const animatedOnce = { current: false } as { current: boolean };
 
-    const duration = 2000;
-    const steps = 60;
-    const stepDuration = duration / steps;
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
-    stats.forEach((stat) => {
-      let currentStep = 0;
-      const interval = setInterval(() => {
-        currentStep++;
-        const progress = currentStep / steps;
-        const currentValue = Math.floor(progress * stat.value);
+    const loop = (now: number) => {
+      const elapsed = now - start;
+      const rawProgress = Math.min(elapsed / duration, 1);
+      const progress = easeOutCubic(rawProgress);
 
-        setCounts((prev) => ({
-          ...prev,
-          [stat.key]: currentValue,
-        }));
+      const nextCounts = {} as typeof counts;
+      stats.forEach((stat) => {
+        nextCounts[stat.key] = Math.floor(progress * stat.value);
+      });
 
-        if (currentStep >= steps) {
-          clearInterval(interval);
-          setCounts((prev) => ({
-            ...prev,
-            [stat.key]: stat.value,
-          }));
-        }
-      }, stepDuration);
-    });
+      setCounts((prev) => ({ ...prev, ...nextCounts }));
+
+      if (rawProgress < 1) {
+        raf = requestAnimationFrame(loop);
+      } else {
+        // ensure final values are exact
+        const finalCounts = {} as typeof counts;
+        stats.forEach((stat) => (finalCounts[stat.key] = stat.value));
+        setCounts((prev) => ({ ...prev, ...finalCounts }));
+        animatedOnce.current = true;
+      }
+    };
+
+    // Start animation only once when visible
+    raf = requestAnimationFrame(loop);
+
+    return () => cancelAnimationFrame(raf);
   }, [isVisible]);
 
   return (

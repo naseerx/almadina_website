@@ -36,7 +36,7 @@ const Hero = () => {
           size="lg"
           className="bg-primary hover:bg-primary/90 text-white font-semibold text-lg px-8 py-6 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-300"
         >
-          Get a Free Quote
+          Get In Touch
         </Button>
       </div>
 

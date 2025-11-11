@@ -103,6 +103,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "commercial" as const,
       year: 2009,
+      isFeatured: true,
     },
     {
       image: commercialBilal,
@@ -111,6 +112,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "commercial" as const,
       year: 2014,
+      isFeatured: true,
     },
     {
       image: commercial3,
@@ -119,6 +121,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "commercial" as const,
       year: 2014,
+      isFeatured: true,
     },
     {
       image: commercial2,
@@ -127,6 +130,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "commercial" as const,
       year: 2015,
+      isFeatured: true,
     },
     {
       image: commercial1,
@@ -135,6 +139,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "commercial" as const,
       year: 2015,
+      isFeatured: true,
     },
     {
       image: mosque1,
@@ -143,6 +148,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "mosques" as const,
       year: 2015,
+      isFeatured: true,
     },
     {
       image: mosque2,
@@ -151,6 +157,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "mosques" as const,
       year: 2015,
+      isFeatured: true,
     },
     {
       image: house1,
@@ -159,6 +166,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2008,
+      isFeatured: true,
     },
     {
       image: house2,
@@ -167,6 +175,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2008,
+      isFeatured: true,
     },
     {
       image: house6,
@@ -175,6 +184,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2008,
+      isFeatured: true,
     },
     {
       image: house7,
@@ -183,6 +193,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2008,
+      isFeatured: true,
     },
     {
       image: house8,
@@ -191,6 +202,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house10,
@@ -199,6 +211,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house11,
@@ -207,6 +220,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house15,
@@ -215,6 +229,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house16,
@@ -223,6 +238,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house17,
@@ -231,6 +247,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house18,
@@ -239,6 +256,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house19,
@@ -247,6 +265,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house22,
@@ -255,6 +274,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house26,
@@ -263,6 +283,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2008,
+      isFeatured: false,
     },
 
     {
@@ -272,6 +293,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house28,
@@ -280,6 +302,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house29,
@@ -288,6 +311,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house30,
@@ -296,6 +320,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house32,
@@ -304,6 +329,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house33,
@@ -312,6 +338,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house34,
@@ -320,6 +347,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house35,
@@ -328,6 +356,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house36,
@@ -336,6 +365,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house37,
@@ -344,6 +374,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house38,
@@ -352,6 +383,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house40,
@@ -360,6 +392,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house46,
@@ -368,6 +401,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house50,
@@ -376,6 +410,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house52,
@@ -384,6 +419,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house53,
@@ -392,6 +428,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house54,
@@ -400,6 +437,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house55,
@@ -408,6 +446,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house56,
@@ -416,6 +455,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house57,
@@ -424,6 +464,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house58,
@@ -432,6 +473,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house59,
@@ -440,6 +482,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house60,
@@ -448,6 +491,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house63,
@@ -456,6 +500,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house64,
@@ -464,6 +509,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house65,
@@ -472,6 +518,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house66,
@@ -480,6 +527,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house67,
@@ -488,6 +536,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house69,
@@ -496,6 +545,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house70,
@@ -504,6 +554,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     }, {
       image: house71,
       title: "6 Marla",
@@ -511,6 +562,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     }, {
       image: house73,
       title: "6 Marla",
@@ -518,6 +570,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house77,
@@ -526,6 +579,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house78,
@@ -534,6 +588,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house79,
@@ -542,6 +597,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house80,
@@ -550,6 +606,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house81,
@@ -558,6 +615,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house82,
@@ -566,6 +624,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house83,
@@ -574,6 +633,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house84,
@@ -582,6 +642,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house85,
@@ -590,6 +651,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house86,
@@ -598,6 +660,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house87,
@@ -606,6 +669,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house88,
@@ -614,6 +678,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house89,
@@ -622,6 +687,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house90,
@@ -630,6 +696,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house91,
@@ -638,6 +705,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house92,
@@ -646,6 +714,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
     {
       image: house111,
@@ -654,6 +723,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
 
     {
@@ -663,8 +733,9 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "residential" as const,
       year: 2009,
+      isFeatured: false,
     },
- 
+
 
   ];
 
@@ -680,8 +751,10 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       ? projects
       : projects.filter((project) => project.category === activeFilter);
 
-  // Limit projects to 6 on home page
-  const displayedProjects = limitProjects ? filteredProjects.slice(0, 6) : filteredProjects;
+  // Limit projects to 6 on home page and only show featured ones
+  const displayedProjects = limitProjects 
+    ? filteredProjects.filter((project) => project.isFeatured)
+    : filteredProjects;
 
   // Format the date to look nicer
   const formatDate = (year: number) => {

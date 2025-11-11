@@ -9,19 +9,19 @@ const Stats = () => {
   const stats = [
     {
       icon: Award,
-      value: 6,
+      value: 24,
       label: "Years of Experience",
       key: "years" as const,
     },
     {
       icon: Users,
-      value: 6,
+      value: 75,
       label: "Skilled Team Members",
       key: "team" as const,
     },
     {
       icon: CheckCircle,
-      value: 6,
+      value: 120,
       label: "Projects Completed",
       key: "projects" as const,
     },

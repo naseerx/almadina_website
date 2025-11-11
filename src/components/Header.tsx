@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import { Button } from "./ui/button";
-import QuoteDialog from "./QuoteDialog";
 import logo from "@/assets/logo-rm.png";
 
 const Header = () => {
@@ -70,11 +68,6 @@ const Header = () => {
                 {item.label}
               </a>
             ))}
-            <QuoteDialog>
-              <Button className="bg-primary hover:bg-primary/90">
-                Get Quote
-              </Button>
-            </QuoteDialog>
           </div>
 
           {/* Mobile Menu Button */}
@@ -102,11 +95,6 @@ const Header = () => {
                 {item.label}
               </a>
             ))}
-            <QuoteDialog>
-              <Button className="w-full bg-white text-primary hover:bg-white/90">
-                Get Quote
-              </Button>
-            </QuoteDialog>
           </div>
         )}
       </nav>

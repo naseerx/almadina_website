@@ -1,5 +1,5 @@
 import { Button } from "./ui/button";
-import heroImage from "@/assets/hero-bg.jpg";
+import heroImage from "@/assets/111c.jpg";
 // import heroImage from "@/assets/33.jpg";
 
 const Hero = () => {
@@ -40,9 +40,6 @@ const Hero = () => {
           Get In Touch
         </Button>
       </div>
-
-      {/* Decorative Elements */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 };

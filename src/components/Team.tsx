@@ -1,6 +1,9 @@
 import { Users } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
-import { Avatar, AvatarFallback } from "./ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import team1 from "@/assets/M1.jpg";
+import team2 from "@/assets/M2.jpg";
+import team3 from "@/assets/M23.jpg";
 
 const Team = () => {
   const teamMembers = [
@@ -8,16 +11,19 @@ const Team = () => {
       name: "Sultan Muhammad",
       role: "Founder and CEO",
       initials: "SM",
+      photo: team1,
     },
     {
       name: "Muhammad Riaz",
       role: "Manager",
       initials: "MR",
+      photo: team2,
     },
     {
       name: "Abdullah Jan",
       role: "Site Supervisor",
       initials: "AJ",
+      photo: team3,
     },
   ];
 
@@ -42,6 +48,7 @@ const Team = () => {
             >
               <CardContent className="pt-8 pb-8">
                 <Avatar className="w-24 h-24 mx-auto mb-4 bg-primary/10">
+                  <AvatarImage src={member.photo} alt={member.name} />
                   <AvatarFallback className="text-2xl font-bold text-primary bg-transparent">
                     {member.initials}
                   </AvatarFallback>

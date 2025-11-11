@@ -23,7 +23,7 @@ const Contact = () => {
     {
       icon: Clock,
       title: "Working Hours",
-      content: "Mon - Sat: 9:00 AM - 6:00 PM",
+      content: "Sat - Tue: 9:00 AM - 6:00 PM",
     },
   ];
 
@@ -75,14 +75,14 @@ const Contact = () => {
               <CardContent className="p-0 h-full">
                 <div className="w-full h-full min-h-[400px]">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3307.4825847662845!2d71.44626307565744!3d34.01561571942073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38d917b90f0e2d85%3A0x2b3f4e5e5e5e5e5e!2sWarsak%20Road%2C%20Peshawar%2C%20Khyber%20Pakhtunkhwa%2C%20Pakistan!5e0!3m2!1sen!2s!4v1234567890123!5m2!1sen!2s"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3310.8345847662845!2d71.5386!3d33.97!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38d917c5e5e5e5e5%3A0x2b3f4e5e5e5e5e5e!2sSabz%20Ali%20Town%2C%20Peshawar!5e0!3m2!1sen!2s!4v1700000000000"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Al-Madina Constructions Location"
+                    title="Al-Madina Constructions Location - Sabz Ali Town"
                     className="w-full h-full"
                   ></iframe>
                 </div>

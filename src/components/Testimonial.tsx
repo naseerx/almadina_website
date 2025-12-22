@@ -34,7 +34,7 @@ const testimonials = [
   },
   {
     id: 5,
-    name: "Mumrain Khan & Brothers",
+    name: "Mumraiz Khan & Brothers",
     role: "Clients",
     quote:
       "We are very satisfied with the experties and the attention to detail throughout our project.",

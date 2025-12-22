@@ -1,4 +1,4 @@
-import { Building, Home, Paintbrush, Ruler } from "lucide-react";
+import { Building, Home, Paintbrush, Ruler, Users, Eye } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 
 const Services = () => {
@@ -27,13 +27,25 @@ const Services = () => {
       description:
         "Innovative floor plans, stunning 3D designs, and sustainable landscaping services.",
     },
+    {
+      icon: Users,
+      title: "Joined Services",
+      description:
+        "Collaborative project delivery where we partner with clients and contractors for joint execution and shared responsibility.",
+    },
+    {
+      icon: Eye,
+      title: "Supervision Only",
+      description:
+        "Professional site supervision and quality assurance services — we oversee execution while you manage procurement and contracting.",
+    },
   ];
 
   return (
     <section id="services" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Services</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">Our Services</h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             Comprehensive solutions for all your construction and design needs,
             delivered with precision and expertise.

@@ -9,7 +9,7 @@ const About = () => {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
               <Building2 className="w-8 h-8 text-primary" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">
               About Al-Madina Constructions
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">

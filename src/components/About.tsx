@@ -28,7 +28,7 @@ const About = () => {
 Starting operations in Peshawar, what began as a modest effort has steadily grown into one of the city’s well-recognized names in the construction industry. From residential homes to commercial complexes and renovation works, our team has built a reputation for delivering quality workmanship, on-time completion, and honest service.
 Today, with over 18 years of experience, Al-Madina Al-Munawwara continues to serve clients across Khyber Pakhtunkhwa and beyond, combining traditional values with modern construction practices. Every project we take on reflects our core belief — that building is not just about concrete and steel, but about creating spaces that inspire trust, comfort, and pride.
 
-As we look ahead, we remain committed to the same principles that started our journey: faith, dedication, and excellence — building the future, one project at a time.
+As we look ahead, we remain committed to the same principles that started our journey: faith, dedication, and excellence — building the future.
             </p>
           </div>
         </div>

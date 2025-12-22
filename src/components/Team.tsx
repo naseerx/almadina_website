@@ -37,14 +37,14 @@ const Team = () => {
       name: "Abdullah Jan",
       role: "Site Supervisor",
       initials: "AJ",
-      photo: riaz,
+      photo: 'riaz',
     },
 
     {
       name: "Gulraiz Usmani",
       role: "Social Media Manager",
       initials: "GU",
-      photo: tahir,
+      photo: 'tahir',
     },
   ];
 

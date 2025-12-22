@@ -243,7 +243,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       category: "residential" as const,
       year: 2022,
       isFeatured: false,
-    },
+    }, 
     // {
     //   image: house87,
     //   title: "6 Marla",
@@ -405,7 +405,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       year: 2017,
       isFeatured: false,
     },
-    {
+     {
       image: house63,
       title: "6 Marla",
       location: "Sabz Ali Town, Peshawar",

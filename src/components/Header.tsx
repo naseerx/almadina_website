@@ -19,6 +19,7 @@ const Header = () => {
     { label: "About", href: "#about" },
     { label: "Services", href: "#services" },
     { label: "Team", href: "#team" },
+    { label: "Testimonials", href: "#testimonials" },
     { label: "Projects", href: "#projects" },
     { label: "Contact", href: "#contact" },
   ];
@@ -34,7 +35,7 @@ const Header = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? "bg-background/95 backdrop-blur-md shadow-md"
-          : "bg-transparent"
+          : "bg-white"
       }`}
     >
       <nav className="container mx-auto px-4 py-4">
@@ -62,7 +63,7 @@ const Header = () => {
                   scrollToSection(item.href);
                 }}
                 className={`text-sm font-medium transition-colors hover:text-primary ${
-                  isScrolled ? "text-foreground" : "text-white"
+                  isScrolled ? "text-foreground" : "text-foreground"
                 }`}
               >
                 {item.label}

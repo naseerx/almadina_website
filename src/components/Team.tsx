@@ -1,9 +1,10 @@
 import { Users } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import team1 from "@/assets/M1.jpg";
-import team2 from "@/assets/M2.jpg";
-import team3 from "@/assets/M23.jpg";
+import ceo from "@/assets/team/CEO.png";
+import riaz from "@/assets/team/riaz.png";
+import abubakkar from "@/assets/team/abu.png";
+import tahir from "@/assets/team/tahir.jpeg";
 
 const Team = () => {
   const teamMembers = [
@@ -11,19 +12,39 @@ const Team = () => {
       name: "Sultan Muhammad",
       role: "Founder and CEO",
       initials: "SM",
-      photo: team1,
+      photo: ceo,
     },
     {
       name: "Muhammad Riaz",
       role: "Manager",
       initials: "MR",
-      photo: team2,
+      photo: riaz,
+    },
+
+    {
+      name: "Abubakkar Khalil",
+      role: "Architect",
+      initials: "AK",
+      photo: abubakkar,
+    },
+     {
+      name: "Tahir Hussain",
+      role: "Accountant",
+      initials: "TH",
+      photo: tahir,
     },
     {
       name: "Abdullah Jan",
       role: "Site Supervisor",
       initials: "AJ",
-      photo: team3,
+      photo: riaz,
+    },
+
+    {
+      name: "Gulraiz Usmani",
+      role: "Social Media Manager",
+      initials: "GU",
+      photo: tahir,
     },
   ];
 
@@ -34,7 +55,7 @@ const Team = () => {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
             <Users className="w-8 h-8 text-primary" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Team</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">Our Team</h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             Meet the dedicated professionals behind our success
           </p>

@@ -7,26 +7,21 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogTitle,
 } from "./ui/dialog";
 import house1 from "@/assets/1.jpg";
 import house2 from "@/assets/2.jpg";
 import house3 from "@/assets/3.jpg";
-import house6 from "@/assets/6.jpg";
 import house7 from "@/assets/7.jpg";
 import house8 from "@/assets/8.jpg";
 import house10 from "@/assets/10.jpg";
 import house11 from "@/assets/11.jpg";
-import house15 from "@/assets/15.jpg";
 import house16 from "@/assets/16.jpg";
 import house17 from "@/assets/17.jpg";
 import house18 from "@/assets/18.jpg";
 import house19 from "@/assets/19.jpg";
 import house22 from "@/assets/22.jpg";
-import house26 from "@/assets/26.jpg";
 import house27 from "@/assets/27.jpg";
 import house28 from "@/assets/28.jpg";
-import house29 from "@/assets/29.jpg";
 import house30 from "@/assets/30.jpg";
 import house32 from "@/assets/32.jpg";
 import house33 from "@/assets/33.jpg";
@@ -44,21 +39,15 @@ import house54 from "@/assets/54.jpg";
 import house55 from "@/assets/55.jpg";
 import house56 from "@/assets/56.jpg";
 import house57 from "@/assets/57.jpg";
-import house58 from "@/assets/58.jpg";
-import house59 from "@/assets/59.jpg";
-import house60 from "@/assets/60.jpg";
 import house63 from "@/assets/63.jpg";
 import house64 from "@/assets/64.jpg";
 import house65 from "@/assets/65.jpg";
 import house66 from "@/assets/66.jpg";
-import house67 from "@/assets/67.jpg";
 import house69 from "@/assets/69.jpg";
 import house70 from "@/assets/70.jpg";
 import house71 from "@/assets/71.jpg";
-import house73 from "@/assets/73.jpg";
 import house77 from "@/assets/77.jpg";
 import house78 from "@/assets/78.jpg";
-import house79 from "@/assets/79.jpg";
 import house80 from "@/assets/80.jpg";
 import house81 from "@/assets/81.jpg";
 import house82 from "@/assets/82.jpg";
@@ -66,10 +55,8 @@ import house83 from "@/assets/83.jpg";
 import house84 from "@/assets/84.jpg";
 import house85 from "@/assets/85.jpg";
 import house86 from "@/assets/86.jpg";
-import house87 from "@/assets/87.jpg";
 import house88 from "@/assets/88.jpg";
 import house89 from "@/assets/89.jpg";
-import house90 from "@/assets/90.jpg";
 import house91 from "@/assets/91.jpg";
 import abid from "@/assets/abid.jpg";
 import house92 from "@/assets/92.jpg";
@@ -83,8 +70,8 @@ import commercial2 from "@/assets/C2.jpg";
 import commercial1 from "@/assets/C1.jpg";
 import mosque1 from "@/assets/M1.jpg";
 import mosque2 from "@/assets/M2.jpg";
-
-
+import peshawar from "@/assets/peshawar.jpg";
+import karbogha from "@/assets/karbogha.jpg";
 
 type ProjectCategory = "all" | "residential" | "commercial" | "mosques" | "street";
 
@@ -188,6 +175,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "mosques" as const,
       year: 2016,
+      hideYear: true,
       isFeatured: true,
     },
     {
@@ -197,6 +185,27 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       description: "A luxury residential project",
       category: "mosques" as const,
       year: 2015,
+      hideYear: true,
+      isFeatured: true,
+    },
+    {
+      image: peshawar,
+      title: "Darul-Eman Wal-Taqwa Peshawar (Caretaking)",
+      location: "Wadpagga, Peshawar",
+      description: "Mosque and Islamic Center",
+      category: "mosques" as const,
+      year: 2017,
+      hideYear: true,
+      isFeatured: true,
+    },
+    {
+      image: karbogha,
+      title: "Darul-Eman Wal-Taqwa Karbogha Sharif (Caretaking)",
+      location: "Karbogha Sharif, Peshawar",
+      description: "Mosque and Islamic Center",
+      category: "mosques" as const,
+      year: 2018,
+      hideYear: true,
       isFeatured: true,
     },
     {
@@ -217,15 +226,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       year: 2021,
       isFeatured: false,
     },
-    // {
-    //   image: house90,
-    //   title: "6 Marla",
-    //   location: "Executive Lodges, Peshawar",
-    //   description: "A luxury residential project",
-    //   category: "residential" as const,
-    //   year: 2022,
-    //   isFeatured: true,
-    // }, 
+
     {
       image: house89,
       title: "7 Marla",
@@ -243,16 +244,8 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       category: "residential" as const,
       year: 2022,
       isFeatured: false,
-    }, 
-    // {
-    //   image: house87,
-    //   title: "6 Marla",
-    //   location: "Executive Lodges, Peshawar",
-    //   description: "A luxury residential project",
-    //   category: "residential" as const,
-    //   year: 2022,
-    //   isFeatured: true,
-    // }, 
+    },
+
     {
       image: house86,
       title: "7 Marla",
@@ -310,15 +303,6 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       year: 2020,
       isFeatured: false,
     },
-    //  {
-    //   image: house79,
-    //   title: "6 Marla",
-    //   location: "Executive Lodges, Peshawar",
-    //   description: "A luxury residential project",
-    //   category: "residential" as const,
-    //   year: 2019,
-    //   isFeatured: false,
-    // }, 
     {
       image: house78,
       title: "7 Marla",
@@ -336,15 +320,6 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       year: 2019,
       isFeatured: false,
     },
-    // {
-    //   image: house73,
-    //   title: "6 Marla",
-    //   location: "Sabz Ali Town, Peshawar",
-    //   description: "A luxury residential project",
-    //   category: "residential" as const,
-    //   year: 2018,
-    //   isFeatured: false,
-    // }, 
     {
       image: house71,
       title: "6 Marla",
@@ -371,15 +346,6 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       year: 2018,
       isFeatured: false,
     },
-    // {
-    //   image: house67,
-    //   title: "6 Marla",
-    //   location: "Sabz Ali Town, Peshawar",
-    //   description: "A luxury residential project",
-    //   category: "residential" as const,
-    //   year: 2018,
-    //   isFeatured: false,
-    // },
     {
       image: house66,
       title: "10 Marla",
@@ -405,7 +371,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       year: 2017,
       isFeatured: false,
     },
-     {
+    {
       image: house63,
       title: "10 Marla",
       location: "Sabz Ali Town, Peshawar",
@@ -414,35 +380,6 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       year: 2017,
       isFeatured: true,
     },
-
-    // {
-    //   image: house60,
-    //   title: "6 Marla",
-    //   location: "Sabz Ali Town, Peshawar",
-    //   description: "A luxury residential project",
-    //   category: "residential" as const,
-    //   year: 2017,
-    //   isFeatured: false,
-    // },
-
-    // {
-    //   image: house59,
-    //   title: "6 Marla",
-    //   location: "Sabz Ali Town, Peshawar",
-    //   description: "A luxury residential project",
-    //   category: "residential" as const,
-    //   year: 2017,
-    //   isFeatured: false,
-    // }, 
-    // {
-    //   image: house58,
-    //   title: "6 Marla",
-    //   location: "Sabz Ali Town, Peshawar",
-    //   description: "A luxury residential project",
-    //   category: "residential" as const,
-    //   year: 2016,
-    //   isFeatured: false,
-    // },
     {
       image: house57,
       title: "Al Madina street 2",
@@ -588,16 +525,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       category: "street" as const,
       year: 2012,
       isFeatured: false,
-    }, 
-    // {
-    //   image: house29,
-    //   title: "6 Marla",
-    //   location: "Sabz Ali Town, Peshawar",
-    //   description: "A luxury residential project",
-    //   category: "residential" as const,
-    //   year: 2011,
-    //   isFeatured: false,
-    // }, 
+    },
     {
       image: house28,
       title: "5 Marla",
@@ -632,15 +560,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       year: 2010,
       isFeatured: false,
     },
-    // {
-    //   image: house19,
-    //   title: "6 Marla",
-    //   location: "Sabz Ali Town, Peshawar",
-    //   description: "A luxury residential project",
-    //   category: "residential" as const,
-    //   year: 2010,
-    //   isFeatured: false,
-    // },
+
     {
       image: house18,
       title: "5 Marla",
@@ -668,16 +588,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       category: "residential" as const,
       year: 2010,
       isFeatured: false,
-    }, 
-    // {
-    //   image: house15,
-    //   title: "6 Marla",
-    //   location: "Sabz Ali Town, Peshawar",
-    //   description: "A luxury residential project",
-    //   category: "residential" as const,
-    //   year: 2009,
-    //   isFeatured: false,
-    // },
+    },
     {
       image: house11,
       title: "5 Marla",
@@ -712,15 +623,6 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
       year: 2008,
       isFeatured: false,
     },
-    // {
-    //   image: house6,
-    //   title: "4 Marla",
-    //   location: "Sabz Ali Town, Peshawar",
-    //   description: "A luxury residential project",
-    //   category: "residential" as const,
-    //   year: 2008,
-    //   isFeatured: false,
-    // },
     {
       image: house3,
       title: "4 Marla",
@@ -778,7 +680,7 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
         <div className="mb-12">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
             <div className="w-full text-center  mb-4 md:mb-0">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-secondary">
                 Our Projects
               </h2>
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -839,7 +741,11 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
               <CardContent className="p-6">
                 <div className="w-full flex items-center justify-between mb-2">
                   <h3 className="text-xl font-bold">{project.title}</h3>
-                  <span className="text-lg text-muted-foreground">{project.year}</span>
+                  {!project.hideYear && (
+                    <span className="text-lg text-muted-foreground">
+                      {project.year}
+                    </span>
+                  )}
                 </div>
                 <p className="text-sm text-primary font-medium mb-2">
                   {project.location}

@@ -5,6 +5,8 @@ import ceo from "@/assets/team/CEO.png";
 import riaz from "@/assets/team/riaz.png";
 import abubakkar from "@/assets/team/abu.png";
 import tahir from "@/assets/team/tahir.jpeg";
+import gul from "@/assets/team/gul.jpeg";
+import abdullah from "@/assets/team/abd.png";
 
 const Team = () => {
   const teamMembers = [
@@ -37,14 +39,14 @@ const Team = () => {
       name: "Abdullah Jan",
       role: "Site Supervisor",
       initials: "AJ",
-      photo: 'riaz',
+      photo: abdullah,
     },
 
     {
       name: "Gulraiz Usmani",
       role: "Social Media Manager",
       initials: "GU",
-      photo: 'tahir',
+      photo: gul,
     },
   ];
 
@@ -55,7 +57,7 @@ const Team = () => {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
             <Users className="w-8 h-8 text-primary" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">Our Team</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-secondary">Our Team</h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             Meet the dedicated professionals behind our success
           </p>

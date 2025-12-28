@@ -83,7 +83,7 @@ const Testimonial = () => {
     <section id="testimonials" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">Testimonials</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-secondary">Testimonials</h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             What clients say about our work — honest feedback from people we've worked with.
           </p>

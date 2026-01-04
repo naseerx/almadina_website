@@ -742,10 +742,10 @@ const Projects = ({ limitProjects = true }: ProjectsProps) => {
                 <div className="w-full flex items-center justify-between mb-2">
                   <h3 className="text-xl font-bold">{project.title}</h3>
                   {!project.hideYear && (
-                    <span className="text-lg text-muted-foreground">
-                      {project.year}
-                    </span>
-                  )}
+  <span className="text-lg text-muted-foreground">
+    {project.year}
+  </span>
+)}
                 </div>
                 <p className="text-sm text-primary font-medium mb-2">
                   {project.location}

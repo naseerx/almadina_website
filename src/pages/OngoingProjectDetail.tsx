@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {
     Dialog,
     DialogContent,
@@ -87,13 +88,13 @@ const OngoingProjectDetail = () => {
                                     className="overflow-hidden group cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                                     onClick={() => handleMediaClick(image, false)}
                                 >
-                                    <div className="h-64 w-full overflow-hidden">
+                                    <AspectRatio ratio={3 / 4} className="w-full overflow-hidden">
                                         <img
                                             src={image}
                                             alt={`${project.name} - Image ${index + 1}`}
                                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                         />
-                                    </div>
+                                    </AspectRatio>
                                 </Card>
                             ))}
                         </div>

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "./ui/card";
+import { AspectRatio } from "./ui/aspect-ratio";
 import { ongoingProjectsData } from "@/data/ongoingProjects";
 
 const OngoingProjects = () => {
@@ -25,13 +26,13 @@ const OngoingProjects = () => {
               className="overflow-hidden group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-border cursor-pointer"
               onClick={() => navigate(`/ongoing-project/${project.id}`)}
             >
-              <div className="h-64 w-full overflow-hidden">
+              <AspectRatio ratio={3 / 4} className="w-full overflow-hidden">
                 <img
                   src={project.thumbnail}
                   alt={project.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-              </div>
+              </AspectRatio>
               <CardContent className="p-6">
                 <h3 className="text-xl font-bold mb-2">{project.name}</h3>
                 <p className="text-sm text-primary font-medium mb-3">

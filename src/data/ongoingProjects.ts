@@ -21,8 +21,8 @@ export const ongoingProjectsData: OngoingProject[] = [
     {
         id: "modern-residential-house",
         thumbnail: b45,
-        name: "Modern Residential house in DHA",
-        location: "DHA sector A, Peshawar",
+        name: "Modern Residential house",
+        location: "DHA sector B, Peshawar",
         images: [b45, b45a, b45b],
         videos: ["https://youtube.com/shorts/rFgT2xW4qKE"],
         coordinates: {
@@ -37,11 +37,11 @@ export const ongoingProjectsData: OngoingProject[] = [
         name: "House Construction Sufyan",
         location: "Sufyan, Peshawar",
         images: [sufyan, sufyan2],
-        videos: ["https://youtube.com/shorts/ykNkSDcLUFM"],
+        videos: ["https://youtube.com/shorts/ykNkSDcLUFM", "https://youtube.com/shorts/XrJVexMwMOQ"],
         coordinates: {
             lat: 34.052876846263004,
             lng: 71.50947935937928
-            
+
         }
     },
 

@@ -16,6 +16,7 @@ const Header = () => {
 
   const navItems = [
     { label: "Home", href: "#home" },
+    { label: "Ongoing Projects", href: "#ongoing-projects" },
     { label: "About", href: "#about" },
     { label: "Services", href: "#services" },
     { label: "Team", href: "#team" },
@@ -32,11 +33,10 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
           ? "bg-background/95 backdrop-blur-md shadow-md"
           : "bg-white"
-      }`}
+        }`}
     >
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
@@ -62,9 +62,8 @@ const Header = () => {
                   e.preventDefault();
                   scrollToSection(item.href);
                 }}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  isScrolled ? "text-foreground" : "text-foreground"
-                }`}
+                className={`text-sm font-medium transition-colors hover:text-primary ${isScrolled ? "text-foreground" : "text-foreground"
+                  }`}
               >
                 {item.label}
               </a>

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import Projects from "@/components/Projects";
+import AllProjectsList from "@/components/AllProjectsList";
 
 const AllProjects = () => {
   // Ensure the page starts at the very top when this route mounts
@@ -19,7 +19,7 @@ const AllProjects = () => {
           <ArrowLeft size={20} />
           Back to Home
         </Link>
-        <Projects limitProjects={false} />
+        <AllProjectsList limitProjects={false} />
       </div>
     </div>
   );

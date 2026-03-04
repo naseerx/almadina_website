@@ -2,7 +2,7 @@ import icon from "@/assets/whatsapp.svg";
 
 const WhatsAppButton = () => {
   const phoneNumber = "923339221258";
-  const message = "Thank you for contacting Al-Madina Al-Munawwara Constructions & Builders! Please let us know how we can help you.";
+  const message = "Hello! I'm interested in your construction services. Could you please provide more information?";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   return (

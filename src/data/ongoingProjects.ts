@@ -34,8 +34,8 @@ export const ongoingProjectsData: OngoingProject[] = [
     {
         id: "house_constrcution_sufyan",
         thumbnail: sufyan,
-        name: "House Construction Sufyan",
-        location: "Sufyan, Peshawar",
+        name: "House Construction",
+        location: "Sufyan Garden, Peshawar",
         images: [sufyan, sufyan2],
         videos: ["https://youtube.com/shorts/ykNkSDcLUFM", "https://youtube.com/shorts/XrJVexMwMOQ"],
         coordinates: {
@@ -44,5 +44,19 @@ export const ongoingProjectsData: OngoingProject[] = [
 
         }
     },
+      {
+        id: "modern-residential-house-2",
+        thumbnail: b45,
+        name: "Residential house",
+        location: "DHA Prism sector, Peshawar",
+        images: [b45, b45a, b45b],
+        videos: ["https://youtube.com/shorts/rFgT2xW4qKE"],
+        coordinates: {
+
+            lat: 34.0538162029604,
+            lng: 71.42868334302644
+        }
+    },
+    
 
 ];

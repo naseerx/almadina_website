@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { Card, CardContent } from "./ui/card";
 import { Link } from "react-router-dom";
 import { ArrowRight, X, ChevronLeft, ChevronRight } from "lucide-react";
 import {
@@ -297,39 +296,46 @@ const HomeProjects = ({ limitProjects = true }: ProjectsProps) => {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7x3 mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
           {displayedProjects.map((project, index) => (
-            <Card
+            <div
               key={index}
-              className="overflow-hidden group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-border cursor-pointer"
+              className="group relative aspect-square overflow-hidden rounded-xl cursor-pointer shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
               onClick={() => setSelectedProject({ projectIndex: index, imageIndex: 0 })}
             >
-              <div className="h-[500px] w-[500px] overflow-hidden">
-                <img
-                  src={project.images[0]}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <CardContent className="p-6">
-                <div className="w-full flex items-center justify-between mb-2">
-                  <h3 className="text-xl font-bold">{project.title}</h3>
+              {/* Image */}
+              <img
+                src={project.images[0]}
+                alt={project.title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+
+              {/* Category badge */}
+              <span className="absolute top-3 left-3 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full capitalize">
+                {project.category}
+              </span>
+
+              {/* Multi-image indicator */}
+              {project.images.length > 1 && (
+                <span className="absolute top-3 right-3 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
+                  {project.images.length} photos
+                </span>
+              )}
+
+              {/* Gradient overlay with info */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <div className="flex items-end justify-between">
+                  <div>
+                    <h3 className="text-white font-bold text-lg leading-tight">{project.title}</h3>
+                    <p className="text-white/80 text-sm mt-0.5">{project.location}</p>
+                  </div>
                   {!project.hideYear && (
-                    <span className="text-lg text-muted-foreground">
-                      {project.year}
-                    </span>
+                    <span className="text-white/70 text-sm font-medium flex-shrink-0 ml-2">{project.year}</span>
                   )}
                 </div>
-                <p className="text-sm text-primary font-medium mb-2">
-                  {project.location}
-                </p>
-                {project.images.length > 1 && (
-                  <p className="text-xs text-muted-foreground">
-                    {project.images.length} images available
-                  </p>
-                )}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
 

@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, X } from "lucide-react";
+import { ArrowLeft, MapPin, X, Images, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { ongoingProjectsData } from "@/data/ongoingProjects";
 
 const OngoingProjectDetail = () => {
@@ -17,7 +12,6 @@ const OngoingProjectDetail = () => {
     const [selectedMedia, setSelectedMedia] = useState<string | null>(null);
     const [isVideo, setIsVideo] = useState(false);
 
-    // Scroll to top on mount
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     }, []);
@@ -35,140 +29,131 @@ const OngoingProjectDetail = () => {
         );
     }
 
-    const handleMediaClick = (media: string, video: boolean = false) => {
-        setSelectedMedia(media);
-        setIsVideo(video);
-    };
-
     const getYoutubeEmbedUrl = (url: string) => {
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
         const match = url.match(regExp);
-        return (match && match[2].length === 11)
-            ? `https://www.youtube.com/embed/${match[2]}`
-            : null;
+        return match && match[2].length === 11 ? `https://www.youtube.com/embed/${match[2]}` : null;
     };
 
-    const isYoutubeUrl = (url: string) => {
-        return url.includes("youtube.com") || url.includes("youtu.be");
-    };
+    const isYoutubeUrl = (url: string) => url.includes("youtube.com") || url.includes("youtu.be");
 
     return (
         <div className="min-h-screen bg-background">
-            <div className="container mx-auto px-4 py-8">
-                {/* Back Button */}
+
+            {/* Hero Banner */}
+            <div className="relative h-[50vh] min-h-[320px] overflow-hidden">
+                <img
+                    src={project.thumbnail}
+                    alt={project.name}
+                    className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+
+                {/* Back button */}
                 <Link
                     to="/"
-                    className="inline-flex items-center gap-2 mb-8 hover:text-primary transition-colors"
+                    className="absolute top-6 left-6 inline-flex items-center gap-2 bg-black/40 backdrop-blur-sm text-white text-sm font-medium px-4 py-2 rounded-full hover:bg-black/60 transition-colors"
                 >
-                    <ArrowLeft size={20} />
+                    <ArrowLeft size={16} />
                     Back to Home
                 </Link>
 
-                {/* Project Header */}
-                <div className="mb-8">
-                    <h1 className="text-3xl md:text-4xl font-bold mb-4 text-secondary">
-                        {project.name}
-                    </h1>
-                    <p className="text-lg text-primary font-medium mb-4">
-                        {project.location}
-                    </p>
-
+                {/* In Progress badge */}
+                <div className="absolute top-6 right-6 flex items-center gap-1.5 bg-black/50 backdrop-blur-sm text-white text-xs font-bold px-3 py-1.5 rounded-full">
+                    <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                    </span>
+                    In Progress
                 </div>
 
-                {/* Media Gallery */}
-                <div className="mb-8">
-                    <h2 className="text-2xl font-bold mb-6">Project Gallery</h2>
+                {/* Project title */}
+                <div className="absolute bottom-0 left-0 right-0 p-8">
+                    <div className="container mx-auto">
+                        <h1 className="text-3xl md:text-5xl font-bold text-white mb-2">{project.name}</h1>
+                        <div className="flex items-center gap-2 text-white/80">
+                            <MapPin className="w-4 h-4 text-primary" />
+                            <span className="text-base">{project.location}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                    {/* Images Grid */}
-                    {project.images && project.images.length > 0 && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {/* Content */}
+            <div className="container mx-auto px-4 py-12">
+
+                {/* Gallery */}
+                {project.images && project.images.length > 0 && (
+                    <div className="mb-12">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="w-1 h-7 bg-primary rounded-full" />
+                            <Images className="w-5 h-5 text-primary" />
+                            <h2 className="text-2xl font-bold text-secondary">Project Gallery</h2>
+                            <span className="text-sm text-muted-foreground ml-auto">{project.images.length} photos</span>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             {project.images.map((image, index) => (
-                                <Card
+                                <div
                                     key={index}
-                                    className="overflow-hidden group cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-                                    onClick={() => handleMediaClick(image, false)}
+                                    className="group relative overflow-hidden rounded-xl cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                                    style={{ aspectRatio: "3/4" }}
+                                    onClick={() => { setSelectedMedia(image); setIsVideo(false); }}
                                 >
-                                    <AspectRatio ratio={3 / 4} className="w-full overflow-hidden">
-                                        <img
-                                            src={image}
-                                            alt={`${project.name} - Image ${index + 1}`}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                        />
-                                    </AspectRatio>
+                                    <img
+                                        src={image}
+                                        alt={`${project.name} - ${index + 1}`}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                        <span className="text-white text-sm font-medium bg-black/50 px-3 py-1 rounded-full">View Full</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {/* Videos */}
+                {project.videos && project.videos.length > 0 && (
+                    <div className="mb-12">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="w-1 h-7 bg-primary rounded-full" />
+                            <Video className="w-5 h-5 text-primary" />
+                            <h2 className="text-2xl font-bold text-secondary">Project Videos</h2>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {project.videos.map((video, index) => (
+                                <Card key={index} className="overflow-hidden shadow-md">
+                                    <CardContent className="p-0 aspect-video">
+                                        {isYoutubeUrl(video) ? (
+                                            <iframe
+                                                src={getYoutubeEmbedUrl(video) || ""}
+                                                title={`Video ${index + 1}`}
+                                                className="w-full h-full"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowFullScreen
+                                            />
+                                        ) : (
+                                            <video controls className="w-full h-auto">
+                                                <source src={video} type="video/mp4" />
+                                            </video>
+                                        )}
+                                    </CardContent>
                                 </Card>
                             ))}
                         </div>
-                    )}
+                    </div>
+                )}
 
-                    {/* Videos Section */}
-                    {project.videos && project.videos.length > 0 && (
-                        <div>
-                            <h3 className="text-xl font-bold mb-4">Project Videos</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {project.videos.map((video, index) => (
-                                    <Card
-                                        key={index}
-                                        className="overflow-hidden group hover:shadow-xl transition-all duration-300"
-                                    >
-                                        <CardContent className="p-0 aspect-video">
-                                            {isYoutubeUrl(video) ? (
-                                                <iframe
-                                                    src={getYoutubeEmbedUrl(video) || ""}
-                                                    title={`YouTube video player ${index}`}
-                                                    className="w-full h-full"
-                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                    allowFullScreen
-                                                ></iframe>
-                                            ) : (
-                                                <video
-                                                    controls
-                                                    className="w-full h-auto"
-                                                >
-                                                    <source src={video} type="video/mp4" />
-                                                    Your browser does not support the video tag.
-                                                </video>
-                                            )}
-                                        </CardContent>
-                                    </Card>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-                </div>
-
-                {/* Media Dialog for Full View */}
-                <Dialog open={!!selectedMedia} onOpenChange={() => setSelectedMedia(null)}>
-                    <DialogContent className="max-w-4xl w-full p-0 overflow-hidden">
-                        <DialogHeader className="absolute right-4 top-4 z-10">
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                className="rounded-full bg-background/80 backdrop-blur-sm"
-                                onClick={() => setSelectedMedia(null)}
-                            >
-                                <X className="h-4 w-4" />
-                            </Button>
-                        </DialogHeader>
-                        {selectedMedia && !isVideo && (
-                            <img
-                                src={selectedMedia}
-                                alt="Full view"
-                                className="w-full h-auto object-contain"
-                            />
-                        )}
-                        {selectedMedia && isVideo && (
-                            <video controls className="w-full h-auto">
-                                <source src={selectedMedia} type="video/mp4" />
-                                Your browser does not support the video tag.
-                            </video>
-                        )}
-                    </DialogContent>
-                </Dialog>
-                {/* Map Section */}
+                {/* Map */}
                 {project.coordinates && (
                     <div className="mb-12">
-                        <h2 className="text-2xl font-bold mb-6">Location</h2>
-                        <Card className="overflow-hidden h-[400px] w-full">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="w-1 h-7 bg-primary rounded-full" />
+                            <MapPin className="w-5 h-5 text-primary" />
+                            <h2 className="text-2xl font-bold text-secondary">Location</h2>
+                        </div>
+                        <div className="overflow-hidden rounded-xl h-[400px] shadow-md border border-border">
                             <iframe
                                 width="100%"
                                 height="100%"
@@ -176,12 +161,35 @@ const OngoingProjectDetail = () => {
                                 style={{ border: 0 }}
                                 src={`https://maps.google.com/maps?q=${project.coordinates.lat},${project.coordinates.lng}&z=15&output=embed`}
                                 allowFullScreen
-                            >
-                            </iframe>
-                        </Card>
+                            />
+                        </div>
                     </div>
                 )}
             </div>
+
+            {/* Lightbox */}
+            <Dialog open={!!selectedMedia} onOpenChange={() => setSelectedMedia(null)}>
+                <DialogContent className="max-w-4xl w-full p-0 overflow-hidden">
+                    <DialogHeader className="absolute right-4 top-4 z-10">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="rounded-full bg-background/80 backdrop-blur-sm"
+                            onClick={() => setSelectedMedia(null)}
+                        >
+                            <X className="h-4 w-4" />
+                        </Button>
+                    </DialogHeader>
+                    {selectedMedia && !isVideo && (
+                        <img src={selectedMedia} alt="Full view" className="w-full h-auto object-contain max-h-[85vh]" />
+                    )}
+                    {selectedMedia && isVideo && (
+                        <video controls className="w-full h-auto">
+                            <source src={selectedMedia} type="video/mp4" />
+                        </video>
+                    )}
+                </DialogContent>
+            </Dialog>
         </div>
     );
 };

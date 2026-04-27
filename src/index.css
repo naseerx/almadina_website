@@ -2,6 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap');
+
+.urdu {
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  direction: rtl;
+  font-size: 16px;
+  line-height: 3;
+  word-spacing: 3px;
+}
+
+/* Headings need extra room */
+.urdu h1 { font-size: 26px; line-height: 3.2; }
+.urdu h2 { font-size: 22px; line-height: 3.2; }
+.urdu h3 { font-size: 18px; line-height: 3; }
+
+/* Body text */
+.urdu p,
+.urdu span,
+.urdu a,
+.urdu label,
+.urdu button,
+.urdu div {
+  line-height: 3;
+}
+
+/* Nastaliq is unreadable at xs/sm sizes — bump them up */
+.urdu .text-xs  { font-size: 13px !important; line-height: 2.8 !important; }
+.urdu .text-sm  { font-size: 15px !important; line-height: 2.8 !important; }
+.urdu .text-base { font-size: 16px !important; }
+.urdu .text-lg  { font-size: 19px !important; }
+.urdu .text-xl  { font-size: 22px !important; }
+.urdu .text-2xl { font-size: 26px !important; }
+
+/* Badges / pills need more horizontal padding */
+.urdu .rounded-full { padding-left: 10px !important; padding-right: 10px !important; }
+
+/* Sidebar nav items */
+.urdu nav button,
+.urdu nav div {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  line-height: 3 !important;
+}
+
+/* Card content breathing room */
+.urdu [class*="CardContent"] {
+  padding: 1.5rem !important;
+}
+
+/* Input fields */
+.urdu input,
+.urdu textarea {
+  font-size: 15px;
+  line-height: 2.8;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+/* Fix outline buttons: shadcn adds bg-background (white) but text is white — make transparent */
+.urdu button.bg-background {
+  background-color: transparent !important;
+}
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */

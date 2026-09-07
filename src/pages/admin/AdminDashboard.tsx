@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  Plus, LogOut, Building2, MapPin, Calendar,
+  Plus, MapPin, Calendar,
   CheckCircle2, Clock, FolderOpen, Link2, MoreVertical,
-  LayoutDashboard,
+  LayoutDashboard, Trash2,
 } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -13,45 +15,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-const MOCK_PROJECTS = [
-  {
-    id: "1",
-    name: "درمنگی پلازہ بلاک-بی",
-    clientName: "جناب احمد خلیل",
-    address: "گلی نمبر ۴، وارسک روڈ، پشاور",
-    type: "تجارتی",
-    status: "active",
-    isPublic: true,
-    startDate: "2026-01-15",
-    stagesTotal: 11,
-    stagesCompleted: 4,
-  },
-  {
-    id: "2",
-    name: "حیات آباد رہائشی ولا",
-    clientName: "جناب طارق حسین",
-    address: "فیز ۶، حیات آباد، پشاور",
-    type: "رہائشی",
-    status: "active",
-    isPublic: false,
-    startDate: "2026-02-20",
-    stagesTotal: 11,
-    stagesCompleted: 2,
-  },
-  {
-    id: "3",
-    name: "یونیورسٹی روڈ کمرشل پلازہ",
-    clientName: "جناب سلمان رحمٰن",
-    address: "یونیورسٹی روڈ، پشاور",
-    type: "تجارتی",
-    status: "completed",
-    isPublic: false,
-    startDate: "2025-06-10",
-    stagesTotal: 11,
-    stagesCompleted: 11,
-  },
-];
+import {
+  AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel,
+} from "@/components/ui/alert-dialog";
+import AdminSidebar from "@/components/admin/AdminSidebar";
+import { listProjects, setProjectPublic, deleteProject } from "@/api/projects";
 
 const statusConfig = {
   active:    { label: "فعال",  color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" },
@@ -65,47 +34,50 @@ const typeColor: Record<string, string> = {
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
-  const [projects] = useState(MOCK_PROJECTS);
+  const queryClient = useQueryClient();
+  const [projectToDelete, setProjectToDelete] = useState<string | null>(null);
+
+  const { data: projects = [], isLoading, isError, error } = useQuery({
+    queryKey: ["projects"],
+    queryFn: listProjects,
+  });
+
+  const togglePublic = useMutation({
+    mutationFn: ({ id, isPublic }: { id: string; isPublic: boolean }) =>
+      setProjectPublic(id, isPublic),
+    onSuccess: (_data, { isPublic }) => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      toast.success(isPublic ? "عوامی لنک بن گیا" : "عوامی لنک منسوخ ہو گیا");
+    },
+    onError: () => toast.error("تبدیلی محفوظ نہیں ہو سکی"),
+  });
+
+  const deleteProjectMut = useMutation({
+    mutationFn: (id: string) => deleteProject(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      setProjectToDelete(null);
+      toast.success("پروجیکٹ حذف کر دیا گیا");
+    },
+    onError: () => toast.error("پروجیکٹ حذف نہیں ہو سکا"),
+  });
 
   const active    = projects.filter((p) => p.status === "active").length;
   const completed = projects.filter((p) => p.status === "completed").length;
 
   return (
     <div className="urdu min-h-screen bg-gray-950 text-white">
-      {/* ── Sidebar (right) ── */}
-      <aside className="fixed top-0 right-0 h-full w-60 bg-secondary border-l border-white/10 flex flex-col z-40">
-        <div className="px-5 py-6 border-b border-white/10">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
-              <Building2 className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <p className="text-sm font-bold text-white leading-tight">المدینہ</p>
-              <p className="text-xs text-white/40">پروجیکٹ ٹریکر</p>
-            </div>
-          </div>
-        </div>
-
-        <nav className="flex-1 px-3 py-4 space-y-1">
+      <AdminSidebar
+        nav={
           <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/20 text-primary text-sm font-medium">
             <LayoutDashboard className="w-4 h-4" />
             ڈیش بورڈ
           </div>
-        </nav>
-
-        <div className="px-3 py-4 border-t border-white/10">
-          <button
-            onClick={() => navigate("/admin")}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-white/50 hover:text-white hover:bg-white/5 transition-colors text-sm"
-          >
-            <LogOut className="w-4 h-4" />
-            لاگ آؤٹ
-          </button>
-        </div>
-      </aside>
+        }
+      />
 
       {/* ── Main content ── */}
-      <main className="mr-60 p-8">
+      <main className="md:mr-60 p-8 pt-20 md:pt-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -148,7 +120,16 @@ export default function AdminDashboard() {
             تمام پروجیکٹس
           </h2>
 
-          {projects.length === 0 ? (
+          {isLoading ? (
+            <div className="text-center py-20 text-white/30">
+              <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin mx-auto" />
+            </div>
+          ) : isError ? (
+            <div className="text-center py-20 text-red-400">
+              <p>پروجیکٹس لوڈ نہیں ہو سکے۔</p>
+              <p className="text-xs text-red-400/60 mt-1" dir="ltr">{(error as Error)?.message}</p>
+            </div>
+          ) : projects.length === 0 ? (
             <div className="text-center py-20 text-white/30">
               <FolderOpen className="w-12 h-12 mx-auto mb-3 opacity-40" />
               <p>ابھی کوئی پروجیکٹ نہیں ہے۔ پہلا پروجیکٹ بنائیں۔</p>
@@ -194,9 +175,18 @@ export default function AdminDashboard() {
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="hover:bg-white/10 cursor-pointer"
-                              onClick={(e) => e.stopPropagation()}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                togglePublic.mutate({ id: project.id, isPublic: !project.isPublic });
+                              }}
                             >
                               {project.isPublic ? "عوامی لنک منسوخ کریں" : "عوامی لنک بنائیں"}
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              className="hover:bg-red-500/10 text-red-400 cursor-pointer"
+                              onClick={(e) => { e.stopPropagation(); setProjectToDelete(project.id); }}
+                            >
+                              پروجیکٹ حذف کریں
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -244,6 +234,30 @@ export default function AdminDashboard() {
           )}
         </div>
       </main>
+
+      {/* ── Delete project confirm ── */}
+      <AlertDialog open={!!projectToDelete} onOpenChange={(open) => !open && setProjectToDelete(null)}>
+        <AlertDialogContent className="urdu bg-gray-950 border-white/10 text-white" dir="rtl">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white text-right">پروجیکٹ حذف کریں؟</AlertDialogTitle>
+            <AlertDialogDescription className="text-white/50 text-right">
+              یہ عمل واپس نہیں ہو سکتا۔ اس پروجیکٹ کے تمام مراحل اور میڈیا بھی مستقل طور پر حذف ہو جائیں گے۔
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction
+              onClick={() => projectToDelete && deleteProjectMut.mutate(projectToDelete)}
+              disabled={deleteProjectMut.isPending}
+              className="bg-red-500 hover:bg-red-600 text-white"
+            >
+              ہاں، حذف کریں
+            </AlertDialogAction>
+            <AlertDialogCancel className="border-white/20 text-white hover:bg-white/10 bg-transparent">
+              منسوخ
+            </AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

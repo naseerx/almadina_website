@@ -1,95 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import {
   Building2, MapPin, Calendar, User, CheckCircle2,
   Clock, Circle, ChevronDown, ImageIcon, Play,
   ExternalLink, Phone, AlertTriangle,
 } from "lucide-react";
 import logo from "@/assets/logo-rm.png";
-
-// ── Types ─────────────────────────────────────────────────────────────────────
-type StageStatus = "not_started" | "in_progress" | "completed";
-
-interface MediaItem {
-  id: string;
-  type: "image" | "video_file" | "video_link";
-  url: string;
-  caption: string;
-  uploadedAt: string;
-}
-
-interface Stage {
-  id: string;
-  order: number;
-  name: string;
-  status: StageStatus;
-  media: MediaItem[];
-}
-
-// ── Mock data (replace with Firestore fetch via token) ────────────────────────
-const MOCK_DATA: Record<string, {
-  valid: boolean;
-  project?: {
-    name: string; clientName: string; address: string;
-    type: string; startDate: string; status: string;
-    stages: Stage[];
-  };
-}> = {
-  "dmg-plaza-b-2026": {
-    valid: true,
-    project: {
-      name: "Darmangi Plaza Block-B",
-      clientName: "Mr. Ahmad Khalil",
-      address: "Street 4, Warsak Road, Peshawar",
-      type: "Commercial",
-      status: "active",
-      startDate: "2026-01-15",
-      stages: [
-        {
-          id: "s1", order: 1, name: "Site Preparation", status: "completed",
-          media: [
-            { id: "m1", type: "image", url: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80", caption: "Site cleared and levelled", uploadedAt: "2026-01-20" },
-            { id: "m2", type: "image", url: "https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=600&q=80", caption: "Boundary walls marked", uploadedAt: "2026-01-22" },
-          ],
-        },
-        {
-          id: "s2", order: 2, name: "Foundation", status: "completed",
-          media: [
-            { id: "m3", type: "image", url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&q=80", caption: "Foundation excavation complete", uploadedAt: "2026-02-05" },
-            { id: "m4", type: "image", url: "https://images.unsplash.com/photo-1591588582259-e675bd2e6088?w=600&q=80", caption: "Concrete poured — east wing", uploadedAt: "2026-02-10" },
-            { id: "m5", type: "video_link", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", caption: "Foundation inspection walkthrough", uploadedAt: "2026-02-12" },
-          ],
-        },
-        {
-          id: "s3", order: 3, name: "Brickwork / Structure", status: "completed",
-          media: [
-            { id: "m6", type: "image", url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80", caption: "Ground floor structure complete", uploadedAt: "2026-02-28" },
-          ],
-        },
-        {
-          id: "s4", order: 4, name: "Roof Work", status: "completed",
-          media: [
-            { id: "m7", type: "image", url: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80", caption: "Roof slab poured", uploadedAt: "2026-03-08" },
-          ],
-        },
-        {
-          id: "s5", order: 5, name: "Plaster", status: "in_progress",
-          media: [
-            { id: "m8", type: "image", url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&q=80", caption: "East wall plastering in progress", uploadedAt: "2026-03-10" },
-            { id: "m9", type: "video_link", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", caption: "Plaster quality check", uploadedAt: "2026-03-13" },
-          ],
-        },
-        { id: "s6",  order: 6,  name: "Electrical & Plumbing", status: "not_started", media: [] },
-        { id: "s7",  order: 7,  name: "Carpenter Work",        status: "not_started", media: [] },
-        { id: "s8",  order: 8,  name: "Tiling & Flooring",     status: "not_started", media: [] },
-        { id: "s9",  order: 9,  name: "Painting",              status: "not_started", media: [] },
-        { id: "s10", order: 10, name: "Final Finishing",        status: "not_started", media: [] },
-        { id: "s11", order: 11, name: "Key Handover",           status: "not_started", media: [] },
-      ],
-    },
-  },
-  "revoked-token": { valid: false },
-};
+import { getProjectByToken } from "@/api/tracker";
+import type { StageStatus } from "@/api/types";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 const statusConfig: Record<StageStatus, {
@@ -103,23 +22,44 @@ const statusConfig: Record<StageStatus, {
 // ── Component ─────────────────────────────────────────────────────────────────
 export default function ProjectTracker() {
   const { token } = useParams<{ token: string }>();
-  const data = MOCK_DATA[token ?? ""] ?? { valid: false };
+  const { data: project, isLoading, isError } = useQuery({
+    queryKey: ["tracker", token],
+    queryFn: () => getProjectByToken(token!),
+    enabled: !!token,
+  });
 
-  const [openStages, setOpenStages] = useState<Set<string>>(
-    new Set(data.valid ? data.project!.stages.filter((s) => s.status !== "not_started").map((s) => s.id) : [])
-  );
+  const [openStages, setOpenStages] = useState<Set<string>>(new Set());
   const [lightbox, setLightbox] = useState<string | null>(null);
+
+  // Open every stage that has started once the project loads.
+  useEffect(() => {
+    if (project) {
+      setOpenStages(
+        new Set(project.stages.filter((s) => s.status !== "not_started").map((s) => s.id)),
+      );
+    }
+  }, [project]);
 
   const toggleStage = (id: string) => {
     setOpenStages((prev) => {
       const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
       return next;
     });
   };
 
+  // ── Loading ────────────────────────────────────────────────────────────────
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   // ── Revoked / invalid ──────────────────────────────────────────────────────
-  if (!data.valid) {
+  if (isError || !project) {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4">
         <div className="text-center max-w-sm">
@@ -141,10 +81,9 @@ export default function ProjectTracker() {
     );
   }
 
-  const project = data.project!;
   const completed = project.stages.filter((s) => s.status === "completed").length;
   const total = project.stages.length;
-  const progressPct = Math.round((completed / total) * 100);
+  const progressPct = total ? Math.round((completed / total) * 100) : 0;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -171,7 +110,7 @@ export default function ProjectTracker() {
               {project.status === "completed" ? "Completed" : "In Progress"}
             </span>
             <span className="text-xs px-2.5 py-1 rounded-full border font-medium bg-blue-500/20 text-blue-300 border-blue-500/40">
-              {project.type}
+              <span className="urdu !text-xs !leading-none">{project.type}</span>
             </span>
           </div>
 
@@ -242,7 +181,7 @@ export default function ProjectTracker() {
                         <div>
                           <div className="flex items-center gap-2 flex-wrap">
                             <span className={`font-semibold text-sm ${stage.status === "not_started" ? "text-gray-400" : "text-gray-800"}`}>
-                              {stage.name}
+                              <span className="urdu !text-sm !leading-none">{stage.name}</span>
                             </span>
                             <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${cfg.badge}`}>
                               {cfg.label}

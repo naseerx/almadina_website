@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  Building2, LayoutDashboard, LogOut,
+  LayoutDashboard,
   CheckCircle2, Clock, Circle, ChevronLeft, ChevronRight,
   Upload, Link2, ImageIcon, Video, Trash2, Pencil,
   Check, X, Play, ExternalLink,
@@ -9,37 +10,27 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel,
+} from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
-
-type StageStatus = "not_started" | "in_progress" | "completed";
-
-interface MediaItem {
-  id: string;
-  type: "image" | "video_file" | "video_link";
-  url: string;
-  caption: string;
-  uploadedAt: string;
-}
-
-const MOCK_STAGE = {
-  id: "s5",
-  order: 5,
-  name: "پلستر",
-  status: "in_progress" as StageStatus,
-  projectId: "1",
-  projectName: "درمنگی پلازہ بلاک-بی",
-  media: [
-    { id: "m1", type: "image" as const, url: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&q=80", caption: "مشرقی دیوار کا پلستر شروع", uploadedAt: "2026-03-10" },
-    { id: "m2", type: "image" as const, url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&q=80", caption: "نچلی منزل مکمل", uploadedAt: "2026-03-12" },
-    { id: "m3", type: "video_link" as const, url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", caption: "دیوار معائنہ ویڈیو", uploadedAt: "2026-03-13" },
-  ] as MediaItem[],
-};
+import AdminSidebar from "@/components/admin/AdminSidebar";
+import { getStageDetail, updateStageStatus } from "@/api/stages";
+import { uploadMediaFile, addVideoLink, updateMediaCaption, deleteMedia } from "@/api/media";
+import type { MediaItem, StageStatus } from "@/api/types";
 
 const STAGE_STATUSES: { value: StageStatus; label: string; icon: React.ElementType; cls: string }[] = [
   { value: "not_started", label: "شروع نہیں ہوا", icon: Circle,       cls: "border-white/20 text-white/50 hover:bg-white/10" },
   { value: "in_progress", label: "جاری ہے",       icon: Clock,        cls: "border-primary/50 text-primary hover:bg-primary/10" },
   { value: "completed",   label: "مکمل",          icon: CheckCircle2, cls: "border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/10" },
 ];
+
+// Matches this Cloudinary account's free-tier limits (Settings → Usage).
+const MAX_IMAGE_SIZE_MB = 10;
+const MAX_VIDEO_SIZE_MB = 100;
+const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
+const MAX_VIDEO_SIZE_BYTES = MAX_VIDEO_SIZE_MB * 1024 * 1024;
 
 const statusActiveCls: Record<StageStatus, string> = {
   not_started: "bg-white/10 border-white/30 text-white",
@@ -48,11 +39,15 @@ const statusActiveCls: Record<StageStatus, string> = {
 };
 
 export default function AdminStage() {
-  const { id, stageId } = useParams();
+  const { id, stageId } = useParams<{ id: string; stageId: string }>();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const [stage, setStage] = useState(MOCK_STAGE);
-  const [media, setMedia] = useState<MediaItem[]>(MOCK_STAGE.media);
+  const { data: stage, isLoading } = useQuery({
+    queryKey: ["stage", stageId],
+    queryFn: () => getStageDetail(stageId!),
+    enabled: !!stageId,
+  });
 
   const [addMode, setAddMode] = useState<null | "photo" | "video">(null);
   const [videoTab, setVideoTab] = useState<"upload" | "link">("upload");
@@ -60,107 +55,125 @@ export default function AdminStage() {
   const [videoLinkCaption, setVideoLinkCaption] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editCaption, setEditCaption] = useState("");
-  const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+  const [mediaToDelete, setMediaToDelete] = useState<string | null>(null);
 
   const photoInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
 
-  const handleStatusChange = (s: StageStatus) => {
-    setStage((prev) => ({ ...prev, status: s }));
-    toast.success(`مرحلہ "${STAGE_STATUSES.find((x) => x.value === s)?.label}" کر دیا گیا`);
+  const refresh = () => {
+    queryClient.invalidateQueries({ queryKey: ["stage", stageId] });
+    queryClient.invalidateQueries({ queryKey: ["project", id] });
   };
 
+  const statusMutation = useMutation({
+    mutationFn: (s: StageStatus) => updateStageStatus(stageId!, s),
+    onSuccess: (_d, s) => {
+      refresh();
+      toast.success(`مرحلہ "${STAGE_STATUSES.find((x) => x.value === s)?.label}" کر دیا گیا`);
+    },
+    onError: () => toast.error("حیثیت تبدیل نہیں ہو سکی"),
+  });
+
+  const uploadPhotos = useMutation({
+    mutationFn: (files: File[]) =>
+      Promise.all(files.map((f) => uploadMediaFile(stageId!, f, "image"))),
+    onSuccess: (items) => {
+      refresh();
+      toast.success(`${items.length} تصویر${items.length > 1 ? "یں" : ""} شامل ہو گئی`);
+    },
+    onError: () => toast.error("تصویر اپلوڈ نہیں ہو سکی"),
+  });
+
+  const uploadVideo = useMutation({
+    mutationFn: (file: File) => uploadMediaFile(stageId!, file, "video_file"),
+    onSuccess: () => { refresh(); toast.success("ویڈیو شامل ہو گئی"); },
+    onError: () => toast.error("ویڈیو اپلوڈ نہیں ہو سکی"),
+  });
+
+  const addLink = useMutation({
+    mutationFn: () => addVideoLink(stageId!, videoLink.trim(), videoLinkCaption.trim()),
+    onSuccess: () => {
+      refresh();
+      setVideoLink("");
+      setVideoLinkCaption("");
+      setAddMode(null);
+      toast.success("ویڈیو لنک شامل ہو گیا");
+    },
+    onError: () => toast.error("لنک شامل نہیں ہو سکا"),
+  });
+
+  const saveCaptionMut = useMutation({
+    mutationFn: (vars: { id: string; caption: string }) => updateMediaCaption(vars.id, vars.caption),
+    onSuccess: () => { refresh(); setEditingId(null); },
+    onError: () => toast.error("عنوان محفوظ نہیں ہو سکا"),
+  });
+
+  const deleteMut = useMutation({
+    mutationFn: (mediaId: string) => deleteMedia(mediaId),
+    onSuccess: () => { refresh(); setMediaToDelete(null); toast.success("میڈیا ہٹا دیا گیا"); },
+    onError: () => toast.error("میڈیا ہٹایا نہیں جا سکا"),
+  });
+
+  const handleStatusChange = (s: StageStatus) => statusMutation.mutate(s);
+
   const handlePhotoFiles = (files: FileList | null) => {
-    if (!files) return;
-    const newItems: MediaItem[] = Array.from(files).map((file) => ({
-      id: `m${Date.now()}-${Math.random()}`,
-      type: "image",
-      url: URL.createObjectURL(file),
-      caption: "",
-      uploadedAt: new Date().toISOString().split("T")[0],
-    }));
-    setMedia((prev) => [...prev, ...newItems]);
+    if (!files || !files.length) return;
+    const all = Array.from(files);
+    const oversized = all.filter((f) => f.size > MAX_IMAGE_SIZE_BYTES);
+    const valid = all.filter((f) => f.size <= MAX_IMAGE_SIZE_BYTES);
+    if (oversized.length) {
+      toast.error(`${oversized.length} فائل${oversized.length > 1 ? "یں" : ""} ${MAX_IMAGE_SIZE_MB}MB سے بڑی ہیں اور شامل نہیں کی گئیں`);
+    }
+    if (!valid.length) return;
     setAddMode(null);
-    toast.success(`${newItems.length} تصویر${newItems.length > 1 ? "یں" : ""} شامل ہو گئی`);
+    uploadPhotos.mutate(valid);
   };
 
   const handleVideoFile = (files: FileList | null) => {
     if (!files || !files[0]) return;
     const file = files[0];
-    const newItem: MediaItem = {
-      id: `m${Date.now()}`,
-      type: "video_file",
-      url: URL.createObjectURL(file),
-      caption: "",
-      uploadedAt: new Date().toISOString().split("T")[0],
-    };
-    setMedia((prev) => [...prev, newItem]);
+    if (file.size > MAX_VIDEO_SIZE_BYTES) {
+      toast.error(`ویڈیو ${MAX_VIDEO_SIZE_MB}MB سے بڑی ہے اور اپلوڈ نہیں ہو سکتی`);
+      return;
+    }
     setAddMode(null);
-    toast.success("ویڈیو شامل ہو گئی");
+    uploadVideo.mutate(file);
   };
 
   const handleAddVideoLink = () => {
     if (!videoLink.trim()) { toast.error("براہ کرم ویڈیو لنک درج کریں"); return; }
-    const newItem: MediaItem = {
-      id: `m${Date.now()}`,
-      type: "video_link",
-      url: videoLink.trim(),
-      caption: videoLinkCaption.trim(),
-      uploadedAt: new Date().toISOString().split("T")[0],
-    };
-    setMedia((prev) => [...prev, newItem]);
-    setVideoLink("");
-    setVideoLinkCaption("");
-    setAddMode(null);
-    toast.success("ویڈیو لنک شامل ہو گیا");
+    addLink.mutate();
   };
 
   const startEdit   = (item: MediaItem) => { setEditingId(item.id); setEditCaption(item.caption); };
-  const saveCaption = (id: string) => {
-    setMedia((prev) => prev.map((m) => m.id === id ? { ...m, caption: editCaption } : m));
-    setEditingId(null);
-  };
+  const saveCaption = (mediaId: string) => saveCaptionMut.mutate({ id: mediaId, caption: editCaption });
+  const deleteItem  = (mediaId: string) => deleteMut.mutate(mediaId);
 
-  const deleteItem = (id: string) => {
-    setMedia((prev) => prev.filter((m) => m.id !== id));
-    setConfirmDelete(null);
-    toast.success("میڈیا ہٹا دیا گیا");
-  };
+  if (isLoading || !stage) {
+    return (
+      <div className="urdu min-h-screen bg-gray-950 flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+      </div>
+    );
+  }
 
+  const media = stage.media;
   const images = media.filter((m) => m.type === "image");
   const videos = media.filter((m) => m.type !== "image");
 
   return (
     <div className="urdu min-h-screen bg-gray-950 text-white">
-      {/* ── Sidebar (right) ── */}
-      <aside className="fixed top-0 right-0 h-full w-60 bg-secondary border-l border-white/10 flex flex-col z-40">
-        <div className="px-5 py-6 border-b border-white/10">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
-              <Building2 className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <p className="text-sm font-bold text-white leading-tight">المدینہ</p>
-              <p className="text-xs text-white/40">پروجیکٹ ٹریکر</p>
-            </div>
-          </div>
-        </div>
-        <nav className="flex-1 px-3 py-4 space-y-1">
+      <AdminSidebar
+        nav={
           <button onClick={() => navigate("/admin/dashboard")}
             className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-white/50 hover:text-white hover:bg-white/5 transition-colors text-sm">
             <LayoutDashboard className="w-4 h-4" /> ڈیش بورڈ
           </button>
-        </nav>
-        <div className="px-3 py-4 border-t border-white/10">
-          <button onClick={() => navigate("/admin")}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-white/50 hover:text-white hover:bg-white/5 transition-colors text-sm">
-            <LogOut className="w-4 h-4" /> لاگ آؤٹ
-          </button>
-        </div>
-      </aside>
+        }
+      />
 
       {/* ── Main ── */}
-      <main className="p-8 max-w-5xl" style={{ marginRight: "15rem" }}>
+      <main className="p-8 pt-20 md:pt-8 max-w-5xl md:mr-60">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-white/40 mb-6 justify-end">
           <span className="text-white">{stage.name}</span>
@@ -209,13 +222,15 @@ export default function AdminStage() {
         <div className="flex items-center justify-between mb-4">
           <div className="flex gap-2">
             <Button size="sm" onClick={() => setAddMode(addMode === "video" ? null : "video")}
+              disabled={uploadVideo.isPending || addLink.isPending}
               className="bg-primary hover:bg-primary/90 text-white gap-2">
-              <Video className="w-4 h-4" /> ویڈیو شامل کریں
+              <Video className="w-4 h-4" /> {uploadVideo.isPending ? "اپلوڈ ہو رہی ہے..." : "ویڈیو شامل کریں"}
             </Button>
             <Button size="sm" variant="outline"
               onClick={() => { setAddMode("photo"); setTimeout(() => photoInputRef.current?.click(), 50); }}
+              disabled={uploadPhotos.isPending}
               className="border-white/20 text-white hover:bg-white/10 gap-2">
-              <ImageIcon className="w-4 h-4" /> تصاویر شامل کریں
+              <ImageIcon className="w-4 h-4" /> {uploadPhotos.isPending ? "اپلوڈ ہو رہی ہیں..." : "تصاویر شامل کریں"}
             </Button>
           </div>
           <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wider">
@@ -256,10 +271,13 @@ export default function AdminStage() {
 
               {videoTab === "upload" ? (
                 <button onClick={() => videoInputRef.current?.click()}
-                  className="w-full border-2 border-dashed border-white/20 hover:border-primary/50 rounded-xl p-8 text-center transition-colors group">
+                  disabled={uploadVideo.isPending}
+                  className="w-full border-2 border-dashed border-white/20 hover:border-primary/50 rounded-xl p-8 text-center transition-colors group disabled:opacity-50 disabled:hover:border-white/20">
                   <Upload className="w-8 h-8 text-white/30 group-hover:text-primary mx-auto mb-2 transition-colors" />
-                  <p className="text-sm text-white/50 group-hover:text-white/70">ویڈیو فائل منتخب کرنے کے لیے کلک کریں</p>
-                  <p className="text-xs text-white/25 mt-1">MP4، MOV، AVI قابل قبول ہیں</p>
+                  <p className="text-sm text-white/50 group-hover:text-white/70">
+                    {uploadVideo.isPending ? "اپلوڈ ہو رہی ہے..." : "ویڈیو فائل منتخب کرنے کے لیے کلک کریں"}
+                  </p>
+                  <p className="text-xs text-white/25 mt-1">MP4، MOV، AVI قابل قبول ہیں — {MAX_VIDEO_SIZE_MB}MB تک</p>
                 </button>
               ) : (
                 <div className="space-y-3">
@@ -276,8 +294,8 @@ export default function AdminStage() {
                       className="bg-white/10 border-white/20 text-white placeholder:text-white/25 focus:border-primary" />
                   </div>
                   <div className="flex justify-end">
-                    <Button onClick={handleAddVideoLink} className="bg-primary hover:bg-primary/90 text-white gap-2">
-                      لنک شامل کریں <Link2 className="w-4 h-4" />
+                    <Button onClick={handleAddVideoLink} disabled={addLink.isPending} className="bg-primary hover:bg-primary/90 text-white gap-2">
+                      {addLink.isPending ? "شامل ہو رہا ہے..." : "لنک شامل کریں"} <Link2 className="w-4 h-4" />
                     </Button>
                   </div>
                 </div>
@@ -307,9 +325,9 @@ export default function AdminStage() {
               {images.map((item) => (
                 <div key={item.id} className="group relative rounded-xl overflow-hidden bg-white/5 border border-white/10 aspect-square">
                   <img src={item.url} alt={item.caption} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-2.5">
+                  <div className="absolute inset-0 bg-black/60 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity flex flex-col justify-between p-2.5">
                     <div className="flex justify-start gap-1.5">
-                      <button onClick={() => setConfirmDelete(item.id)}
+                      <button onClick={() => setMediaToDelete(item.id)}
                         className="p-1.5 bg-red-500/30 hover:bg-red-500/50 rounded-lg transition-colors">
                         <Trash2 className="w-3.5 h-3.5 text-red-300" />
                       </button>
@@ -335,18 +353,6 @@ export default function AdminStage() {
                       </div>
                     </div>
                   )}
-
-                  {confirmDelete === item.id && (
-                    <div className="absolute inset-0 bg-black/90 flex flex-col items-center justify-center gap-3 p-3">
-                      <p className="text-xs text-white text-center">یہ تصویر ہٹائیں؟</p>
-                      <div className="flex gap-2">
-                        <button onClick={() => setConfirmDelete(null)}
-                          className="px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded text-white/60 text-xs transition-colors">نہیں</button>
-                        <button onClick={() => deleteItem(item.id)}
-                          className="px-3 py-1.5 bg-red-500 hover:bg-red-600 rounded text-white text-xs font-medium transition-colors">ہاں، ہٹائیں</button>
-                      </div>
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
@@ -364,31 +370,20 @@ export default function AdminStage() {
                 <Card key={item.id} className="bg-white/5 border-white/10 group">
                   <CardContent className="p-4 flex items-center gap-4">
                     {/* Actions */}
-                    <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
-                      {confirmDelete === item.id ? (
-                        <>
-                          <button onClick={() => setConfirmDelete(null)}
-                            className="px-2.5 py-1.5 bg-white/10 rounded-lg text-white/50 text-xs transition-colors">نہیں</button>
-                          <button onClick={() => deleteItem(item.id)}
-                            className="px-2.5 py-1.5 bg-red-500 hover:bg-red-600 rounded-lg text-white text-xs font-medium transition-colors">ہٹائیں</button>
-                        </>
-                      ) : (
-                        <>
-                          <button onClick={() => setConfirmDelete(item.id)}
-                            className="p-1.5 bg-red-500/20 hover:bg-red-500/40 rounded-lg transition-colors">
-                            <Trash2 className="w-3.5 h-3.5 text-red-400" />
-                          </button>
-                          <button onClick={() => startEdit(item)}
-                            className="p-1.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors">
-                            <Pencil className="w-3.5 h-3.5 text-white/60" />
-                          </button>
-                          {item.type === "video_link" && (
-                            <a href={item.url} target="_blank" rel="noopener noreferrer"
-                              className="p-1.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors">
-                              <ExternalLink className="w-3.5 h-3.5 text-white/60" />
-                            </a>
-                          )}
-                        </>
+                    <div className="flex items-center gap-1.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity flex-shrink-0">
+                      <button onClick={() => setMediaToDelete(item.id)}
+                        className="p-1.5 bg-red-500/20 hover:bg-red-500/40 rounded-lg transition-colors">
+                        <Trash2 className="w-3.5 h-3.5 text-red-400" />
+                      </button>
+                      <button onClick={() => startEdit(item)}
+                        className="p-1.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors">
+                        <Pencil className="w-3.5 h-3.5 text-white/60" />
+                      </button>
+                      {item.type === "video_link" && (
+                        <a href={item.url} target="_blank" rel="noopener noreferrer"
+                          className="p-1.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors">
+                          <ExternalLink className="w-3.5 h-3.5 text-white/60" />
+                        </a>
                       )}
                     </div>
 
@@ -440,6 +435,30 @@ export default function AdminStage() {
           </Button>
         </div>
       </main>
+
+      {/* ── Delete media confirm ── */}
+      <AlertDialog open={!!mediaToDelete} onOpenChange={(open) => !open && setMediaToDelete(null)}>
+        <AlertDialogContent className="urdu bg-gray-950 border-white/10 text-white" dir="rtl">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white text-right">میڈیا حذف کریں؟</AlertDialogTitle>
+            <AlertDialogDescription className="text-white/50 text-right">
+              یہ عمل واپس نہیں ہو سکتا۔
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction
+              onClick={() => mediaToDelete && deleteItem(mediaToDelete)}
+              disabled={deleteMut.isPending}
+              className="bg-red-500 hover:bg-red-600 text-white"
+            >
+              ہاں، حذف کریں
+            </AlertDialogAction>
+            <AlertDialogCancel className="border-white/20 text-white hover:bg-white/10 bg-transparent">
+              منسوخ
+            </AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

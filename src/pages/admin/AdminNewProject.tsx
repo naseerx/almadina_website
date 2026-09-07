@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   ArrowRight, Building2, User, MapPin, Calendar,
   ChevronDown, Check, Plus, Trash2,
 } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
+import AdminSidebar from "@/components/admin/AdminSidebar";
+import { createProject } from "@/api/projects";
 
 const DEFAULT_STAGES = [
   "جائے وقوع کی تیاری",
@@ -27,6 +31,7 @@ const PROJECT_TYPES = ["تجارتی", "رہائشی", "مسجد", "پلازہ",
 
 export default function AdminNewProject() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [form, setForm] = useState({
     name: "",
@@ -40,7 +45,24 @@ export default function AdminNewProject() {
   const [newStage, setNewStage] = useState("");
   const [typeOpen, setTypeOpen] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [loading, setLoading] = useState(false);
+
+  const { mutate: submitProject, isPending: loading } = useMutation({
+    mutationFn: () =>
+      createProject({
+        name: form.name.trim(),
+        clientName: form.clientName.trim(),
+        address: form.address.trim(),
+        type: form.type,
+        startDate: form.startDate,
+        stageNames: stages,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      toast.success("پروجیکٹ بن گیا");
+      navigate("/admin/dashboard");
+    },
+    onError: () => toast.error("پروجیکٹ نہیں بن سکا"),
+  });
 
   const set = (field: string, value: string) => {
     setForm((f) => ({ ...f, [field]: value }));
@@ -71,27 +93,13 @@ export default function AdminNewProject() {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length) { setErrors(errs); return; }
-    setLoading(true);
-    setTimeout(() => { setLoading(false); navigate("/admin/dashboard"); }, 800);
+    submitProject();
   };
 
   return (
     <div className="urdu min-h-screen bg-gray-950 text-white">
-      {/* ── Sidebar (right) ── */}
-      <aside className="fixed top-0 right-0 h-full w-60 bg-secondary border-l border-white/10 flex flex-col z-40">
-        <div className="px-5 py-6 border-b border-white/10">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
-              <Building2 className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <p className="text-sm font-bold text-white leading-tight">المدینہ</p>
-              <p className="text-xs text-white/40">پروجیکٹ ٹریکر</p>
-            </div>
-          </div>
-        </div>
-        <div className="flex-1" />
-        <div className="px-3 py-4 border-t border-white/10">
+      <AdminSidebar
+        nav={
           <button
             onClick={() => navigate("/admin/dashboard")}
             className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-white/50 hover:text-white hover:bg-white/5 transition-colors text-sm"
@@ -99,11 +107,11 @@ export default function AdminNewProject() {
             <ArrowRight className="w-4 h-4" />
             ڈیش بورڈ پر واپس
           </button>
-        </div>
-      </aside>
+        }
+      />
 
       {/* ── Main ── */}
-      <main className="mr-60 p-8 max-w-3xl mr-auto" style={{ marginRight: "15rem" }}>
+      <main className="md:mr-60 p-8 pt-20 md:pt-8 max-w-3xl">
         {/* Back */}
         <button
           onClick={() => navigate("/admin/dashboard")}
@@ -246,7 +254,7 @@ export default function AdminNewProject() {
                     <button
                       type="button"
                       onClick={() => removeStage(i)}
-                      className="text-white/20 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100 flex-shrink-0"
+                      className="text-white/20 hover:text-red-400 transition-colors opacity-100 md:opacity-0 md:group-hover:opacity-100 flex-shrink-0"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>

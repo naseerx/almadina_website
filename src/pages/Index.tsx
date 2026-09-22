@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import OngoingProjects from "@/components/OngoingProjects";
+// import OngoingProjects from "@/components/OngoingProjects";
 import About from "@/components/About";
 import Services from "@/components/Services";
 import Team from "@/components/Team";
@@ -16,7 +16,8 @@ const Index = () => {
     <div className="min-h-screen">
       <Header />
       <Hero />
-      <OngoingProjects />
+      {/* Ongoing Projects section hidden for now */}
+      {/* <OngoingProjects /> */}
       <About />
       <Services />
       <Team />

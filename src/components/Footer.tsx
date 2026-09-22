@@ -4,7 +4,8 @@ import logo from "@/assets/logo-rm.png";
 const Footer = () => {
   const navLinks = [
     { label: "Home", href: "#home" },
-    { label: "Ongoing Projects", href: "#ongoing-projects" },
+    // Hidden for now — restore along with <OngoingProjects /> in Index.tsx
+    // { label: "Ongoing Projects", href: "#ongoing-projects" },
     { label: "About", href: "#about" },
     { label: "Services", href: "#services" },
     { label: "Team", href: "#team" },

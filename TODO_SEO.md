@@ -85,7 +85,7 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - `og-image.png` 1200×630 — full logo, "Construction Company in Peshawar · Since 2001", domain, brand bars
   - `<head>`: `rel=icon` (ico + 192 png), `rel=apple-touch-icon`; old link to the wide logo PNG removed
   - `og:image` + width/height/alt, `twitter:card=summary_large_image`, `twitter:image` on every page (`SITE.image` in `src/seo.ts`)
-- [x] Phase 5 — live 2026-09-28; **Google Rich Results Test: 2 valid items (Local business + Organization)**, only optional warnings: missing `priceRange`, missing `postalCode`:
+- [x] Phase 5 — live 2026-09-28; **Google Rich Results Test: 2 valid items (Local business + Organization)**, only optional warnings: missing `priceRange`, missing `postalCode`. Postal code **25000** added + deployed 2026-09-28 → re-test: Organization **0 issues**, Local business only optional `priceRange`:
   - Name **"Al-Madina Al-Munawara Builders"** applied to titles, OG, JSON-LD, `<meta name=author>`, About heading/story, footer tagline + ©, Contact address line + map title, logo alts (header/footer/tracker), tracker copy. Left as-is: short "Al-Madina" in prose, client testimonial quotes, street/project names, "Madina Munawwara" references, `/new` (noindex).
   - Titles: `/` "Al-Madina Al-Munawara Builders — Construction in Peshawar" (57), `/projects` "Our Projects in Peshawar — Al-Madina Al-Munawara Builders" (57)
   - JSON-LD `@graph` on `/` only: `GeneralContractor` (name, alternateName, url, logo, image, description, telephone, email, foundingDate, PostalAddress, areaServed Peshawar, opening hours Sat–Thu 09–18) + `WebSite` (publisher → business). `<` escaped. Parses as valid JSON.
@@ -108,7 +108,6 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 
 ### Phase 5 — Structured data — remaining
 - [ ] 👤 Provide to add later (left out until real): **`priceRange`** (Google flags it as optional-missing; e.g. "PKR" range or omit), **`sameAs`** profile URLs (Facebook, Instagram, YouTube, TikTok, Google Business Profile), **geo coordinates**.
-- [ ] Postal code **25000** (👤 2026-09-28) added to JSON-LD address — built, **not deployed yet**.
 - [ ] Details used are the ones already published in the Contact section (phone, email, address, hours, founded 2001) — 👤 tell me if any is outdated.
 - [ ] Nice-to-have: make `Contact.tsx` / `Footer.tsx` read phone/email/address from the same source as `BUSINESS` in `src/seo.ts` (currently duplicated).
 

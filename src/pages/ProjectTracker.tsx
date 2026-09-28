@@ -6,7 +6,7 @@ import {
   Clock, Circle, ChevronDown, ImageIcon, Play,
   ExternalLink, Phone, AlertTriangle,
 } from "lucide-react";
-import logo from "@/assets/logo-rm.png";
+import logo from "@/assets/logo-sm.png";
 import { getProjectByToken } from "@/api/tracker";
 import type { StageStatus } from "@/api/types";
 import "@/styles/urdu-font.css";

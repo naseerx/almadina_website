@@ -305,10 +305,10 @@ const HomeProjects = ({ limitProjects = true }: ProjectsProps) => {
             >
               {/* Image */}
               <img
-                src={project.images[0]}
-                alt={project.title}
                 loading="lazy"
                 decoding="async"
+                src={project.images[0]}
+                alt={project.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
 

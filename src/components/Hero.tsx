@@ -28,7 +28,9 @@ const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center text-white">
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+        {/* No entrance animation on the headline: it's the LCP element, and an
+            opacity-0 start delays LCP until the fade finishes. */}
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
           Building the Future of{" "}
           <span className="text-primary">Peshawar</span>
         </h1>

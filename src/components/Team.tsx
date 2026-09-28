@@ -29,10 +29,10 @@ const Team = () => {
           <div className="group relative overflow-hidden rounded-2xl border border-border bg-background hover:shadow-2xl transition-all duration-300 flex flex-col sm:flex-row w-full max-w-xl">
             <div className="relative sm:w-56 h-64 sm:h-auto overflow-hidden bg-white flex-shrink-0">
               <img
-                src={ceo}
-                alt="Sultan Muhammad"
                 loading="lazy"
                 decoding="async"
+                src={ceo}
+                alt="Sultan Muhammad"
                 className="w-full h-full object-contain object-top group-hover:scale-105 transition-transform duration-500"
               />
             </div>
@@ -52,10 +52,10 @@ const Team = () => {
             <div key={index} className="group flex flex-col items-center text-center">
               <div className="w-28 h-28 mb-4 rounded-full overflow-hidden border-4 border-border group-hover:border-primary transition-colors duration-300 bg-white">
                 <img
-                  src={member.photo}
-                  alt={member.name}
                   loading="lazy"
                   decoding="async"
+                  src={member.photo}
+                  alt={member.name}
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                 />
               </div>

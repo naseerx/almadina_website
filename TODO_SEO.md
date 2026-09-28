@@ -6,7 +6,7 @@ Tracks progress against `SEO_PLAYBOOK.md`. Updated after every phase.
 > (Al-Madina Constructions, Peshawar), so Phase 5 uses a business type (`GeneralContractor` +
 > `WebSite`) instead of `Person`, and Phase 6 follows Pakistani norms (no Impressum).
 
-Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) **live + verified**. Phase 5 (JSON-LD + name) **live + validated**. Phase 7 (speed) **live + measured** (mobile 67 → 82). Phase 1 (Google) done; Bing pending. Phase 6 (privacy page) **live + verified**.
+Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) **live + verified**. Phase 5 (JSON-LD + name) **live + validated**. Phase 7 (speed) **live + measured** (mobile 67 → 82). Phase 1 (Google) done; Bing pending. Phase 6 (privacy page) **live + verified**. Phase 7b (LCP) built locally, **not deployed yet**.
 
 Decisions: official name = **"Al-Madina Al-Munawara Builders"** (👤 2026-09-28); "Al-Madina Constructions" kept only as JSON-LD `alternateName`. This repo is the target (not naseer.pk). `/ongoing-project/:id` and `/new` → `noindex`, not in sitemap (defaults; revisit if the ongoing section comes back).
 
@@ -103,6 +103,14 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - Sitemap `https://www.almadinabuilders.com/sitemap.xml` **submitted** (first sitemap on the property).
   - URL Inspection: `/` was indexed (old empty-SPA version) → **re-indexing requested**; `/projects` was unknown to Google → **indexing requested** (live test passed). Both in Google's priority crawl queue.
 - [x] Phase 6 — live 2026-09-28, verified (`/privacy` 200 with page text in HTML, `noindex, follow`, footer link on `/`, not in sitemap): `/privacy` page (`src/pages/PrivacyPage.tsx`), pre-rendered, `noindex, follow`, not in sitemap, linked in the footer next to ©. Lists only what the site really does: no cookies/analytics; contact form → WhatsApp (nothing stored); Vercel hosting logs; Google Maps embed; YouTube embeds on project pages; Inter self-hosted, Urdu font from Google Fonts on tracker/staff screens; tracker via Supabase + Cloudinary; staff login via Supabase (session in local storage). Contact details read from `BUSINESS` in `src/seo.ts`. No Impressum (not required in Pakistan). All noindex pages now use `noindex, follow`.
+- [x] Phase 7b (local, build passes) — LCP fixes:
+  - Diagnosis (Lighthouse on live `/`): LCP element = hero `<h1>`, ~20 s *render delay* in simulation; `createRoot` replaced the pre-rendered DOM, repainting the headline and re-creating every `<img>` with `src` set before `loading` → **all ~25 photos (7.4 MB) downloaded eagerly** despite `loading="lazy"`.
+  - `src/main.tsx`: **`hydrateRoot`** when `#root` has pre-rendered markup, `createRoot` otherwise (app shell / dev). Checked all routes with Vercel-like rewrites: 0 console errors, no hydration mismatches.
+  - `loading`/`decoding` now come before `src` on lazy `<img>`s (so client-side navigation stays lazy too).
+  - Hero `<h1>`: removed the opacity-0 fade-in (it's the LCP element).
+  - Display logo `src/assets/logo-sm.png` (480×153, 70 KB) instead of the 863×275 208 KB original in Header/Footer/Tracker; original `logo-rm.png` kept for `scripts/brand/` templates.
+  - Hero photo re-encoded from the original: 1280 px, JPEG q35 → 149 KB (was 252 KB).
+  - **Local Lighthouse (mobile, served like Vercel):** 83 → **91**; LCP 4.5 → **3.3 s**; FCP 1.8 s; TBT 0 ms; bytes on load **7.4 MB → 449 KB**. (Removing the hero preload made no difference, so it stays.)
 - [x] Google site-verification TXT exists on the apex (status in Search Console **not verified by me**)
 
 ## Remaining
@@ -128,7 +136,7 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 - [ ] 👤 Read the policy text once — it's a factual draft of what the site does, not legal advice. Keep it in sync when adding analytics, a real form backend, new embeds, etc. (`src/pages/PrivacyPage.tsx`).
 
 ### Phase 7 — Speed — remaining
-- [ ] Remaining LCP (4.3 s mobile, target < 2.5 s): hero image under a dark overlay could be smaller/AVIF, or the hero headline fade-in removed.
+- [ ] 👤 OK to deploy Phase 7b, then re-run PageSpeed Insights (mobile) and record the result.
 - [ ] 👤 Log in to `/admin` once to confirm login still works after the auth layout change (not testable by Claude).
 - [ ] Optional next steps: AVIF/WebP versions with `<picture>` fallback (sips can write AVIF; no WebP encoder installed); smaller thumbnails for project cards (cards show ~400px, files are 1600px); lazy-load the Contact form (zod + react-hook-form ≈ 250 kB source in the main bundle); drop the 1 s fade-in on the hero headline.
 - [ ] ~20 unused photos in `src/assets` (not shipped, only repo weight) — delete if you don't need them.
@@ -173,7 +181,9 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 | Projects list (`/projects`) | `src/pages/AllProjects.tsx`, `src/components/AllProjectsList.tsx` |
 | Home projects section | `src/components/HomeProjects.tsx` |
 | Ongoing projects data (YouTube, coordinates) | `src/data/ongoingProjects.ts` |
-| Logo (source for all icons) | `src/assets/logo-rm.png` |
+| Logo (source for all icons / brand templates) | `src/assets/logo-rm.png` |
+| Logo shown on the site (small copy) | `src/assets/logo-sm.png` |
+| Hydrate vs render decision | `src/main.tsx` |
 | Favicons, touch icon, share image | `public/` (`favicon.ico`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`, `og-image.png`) |
 | Templates to regenerate them | `scripts/brand/` (`crop.html`, `og.html`, README) |
 | 404 page | `src/pages/NotFound.tsx` |

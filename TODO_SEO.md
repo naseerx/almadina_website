@@ -6,7 +6,7 @@ Tracks progress against `SEO_PLAYBOOK.md`. Updated after every phase.
 > (Al-Madina Constructions, Peshawar), so Phase 5 uses a business type (`GeneralContractor` +
 > `WebSite`) instead of `Person`, and Phase 6 follows Pakistani norms (no Impressum).
 
-Last updated: 2026-09-28 — Phase 2 (crawlability) done locally, **not yet deployed**.
+Last updated: 2026-09-28 — Phase 2 (crawlability) **deployed to production and verified live**.
 
 Decisions: this repo is the target (not naseer.pk). `/ongoing-project/:id` and `/new` → `noindex`, not in sitemap (defaults; revisit if the ongoing section comes back).
 
@@ -63,7 +63,7 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 - [x] HTTPS + single canonical host (`www`) with 308 redirects (already in place)
 - [x] `<html lang="en">`, a sensible home `<title>` and meta description (already in place)
 - [x] `robots.txt` exists and allows crawling (needs changes, see Phase 2)
-- [x] Phase 2 (local, build passes):
+- [x] Phase 2 — deployed to production 2026-09-28 (`dpl_H7JcB5XqCMKjsqT2gXP4KNY9DPQD`, commit `ea0dc7b`) and verified live: `/` and `/projects` contain page text in raw HTML; `/foo` → 404; `/projects.html` → 308 `/projects`; `/admin*`, `/track/*`, `/new`, `/ongoing-project/*`, `/app` → 200 + `X-Robots-Tag: noindex` and still boot in Chrome; `robots.txt` and `sitemap.xml` (application/xml) served correctly.
   - `robots.txt`: single `User-agent: *`, `Disallow: /admin`, `Sitemap:` line
   - `public/sitemap.xml`: `/` and `/projects` with `<lastmod>`
   - Build-time pre-render: `src/entry-server.tsx` + `scripts/prerender.mjs` write real HTML for `/` (`dist/index.html`), `/projects` (`dist/projects.html`) and the 404 page (`dist/404.html`, noindex). Verified locally: headline text present in the HTML, 73/73 asset URLs resolve, app still boots in headless Chrome on `/`, `/projects`, `/admin`.
@@ -79,9 +79,6 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 - [ ] Submit `https://www.almadinabuilders.com/sitemap.xml` (after Phase 2 is deployed).
 - [ ] Request indexing for `/` and `/projects`.
 - [ ] Bing Webmaster Tools → import from Search Console (👤 sign-in + Google consent).
-
-### Phase 2 — Crawlability (🤖) — code done, awaiting deploy + live check
-- [ ] 👤 OK to deploy (preview first), then verify live: `curl` text on `/` and `/projects`; `/foo` → 404; `/admin`, `/track/x`, `/new` → `X-Robots-Tag: noindex` and still load; `/projects.html` → 308 `/projects`; `/sitemap.xml` returns XML.
 
 ### Phase 3 — Head tags (🤖)
 - [ ] Per-route `<title>` + description (`/`, `/projects`), generated at build time from one source.

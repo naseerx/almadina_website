@@ -6,7 +6,7 @@ Tracks progress against `SEO_PLAYBOOK.md`. Updated after every phase.
 > (Al-Madina Constructions, Peshawar), so Phase 5 uses a business type (`GeneralContractor` +
 > `WebSite`) instead of `Person`, and Phase 6 follows Pakistani norms (no Impressum).
 
-Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) **live + verified**. Phase 5 (JSON-LD + name) **live + validated**. Phase 7 (speed) **live + measured** (mobile 67 → 82).
+Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) **live + verified**. Phase 5 (JSON-LD + name) **live + validated**. Phase 7 (speed) **live + measured** (mobile 67 → 82). Phase 1 (Google) done; Bing pending.
 
 Decisions: official name = **"Al-Madina Al-Munawara Builders"** (👤 2026-09-28); "Al-Madina Constructions" kept only as JSON-LD `alternateName`. This repo is the target (not naseer.pk). `/ongoing-project/:id` and `/new` → `noindex`, not in sitemap (defaults; revisit if the ongoing section comes back).
 
@@ -98,15 +98,18 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - Hero background preloaded with `fetchpriority="high"` (added by `scripts/prerender.mjs`).
   - JS: admin, tracker, `/new`, ongoing-project pages lazy-loaded; Supabase auth moved into a lazy `AdminLayout` → main bundle **833 kB → 493 kB** (gzip 235 → 152 kB).
   - Fonts: Inter self-hosted (`public/fonts/inter-latin.woff2`, 47 KB, preloaded); Google Fonts link removed from public pages. Noto Nastaliq Urdu now only loaded by the Urdu screens (`src/styles/urdu-font.css`).
+- [x] Phase 1 (Google) — 2026-09-28:
+  - Search Console **Domain property `almadinabuilders.com` already verified** — owned by a *different* Google account than muhammadnaseer.dev@gmail.com (Chrome account `/u/3/`); the existing TXT record belongs to it. Data since 22 Sep 2026.
+  - Sitemap `https://www.almadinabuilders.com/sitemap.xml` **submitted** (first sitemap on the property).
+  - URL Inspection: `/` was indexed (old empty-SPA version) → **re-indexing requested**; `/projects` was unknown to Google → **indexing requested** (live test passed). Both in Google's priority crawl queue.
 - [x] Google site-verification TXT exists on the apex (status in Search Console **not verified by me**)
 
 ## Remaining
 
-### Phase 1 — Search engines (👤 / 🤝)
-- [ ] 👤 Confirm whether Search Console already has a **Domain property** for `almadinabuilders.com` (the TXT record suggests yes). If yes → skip verification.
-- [ ] Submit `https://www.almadinabuilders.com/sitemap.xml` (after Phase 2 is deployed).
-- [ ] Request indexing for `/` and `/projects`.
-- [ ] Bing Webmaster Tools → import from Search Console (👤 sign-in + Google consent).
+### Phase 1 — Search engines — remaining
+- [ ] Re-check Search Console → Sitemaps in 1–2 days: status was **"Couldn't fetch"** right after submitting (usual first-submission state; the file returns 200 `application/xml`, valid XML, to a Googlebot user agent). If it still fails after 48 h, delete and re-submit it.
+- [ ] 👤 **Bing Webmaster Tools** → sign in → Import from Google Search Console (approve Google consent yourself) — then Claude can check the import / submit the sitemap there.
+- [ ] Optional: give `muhammadnaseer.dev@gmail.com` access (Search Console → Settings → Users and permissions) so both accounts can manage it.
 
 ### Phase 3 — Head tags (🤖) — remaining
 - [ ] Check WhatsApp/Facebook link preview of `/` after Phase 4 deploy (FB Sharing Debugger / opengraph.xyz).

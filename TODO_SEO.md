@@ -6,7 +6,7 @@ Tracks progress against `SEO_PLAYBOOK.md`. Updated after every phase.
 > (Al-Madina Constructions, Peshawar), so Phase 5 uses a business type (`GeneralContractor` +
 > `WebSite`) instead of `Person`, and Phase 6 follows Pakistani norms (no Impressum).
 
-Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) **live + verified**. Phase 5 (JSON-LD + name) **live + validated**.
+Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) **live + verified**. Phase 5 (JSON-LD + name) **live + validated**. Phase 7 (speed) built locally, **not deployed yet**.
 
 Decisions: official name = **"Al-Madina Al-Munawara Builders"** (👤 2026-09-28); "Al-Madina Constructions" kept only as JSON-LD `alternateName`. This repo is the target (not naseer.pk). `/ongoing-project/:id` and `/new` → `noindex`, not in sitemap (defaults; revisit if the ongoing section comes back).
 
@@ -89,6 +89,13 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - Name **"Al-Madina Al-Munawara Builders"** applied to titles, OG, JSON-LD, `<meta name=author>`, About heading/story, footer tagline + ©, Contact address line + map title, logo alts (header/footer/tracker), tracker copy. Left as-is: short "Al-Madina" in prose, client testimonial quotes, street/project names, "Madina Munawwara" references, `/new` (noindex).
   - Titles: `/` "Al-Madina Al-Munawara Builders — Construction in Peshawar" (57), `/projects` "Our Projects in Peshawar — Al-Madina Al-Munawara Builders" (57)
   - JSON-LD `@graph` on `/` only: `GeneralContractor` (name, alternateName, url, logo, image, description, telephone, email, foundingDate, PostalAddress, areaServed Peshawar, opening hours Sat–Thu 09–18) + `WebSite` (publisher → business). `<` escaped. Parses as valid JSON.
+- [x] Phase 7 (local, build passes):
+  - **Baseline (PageSpeed mobile, 2026-09-28, before):** Performance **67**, Accessibility 91, Best Practices 100, SEO 100 · FCP 3.2 s · **LCP 17.3 s** · TBT 90 ms · Speed Index 3.5 s
+  - Images: 80 used photos resized from 4032×3024 to max 1600 px (JPEG q60; hero q40 — it sits under a dark overlay): 144 MB → 29 MB. Hero 2 MB+ → 252 KB. Originals remain in git history.
+  - `loading="lazy"` + `decoding="async"` on team photos, home project cards, ongoing-project gallery; `/projects` keeps the first 3 cards eager. Home now loads ~0.4 MB of images up front (was 30.8 MB); `/projects` ~0.9 MB (was 115 MB).
+  - Hero background preloaded with `fetchpriority="high"` (added by `scripts/prerender.mjs`).
+  - JS: admin, tracker, `/new`, ongoing-project pages lazy-loaded; Supabase auth moved into a lazy `AdminLayout` → main bundle **833 kB → 493 kB** (gzip 235 → 152 kB).
+  - Fonts: Inter self-hosted (`public/fonts/inter-latin.woff2`, 47 KB, preloaded); Google Fonts link removed from public pages. Noto Nastaliq Urdu now only loaded by the Urdu screens (`src/styles/urdu-font.css`).
 - [x] Google site-verification TXT exists on the apex (status in Search Console **not verified by me**)
 
 ## Remaining
@@ -115,11 +122,10 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 - [ ] Privacy policy (recommended): Google Fonts, Google Maps, YouTube, WhatsApp hand-off, Supabase/Cloudinary (tracker only). `noindex, follow`, footer link, not in sitemap.
 - [ ] ~~Impressum~~ — not required (Pakistan).
 
-### Phase 7 — Speed (🤖)
-- [ ] PageSpeed Insights mobile score for `/` → record here.
-- [ ] Split admin/tracker routes with `React.lazy` (bundle ~820 kB).
-- [ ] Self-host Inter; load Noto Nastaliq only on Urdu pages (not the public home).
-- [ ] Convert/resize images to WebP/AVIF, `width`/`height`, `loading="lazy"` below the fold, preload hero image.
+### Phase 7 — Speed — remaining
+- [ ] 👤 OK to deploy, then re-run PageSpeed Insights (mobile) on `/` and record the new scores here.
+- [ ] Optional next steps: AVIF/WebP versions with `<picture>` fallback (sips can write AVIF; no WebP encoder installed); smaller thumbnails for project cards (cards show ~400px, files are 1600px); lazy-load the Contact form (zod + react-hook-form ≈ 250 kB source in the main bundle); drop the 1 s fade-in on the hero headline.
+- [ ] ~20 unused photos in `src/assets` (not shipped, only repo weight) — delete if you don't need them.
 
 ### Phase 8 — Content & authority (🤝 / 👤)
 - [ ] Separate pages per service / key project (reuse the unrouted `*Page.tsx` files?).
@@ -138,7 +144,10 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 | What | File |
 |---|---|
 | Global head (fonts, favicon link, `seo:start/seo:end` markers replaced at build) | `index.html` |
-| Urdu font `@import`, theme tokens | `src/index.css` |
+| Inter `@font-face`, `.urdu` class, theme tokens | `src/index.css` |
+| Urdu font (Google Fonts import, admin/tracker only) | `src/styles/urdu-font.css` |
+| Self-hosted font file | `public/fonts/inter-latin.woff2` |
+| Admin auth layout (lazy; keeps Supabase out of public bundle) | `src/pages/admin/AdminLayout.tsx` |
 | Routes | `src/App.tsx` |
 | Browser entry | `src/main.tsx` |
 | Shared providers + route table (`AppProviders`, `AppRoutes`) | `src/App.tsx` |

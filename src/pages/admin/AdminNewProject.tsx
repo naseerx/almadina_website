@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import { createProject } from "@/api/projects";
+import "@/styles/urdu-font.css";
 
 const DEFAULT_STAGES = [
   "جائے وقوع کی تیاری",

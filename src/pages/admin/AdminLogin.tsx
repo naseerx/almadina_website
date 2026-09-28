@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
+import "@/styles/urdu-font.css";
 
 const AdminLogin = () => {
   const navigate = useNavigate();

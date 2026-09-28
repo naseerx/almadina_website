@@ -9,6 +9,7 @@ import {
 import logo from "@/assets/logo-rm.png";
 import { getProjectByToken } from "@/api/tracker";
 import type { StageStatus } from "@/api/types";
+import "@/styles/urdu-font.css";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 const statusConfig: Record<StageStatus, {

@@ -26,6 +26,7 @@ import {
   updateProject, deleteProject, regeneratePublicToken,
 } from "@/api/projects";
 import { createStage, renameStage, deleteStage, reorderStages } from "@/api/stages";
+import "@/styles/urdu-font.css";
 
 type StageStatus = "not_started" | "in_progress" | "completed";
 

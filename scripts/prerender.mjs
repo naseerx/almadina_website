@@ -33,9 +33,20 @@ const { render, SITE, PAGES, NOT_FOUND, APP_SHELL, renderHead } = await import(
 
 const fileFor = (p) => (p === "/" ? "index.html" : `${p.slice(1)}.html`);
 
+// The hero is a CSS background, which the browser only discovers after CSS
+// and layout; preloading it lets the LCP image download straight away.
+const BG_IMAGE = /background-image:url\(([^)]+)\)/;
+
 const writePage = (meta, file, url) => {
-  let html = template.replace(SEO_BLOCK, renderHead(meta));
-  if (url) html = html.replace(EMPTY_ROOT, `<div id="root">${render(url)}</div>`);
+  let head = renderHead(meta);
+  let html = template;
+  if (url) {
+    const body = render(url);
+    const hero = body.match(BG_IMAGE)?.[1];
+    if (hero) head += `\n    <link rel="preload" as="image" href="${hero}" fetchpriority="high" />`;
+    html = html.replace(EMPTY_ROOT, `<div id="root">${body}</div>`);
+  }
+  html = html.replace(SEO_BLOCK, head);
   fs.writeFileSync(path.join(dist, file), html);
   console.log(`prerender: ${url ?? "(shell)"} → dist/${file}`);
 };

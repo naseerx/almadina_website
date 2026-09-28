@@ -1,11 +1,12 @@
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import RequireAuth from "@/components/RequireAuth";
+import { SITE, findPage } from "@/seo";
 import Index from "./pages/Index";
 import IndexExperimental from "./pages/IndexExperimental";
 import AllProjects from "./pages/AllProjects";
@@ -34,8 +35,19 @@ export const AppProviders = ({ children }: ChildrenProps) => (
   </QueryClientProvider>
 );
 
+// Keeps the tab title in sync on client-side navigation; the pre-rendered
+// HTML already has the right <title> for the first load.
+const RouteTitle = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    document.title = findPage(pathname)?.title ?? SITE.name;
+  }, [pathname]);
+  return null;
+};
+
 export const AppRoutes = () => (
   <AuthProvider>
+    <RouteTitle />
     <Routes>
       <Route path="/" element={<Index />} />
       {/* EXPERIMENTAL home screen preview — delete this line to roll back */}

@@ -6,9 +6,9 @@ Tracks progress against `SEO_PLAYBOOK.md`. Updated after every phase.
 > (Al-Madina Constructions, Peshawar), so Phase 5 uses a business type (`GeneralContractor` +
 > `WebSite`) instead of `Person`, and Phase 6 follows Pakistani norms (no Impressum).
 
-Last updated: 2026-09-28 — Phase 2 (crawlability) **deployed to production and verified live**.
+Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) built + verified locally, **not deployed yet**.
 
-Decisions: this repo is the target (not naseer.pk). `/ongoing-project/:id` and `/new` → `noindex`, not in sitemap (defaults; revisit if the ongoing section comes back).
+Decisions: company name in meta = **"Al-Madina Constructions"** (provisional, until 👤 confirms the official name). This repo is the target (not naseer.pk). `/ongoing-project/:id` and `/new` → `noindex`, not in sitemap (defaults; revisit if the ongoing section comes back).
 
 ---
 
@@ -70,6 +70,15 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - `vercel.json`: catch-all SPA rewrite removed → unknown URLs get Vercel's `404.html` with HTTP 404; `cleanUrls`; client-only routes (`/admin*`, `/track/*`, `/new`, `/ongoing-project/*`) rewrite to an empty `dist/app.html` shell with `<meta name="robots" content="noindex">` + `X-Robots-Tag: noindex` header
   - `/projects` now has an `<h1>` ("Our Projects")
   - Generic lightbox alts replaced with "<project title> — photo N" / "<project> — full view"
+- [x] Phase 3 (local, build passes): per-page head tags generated from `src/seo.ts` by `scripts/prerender.mjs`
+  - `/`: title "Al-Madina Constructions — Construction Company in Peshawar" (58), description 148 chars
+  - `/projects`: title "Our Projects in Peshawar — Al-Madina Constructions" (50), description 147 chars
+  - canonical + `og:url` (www, no trailing slash except `/`), `og:type/site_name/locale=en_PK/title/description`, `twitter:card/title/description`
+  - 404 and app shell: `noindex`, no canonical
+  - Lovable `og:image` / `twitter:site=@Lovable` removed (no `og:image` until Phase 4)
+  - `sitemap.xml` now generated at build from `PAGES` (static `public/sitemap.xml` removed)
+  - `RouteTitle` in `App.tsx` updates `document.title` on client-side navigation
+  - hreflang: n/a (English only)
 - [x] Google site-verification TXT exists on the apex (status in Search Console **not verified by me**)
 
 ## Remaining
@@ -80,11 +89,9 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 - [ ] Request indexing for `/` and `/projects`.
 - [ ] Bing Webmaster Tools → import from Search Console (👤 sign-in + Google consent).
 
-### Phase 3 — Head tags (🤖)
-- [ ] Per-route `<title>` + description (`/`, `/projects`), generated at build time from one source.
-- [ ] `<link rel="canonical">` → `https://www.almadinabuilders.com/…`
-- [ ] Full OG set (`og:url`, `og:site_name`, `og:locale=en_PK`, own `og:image` 1200×630 + size) and Twitter card; **remove `@Lovable` / Lovable image**.
-- [ ] ~~hreflang~~ — not applicable (English only).
+### Phase 3 — Head tags (🤖) — built, awaiting deploy
+- [ ] 👤 OK to deploy, then verify live: `curl` each URL's `<title>`/canonical/OG; share-debug `/` (e.g. opengraph.xyz).
+- [ ] `og:image` + size + `summary_large_image` → comes with Phase 4 share image (hook marked `TODO(SEO phase 4)` in `src/seo.ts`).
 
 ### Phase 4 — Brand assets (🤖, 👤 picks design)
 - [ ] `favicon.svg` (square mark, not the wide logo), `apple-touch-icon.png` 180×180, `icon-512.png`, real `favicon.ico`.
@@ -122,7 +129,7 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 
 | What | File |
 |---|---|
-| Global head tags (title, description, OG, favicon link, fonts) | `index.html` |
+| Global head (fonts, favicon link, `seo:start/seo:end` markers replaced at build) | `index.html` |
 | Urdu font `@import`, theme tokens | `src/index.css` |
 | Routes | `src/App.tsx` |
 | Browser entry | `src/main.tsx` |
@@ -130,7 +137,8 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 | Build-time render entry | `src/entry-server.tsx` |
 | Pre-render script (writes `dist/*.html`) — Phase 3 per-page head tags go here | `scripts/prerender.mjs` |
 | Build pipeline | `package.json` → `build` |
-| Sitemap | `public/sitemap.xml` (add new indexable pages here + in `PAGES` in `scripts/prerender.mjs`) |
+| **Per-page titles/descriptions, site name/URL, sitemap source** | `src/seo.ts` (`SITE`, `PAGES`) |
+| Sitemap | generated into `dist/sitemap.xml` by `scripts/prerender.mjs` from `PAGES` |
 | robots.txt / static root files | `public/` (`robots.txt`, `favicon.ico`) |
 | Hosting config (cleanUrls, SPA rewrites for client-only routes, noindex headers) | `vercel.json` |
 | Build config / `@` alias | `vite.config.ts` |

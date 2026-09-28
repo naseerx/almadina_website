@@ -1,7 +1,8 @@
 // Runs after `vite build` + the SSR build of src/entry-server.tsx.
 // Writes static HTML for the public routes into dist/ so search engines see
-// the page text without running JavaScript. The browser still boots with
-// createRoot (main.tsx), which simply replaces this markup.
+// the page text and per-page <head> tags without running JavaScript. The
+// browser still boots with createRoot (main.tsx), which simply replaces this
+// markup. Page titles/descriptions come from src/seo.ts.
 //
 // Output (served by Vercel with cleanUrls, see vercel.json):
 //   dist/index.html     → /
@@ -9,6 +10,7 @@
 //   dist/404.html       → any unknown URL (served with HTTP 404)
 //   dist/app.html       → empty, noindex shell for client-only routes
 //                         (/admin*, /track/*, /new, /ongoing-project/*)
+//   dist/sitemap.xml    → every indexable page in src/seo.ts
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -17,32 +19,41 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dist = path.join(root, "dist");
 const ssrDir = path.join(root, "dist-ssr");
 
-const PAGES = [
-  { url: "/", file: "index.html" },
-  { url: "/projects", file: "projects.html" },
-  { url: "/__not-found__", file: "404.html", noindex: true },
-];
-
 const EMPTY_ROOT = '<div id="root"></div>';
-const NOINDEX = '<meta name="robots" content="noindex" />';
+const SEO_BLOCK = /<!-- seo:start[\s\S]*?<!-- seo:end -->/;
 
 const template = fs.readFileSync(path.join(dist, "index.html"), "utf8");
-if (!template.includes(EMPTY_ROOT)) {
-  throw new Error(`prerender: ${EMPTY_ROOT} not found in dist/index.html`);
+if (!template.includes(EMPTY_ROOT) || !SEO_BLOCK.test(template)) {
+  throw new Error("prerender: dist/index.html is missing the #root div or the seo:start/seo:end markers");
 }
 
-const withNoindex = (html) => html.replace("</head>", `  ${NOINDEX}\n  </head>`);
+const { render, SITE, PAGES, NOT_FOUND, APP_SHELL, renderHead } = await import(
+  pathToFileURL(path.join(ssrDir, "entry-server.js")).href
+);
 
-const { render } = await import(pathToFileURL(path.join(ssrDir, "entry-server.js")).href);
+const fileFor = (p) => (p === "/" ? "index.html" : `${p.slice(1)}.html`);
 
-fs.writeFileSync(path.join(dist, "app.html"), withNoindex(template));
+const writePage = (meta, file, url) => {
+  let html = template.replace(SEO_BLOCK, renderHead(meta));
+  if (url) html = html.replace(EMPTY_ROOT, `<div id="root">${render(url)}</div>`);
+  fs.writeFileSync(path.join(dist, file), html);
+  console.log(`prerender: ${url ?? "(shell)"} → dist/${file}`);
+};
 
-for (const page of PAGES) {
-  const body = render(page.url);
-  let html = template.replace(EMPTY_ROOT, `<div id="root">${body}</div>`);
-  if (page.noindex) html = withNoindex(html);
-  fs.writeFileSync(path.join(dist, page.file), html);
-  console.log(`prerender: ${page.url} → dist/${page.file} (${Math.round(body.length / 1024)} kB)`);
-}
+writePage(APP_SHELL, "app.html");
+for (const page of PAGES) writePage(page, fileFor(page.path), page.path);
+writePage(NOT_FOUND, "404.html", "/__not-found__");
+
+const urls = PAGES.filter((p) => !p.noindex).map(
+  (p) =>
+    `  <url>\n    <loc>${SITE.url}${p.path}</loc>\n` +
+    (p.lastmod ? `    <lastmod>${p.lastmod}</lastmod>\n` : "") +
+    `  </url>`,
+);
+fs.writeFileSync(
+  path.join(dist, "sitemap.xml"),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`,
+);
+console.log(`prerender: sitemap.xml (${urls.length} URLs)`);
 
 fs.rmSync(ssrDir, { recursive: true, force: true });

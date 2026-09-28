@@ -6,7 +6,7 @@ Tracks progress against `SEO_PLAYBOOK.md`. Updated after every phase.
 > (Al-Madina Constructions, Peshawar), so Phase 5 uses a business type (`GeneralContractor` +
 > `WebSite`) instead of `Person`, and Phase 6 follows Pakistani norms (no Impressum).
 
-Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) **live + verified**. Phase 5 (JSON-LD + name) **live + validated**. Phase 7 (speed) built locally, **not deployed yet**.
+Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) **live + verified**. Phase 5 (JSON-LD + name) **live + validated**. Phase 7 (speed) **live + measured** (mobile 67 → 82).
 
 Decisions: official name = **"Al-Madina Al-Munawara Builders"** (👤 2026-09-28); "Al-Madina Constructions" kept only as JSON-LD `alternateName`. This repo is the target (not naseer.pk). `/ongoing-project/:id` and `/new` → `noindex`, not in sitemap (defaults; revisit if the ongoing section comes back).
 
@@ -89,7 +89,9 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - Name **"Al-Madina Al-Munawara Builders"** applied to titles, OG, JSON-LD, `<meta name=author>`, About heading/story, footer tagline + ©, Contact address line + map title, logo alts (header/footer/tracker), tracker copy. Left as-is: short "Al-Madina" in prose, client testimonial quotes, street/project names, "Madina Munawwara" references, `/new` (noindex).
   - Titles: `/` "Al-Madina Al-Munawara Builders — Construction in Peshawar" (57), `/projects` "Our Projects in Peshawar — Al-Madina Al-Munawara Builders" (57)
   - JSON-LD `@graph` on `/` only: `GeneralContractor` (name, alternateName, url, logo, image, description, telephone, email, foundingDate, PostalAddress, areaServed Peshawar, opening hours Sat–Thu 09–18) + `WebSite` (publisher → business). `<` escaped. Parses as valid JSON.
-- [x] Phase 7 (local, build passes):
+- [x] Phase 7 — live 2026-09-28 (commit `ec9dd03`):
+  - **After (PageSpeed mobile):** Performance **82** (was 67) · FCP **1.7 s** (was 3.2) · LCP **4.3 s** (was 17.3) · TBT 90 ms · Speed Index 4.3 s · Accessibility 91 · Best Practices 100 · SEO 100. Desktop: **100** (FCP 0.4 s, LCP 0.8 s).
+  - Verified live: hero + font preloaded (hero 258 KB, font 48 KB), no Google Fonts on `/`, main JS 493 kB, 404 ok, `/admin` + `/admin/dashboard` (redirects to login) + `/track` + `/projects` load.
   - **Baseline (PageSpeed mobile, 2026-09-28, before):** Performance **67**, Accessibility 91, Best Practices 100, SEO 100 · FCP 3.2 s · **LCP 17.3 s** · TBT 90 ms · Speed Index 3.5 s
   - Images: 80 used photos resized from 4032×3024 to max 1600 px (JPEG q60; hero q40 — it sits under a dark overlay): 144 MB → 29 MB. Hero 2 MB+ → 252 KB. Originals remain in git history.
   - `loading="lazy"` + `decoding="async"` on team photos, home project cards, ongoing-project gallery; `/projects` keeps the first 3 cards eager. Home now loads ~0.4 MB of images up front (was 30.8 MB); `/projects` ~0.9 MB (was 115 MB).
@@ -123,7 +125,8 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 - [ ] ~~Impressum~~ — not required (Pakistan).
 
 ### Phase 7 — Speed — remaining
-- [ ] 👤 OK to deploy, then re-run PageSpeed Insights (mobile) on `/` and record the new scores here.
+- [ ] Remaining LCP (4.3 s mobile, target < 2.5 s): hero image under a dark overlay could be smaller/AVIF, or the hero headline fade-in removed.
+- [ ] 👤 Log in to `/admin` once to confirm login still works after the auth layout change (not testable by Claude).
 - [ ] Optional next steps: AVIF/WebP versions with `<picture>` fallback (sips can write AVIF; no WebP encoder installed); smaller thumbnails for project cards (cards show ~400px, files are 1600px); lazy-load the Contact form (zod + react-hook-form ≈ 250 kB source in the main bundle); drop the 1 s fade-in on the hero headline.
 - [ ] ~20 unused photos in `src/assets` (not shipped, only repo weight) — delete if you don't need them.
 

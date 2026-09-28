@@ -152,12 +152,13 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - Phone → **+92 333 9221258** (currently 0315 6666550)
   - Hours → **Sat–Thu 09:00–18:00**, Friday closed (a stuck pending edit "Open with no main hours" from the claim flow is blocking it — if still stuck after 5 days use "Contact support" in the hours panel)
   - Opening date → 2001 (optional)
-  - Photos: logo + a few project photos from `src/assets/` (need 👤 OK on which)
+  - Photos: **logo uploaded** (👤, 28 Sep). Still to upload: cover photo (25 Marla house) + 9 project photos (houses, plazas, street, 3 mosques) — first photo of each home-page project, re-exported at 1600 px q80 from the originals in git (`git show e46f2bb:src/assets/<file>`). Upload is manual (Google's uploader iframe isn't reachable by Claude in Chrome).
   - Check the 4 pending edits went live (name, categories, description, website).
 - [ ] 👤 **Phone consistency:** Facebook page "Al Madina Al Monawara Real Estate" (9.3K followers) and Zameen.com agent listing both show +92 315 6666550. Either update them to +92 333 9221258 or decide on one number everywhere (site, JSON-LD, GBP, Facebook, Zameen).
 - [ ] 👤 Send the Facebook page URL (+ Instagram/YouTube/TikTok if any) → add to GBP "Social profiles" and JSON-LD `sameAs` in `src/seo.ts`.
 - [ ] Link the website from Facebook page ("Website" field + bio) and Zameen profile.
 - [ ] Ask happy clients for Google reviews (GBP → "Get your first reviews" share link).
+- [ ] ~~Maps Platform "address autocomplete" / map / directions widgets~~ — skipped (👤): site has no address form, needs a billing account, adds a third-party script.
 - [ ] Separate pages per service / key project (reuse the unrouted `*Page.tsx` files?).
 - [ ] Local directories (Zameen.com already exists; Graana, OLX business).
 

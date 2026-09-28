@@ -6,7 +6,7 @@ Tracks progress against `SEO_PLAYBOOK.md`. Updated after every phase.
 > (Al-Madina Constructions, Peshawar), so Phase 5 uses a business type (`GeneralContractor` +
 > `WebSite`) instead of `Person`, and Phase 6 follows Pakistani norms (no Impressum).
 
-Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) **live + verified**. Phase 5 (JSON-LD + name) **live + validated**. Phase 7 (speed) **live + measured** (mobile 67 → 82). Phase 1 (Google) done; Bing pending. Phase 6 (privacy page) **live + verified**. Phase 7b (LCP) built locally, **not deployed yet**.
+Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) **live + verified**. Phase 5 (JSON-LD + name) **live + validated**. Phase 7 (speed) **live + measured** (mobile 67 → 82). Phase 1 (Google) done; Bing pending. Phase 6 (privacy page) **live + verified**. Phase 7b (LCP) **live + measured** (Lighthouse mobile on live: 72 → 91).
 
 Decisions: official name = **"Al-Madina Al-Munawara Builders"** (👤 2026-09-28); "Al-Madina Constructions" kept only as JSON-LD `alternateName`. This repo is the target (not naseer.pk). `/ongoing-project/:id` and `/new` → `noindex`, not in sitemap (defaults; revisit if the ongoing section comes back).
 
@@ -103,7 +103,7 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - Sitemap `https://www.almadinabuilders.com/sitemap.xml` **submitted** (first sitemap on the property).
   - URL Inspection: `/` was indexed (old empty-SPA version) → **re-indexing requested**; `/projects` was unknown to Google → **indexing requested** (live test passed). Both in Google's priority crawl queue.
 - [x] Phase 6 — live 2026-09-28, verified (`/privacy` 200 with page text in HTML, `noindex, follow`, footer link on `/`, not in sitemap): `/privacy` page (`src/pages/PrivacyPage.tsx`), pre-rendered, `noindex, follow`, not in sitemap, linked in the footer next to ©. Lists only what the site really does: no cookies/analytics; contact form → WhatsApp (nothing stored); Vercel hosting logs; Google Maps embed; YouTube embeds on project pages; Inter self-hosted, Urdu font from Google Fonts on tracker/staff screens; tracker via Supabase + Cloudinary; staff login via Supabase (session in local storage). Contact details read from `BUSINESS` in `src/seo.ts`. No Impressum (not required in Pakistan). All noindex pages now use `noindex, follow`.
-- [x] Phase 7b (local, build passes) — LCP fixes:
+- [x] Phase 7b — live 2026-09-28 (commit `cfc0454`). **Lighthouse 12 mobile against live `/`: before 72 / LCP 21.5 s / 7.4 MB → after 91 / LCP 3.1 s / FCP 1.7 s / TBT 0 / CLS 0 / 453 KB, 3 images on load.** All routes verified live with 0 console errors. LCP fixes:
   - Diagnosis (Lighthouse on live `/`): LCP element = hero `<h1>`, ~20 s *render delay* in simulation; `createRoot` replaced the pre-rendered DOM, repainting the headline and re-creating every `<img>` with `src` set before `loading` → **all ~25 photos (7.4 MB) downloaded eagerly** despite `loading="lazy"`.
   - `src/main.tsx`: **`hydrateRoot`** when `#root` has pre-rendered markup, `createRoot` otherwise (app shell / dev). Checked all routes with Vercel-like rewrites: 0 console errors, no hydration mismatches.
   - `loading`/`decoding` now come before `src` on lazy `<img>`s (so client-side navigation stays lazy too).
@@ -136,7 +136,8 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 - [ ] 👤 Read the policy text once — it's a factual draft of what the site does, not legal advice. Keep it in sync when adding analytics, a real form backend, new embeds, etc. (`src/pages/PrivacyPage.tsx`).
 
 ### Phase 7 — Speed — remaining
-- [ ] 👤 OK to deploy Phase 7b, then re-run PageSpeed Insights (mobile) and record the result.
+- [ ] Re-run PageSpeed Insights (pagespeed.web.dev, mobile) when convenient and record it — the PSI API daily quota was exhausted and the Chrome extension was disconnected on 2026-09-28, so the post-7b number below is from Lighthouse 12 run locally against the live site (same engine, not identical to PSI).
+- [ ] LCP still 3.1 s in simulation (target < 2.5 s): remaining cost is the main JS (149 kB gz) + font + hero sharing the throttled connection. Next options: lazy-load the Contact form's zod/react-hook-form, AVIF hero via `image-set()`.
 - [ ] 👤 Log in to `/admin` once to confirm login still works after the auth layout change (not testable by Claude).
 - [ ] Optional next steps: AVIF/WebP versions with `<picture>` fallback (sips can write AVIF; no WebP encoder installed); smaller thumbnails for project cards (cards show ~400px, files are 1600px); lazy-load the Contact form (zod + react-hook-form ≈ 250 kB source in the main bundle); drop the 1 s fade-in on the hero headline.
 - [ ] ~20 unused photos in `src/assets` (not shipped, only repo weight) — delete if you don't need them.

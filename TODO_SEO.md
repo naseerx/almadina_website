@@ -107,7 +107,8 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 - [ ] ~~`favicon.svg`~~ — skipped: there's no vector source of the logo (only `logo-rm.png`). Add one if you get an SVG/AI file from the designer.
 
 ### Phase 5 — Structured data — remaining
-- [ ] 👤 Provide to add later (left out until real): **`priceRange`** (Google flags it as optional-missing; e.g. "PKR" range or omit), **`sameAs`** profile URLs (Facebook, Instagram, YouTube, TikTok, Google Business Profile), **postal code**, **geo coordinates**.
+- [ ] 👤 Provide to add later (left out until real): **`priceRange`** (Google flags it as optional-missing; e.g. "PKR" range or omit), **`sameAs`** profile URLs (Facebook, Instagram, YouTube, TikTok, Google Business Profile), **geo coordinates**.
+- [ ] Postal code **25000** (👤 2026-09-28) added to JSON-LD address — built, **not deployed yet**.
 - [ ] Details used are the ones already published in the Contact section (phone, email, address, hours, founded 2001) — 👤 tell me if any is outdated.
 - [ ] Nice-to-have: make `Contact.tsx` / `Footer.tsx` read phone/email/address from the same source as `BUSINESS` in `src/seo.ts` (currently duplicated).
 

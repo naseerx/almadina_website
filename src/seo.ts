@@ -26,7 +26,7 @@ export interface PageMeta {
 
 // Business facts for JSON-LD. Only real, published data (same as the Contact
 // section) — leave a field out rather than guess. Missing, to add when known:
-// sameAs (Facebook/Instagram/YouTube/Google Business Profile), postalCode, geo.
+// sameAs (Facebook/Instagram/YouTube/Google Business Profile), geo.
 const BUSINESS = {
   alternateName: "Al-Madina Constructions",
   telephone: "+923339221258",
@@ -34,6 +34,7 @@ const BUSINESS = {
   streetAddress: "Darmangi Garden Street 1, Warsak Road",
   addressLocality: "Peshawar",
   addressRegion: "Khyber Pakhtunkhwa",
+  postalCode: "25000",
   addressCountry: "PK",
   foundingDate: "2001",
   openingDays: ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
@@ -64,6 +65,7 @@ const HOME_JSON_LD: object[] = [
       streetAddress: BUSINESS.streetAddress,
       addressLocality: BUSINESS.addressLocality,
       addressRegion: BUSINESS.addressRegion,
+      postalCode: BUSINESS.postalCode,
       addressCountry: BUSINESS.addressCountry,
     },
     areaServed: { "@type": "City", name: "Peshawar" },

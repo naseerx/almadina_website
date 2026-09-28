@@ -22,7 +22,7 @@ const About = () => {
             <Building2 className="w-8 h-8 text-primary" />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-secondary">
-            About Al-Madina Constructions
+            About Al-Madina Al-Munawara Builders
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             Your trusted partner in construction and real estate, committed to
@@ -36,10 +36,10 @@ const About = () => {
           <div>
             <h3 className="text-2xl font-bold mb-5 text-secondary">Our Story</h3>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              The story of Al-Madina Al-Munawwara Constructions & Builders began far from Pakistan — in the Kingdom of Saudi Arabia. Our founder started his career there as a Site Manager, gaining first-hand experience in every stage of construction. It was during a project completed in the sacred city of Madina Munawwara that the dream of building something lasting and meaningful truly began.
+              The story of Al-Madina Al-Munawara Builders began far from Pakistan — in the Kingdom of Saudi Arabia. Our founder started his career there as a Site Manager, gaining first-hand experience in every stage of construction. It was during a project completed in the sacred city of Madina Munawwara that the dream of building something lasting and meaningful truly began.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Upon returning to Pakistan, that vision took form as Al-Madina Al-Munawwara Constructions & Builders — a company founded on faith, hard work, and a deep respect for the craft of construction.
+              Upon returning to Pakistan, that vision took form as Al-Madina Al-Munawara Builders — a company founded on faith, hard work, and a deep respect for the craft of construction.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               Today, with over 24 years of experience, Al-Madina continues to serve clients across Khyber Pakhtunkhwa, combining traditional values with modern construction practices. Every project reflects our core belief — that building is not just about concrete and steel, but about creating spaces that inspire trust, comfort, and pride.

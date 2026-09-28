@@ -19,6 +19,7 @@ import AdminSidebar from "@/components/admin/AdminSidebar";
 import { getStageDetail, updateStageStatus } from "@/api/stages";
 import { uploadMediaFile, addVideoLink, updateMediaCaption, deleteMedia } from "@/api/media";
 import type { MediaItem, StageStatus } from "@/api/types";
+import "@/styles/urdu-font.css";
 
 const STAGE_STATUSES: { value: StageStatus; label: string; icon: React.ElementType; cls: string }[] = [
   { value: "not_started", label: "شروع نہیں ہوا", icon: Circle,       cls: "border-white/20 text-white/50 hover:bg-white/10" },

@@ -700,9 +700,9 @@ const AllProjectsList = ({ limitProjects = true }: ProjectsProps) => {
         <div className="mb-12">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
             <div className="w-full text-center  mb-4 md:mb-0">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-secondary">
+              <h1 className="text-3xl md:text-4xl font-bold mb-4 text-secondary">
                 Our Projects
-              </h2>
+              </h1>
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
                 A showcase of our commitment to excellence and quality
                 craftsmanship across various sectors.
@@ -753,6 +753,8 @@ const AllProjectsList = ({ limitProjects = true }: ProjectsProps) => {
             >
               {/* Image */}
               <img
+                loading={index < 3 ? "eager" : "lazy"}
+                decoding="async"
                 src={project.images[0]}
                 alt={project.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -807,7 +809,7 @@ const AllProjectsList = ({ limitProjects = true }: ProjectsProps) => {
               <div className="relative w-full">
                 <img
                   src={displayedProjects[selectedProject.projectIndex]?.images[selectedProject.imageIndex]}
-                  alt="Project full view"
+                  alt={`${displayedProjects[selectedProject.projectIndex]?.title} — photo ${selectedProject.imageIndex + 1}`}
                   className="w-full h-auto object-contain max-h-[80vh]"
                 />
 

@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import { listProjects, setProjectPublic, deleteProject } from "@/api/projects";
+import "@/styles/urdu-font.css";
 
 const statusConfig = {
   active:    { label: "فعال",  color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" },

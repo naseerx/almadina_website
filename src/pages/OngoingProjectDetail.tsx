@@ -100,6 +100,8 @@ const OngoingProjectDetail = () => {
                                     onClick={() => { setSelectedMedia(image); setIsVideo(false); }}
                                 >
                                     <img
+                                        loading="lazy"
+                                        decoding="async"
                                         src={image}
                                         alt={`${project.name} - ${index + 1}`}
                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -181,7 +183,7 @@ const OngoingProjectDetail = () => {
                         </Button>
                     </DialogHeader>
                     {selectedMedia && !isVideo && (
-                        <img src={selectedMedia} alt="Full view" className="w-full h-auto object-contain max-h-[85vh]" />
+                        <img src={selectedMedia} alt={`${project.name} — full view`} className="w-full h-auto object-contain max-h-[85vh]" />
                     )}
                     {selectedMedia && isVideo && (
                         <video controls className="w-full h-auto">

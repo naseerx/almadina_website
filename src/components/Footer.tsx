@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail } from "lucide-react";
 import logo from "@/assets/logo-rm.png";
 
@@ -75,6 +76,10 @@ const Footer = () => {
         <div className="border-t border-white/10 pt-6 text-center">
           <p className="text-white/40 text-sm">
             © {new Date().getFullYear()} Al-Madina Al-Munawara Builders. All rights reserved.
+            {" · "}
+            <Link to="/privacy" className="hover:text-primary transition-colors underline-offset-2 hover:underline">
+              Privacy Policy
+            </Link>
           </p>
         </div>
       </div>

@@ -27,7 +27,7 @@ export interface PageMeta {
 // Business facts for JSON-LD. Only real, published data (same as the Contact
 // section) — leave a field out rather than guess. Missing, to add when known:
 // sameAs (Facebook/Instagram/YouTube/Google Business Profile), geo.
-const BUSINESS = {
+export const BUSINESS = {
   alternateName: "Al-Madina Constructions",
   telephone: "+923339221258",
   email: "almadinaconstructions260@gmail.com",
@@ -101,6 +101,14 @@ export const PAGES: PageMeta[] = [
       "Homes, commercial plazas, streets and mosques built by Al-Madina Al-Munawara Builders in Peshawar — Sabz Ali Town, Executive Lodges, Khwaja Town and more.",
     lastmod: "2026-09-28",
   },
+  {
+    // Legal page: pre-rendered and linked from the footer, but noindex and
+    // therefore left out of the sitemap.
+    path: "/privacy",
+    title: `Privacy Policy — ${SITE.name}`,
+    description: `How ${SITE.name} handles information when you visit almadinabuilders.com or contact us.`,
+    noindex: true,
+  },
 ];
 
 export const NOT_FOUND: PageMeta = {
@@ -138,7 +146,7 @@ export function renderHead(meta: PageMeta): string {
     `<meta name="description" content="${description}" />`,
   ];
   if (meta.noindex) {
-    tags.push(`<meta name="robots" content="noindex" />`);
+    tags.push(`<meta name="robots" content="noindex, follow" />`);
   } else {
     tags.push(
       `<link rel="canonical" href="${url}" />`,

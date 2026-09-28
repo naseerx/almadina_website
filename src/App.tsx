@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { SITE, findPage } from "@/seo";
 import Index from "./pages/Index";
 import AllProjects from "./pages/AllProjects";
+import PrivacyPage from "./pages/PrivacyPage";
 import NotFound from "./pages/NotFound";
 
 // Pre-rendered public pages (above) ship in the main bundle; everything else
@@ -57,6 +58,7 @@ export const AppRoutes = () => (
         {/* EXPERIMENTAL home screen preview — delete this line to roll back */}
         <Route path="/new" element={<IndexExperimental />} />
         <Route path="/projects" element={<AllProjects />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/ongoing-project/:id" element={<OngoingProjectDetail />} />
         <Route element={<AdminLayout />}>
           <Route path="/admin" element={<AdminLogin />} />

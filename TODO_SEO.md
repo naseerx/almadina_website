@@ -6,7 +6,7 @@ Tracks progress against `SEO_PLAYBOOK.md`. Updated after every phase.
 > (Al-Madina Constructions, Peshawar), so Phase 5 uses a business type (`GeneralContractor` +
 > `WebSite`) instead of `Person`, and Phase 6 follows Pakistani norms (no Impressum).
 
-Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) **live + verified**. Phase 5 (JSON-LD + name) **live + validated**. Phase 7 (speed) **live + measured** (mobile 67 → 82). Phase 1 (Google) done; Bing pending.
+Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) **live + verified**. Phase 5 (JSON-LD + name) **live + validated**. Phase 7 (speed) **live + measured** (mobile 67 → 82). Phase 1 (Google) done; Bing pending. Phase 6 (privacy page) built locally, **not deployed yet**.
 
 Decisions: official name = **"Al-Madina Al-Munawara Builders"** (👤 2026-09-28); "Al-Madina Constructions" kept only as JSON-LD `alternateName`. This repo is the target (not naseer.pk). `/ongoing-project/:id` and `/new` → `noindex`, not in sitemap (defaults; revisit if the ongoing section comes back).
 
@@ -102,6 +102,7 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - Search Console **Domain property `almadinabuilders.com` already verified** — owned by a *different* Google account than muhammadnaseer.dev@gmail.com (Chrome account `/u/3/`); the existing TXT record belongs to it. Data since 22 Sep 2026.
   - Sitemap `https://www.almadinabuilders.com/sitemap.xml` **submitted** (first sitemap on the property).
   - URL Inspection: `/` was indexed (old empty-SPA version) → **re-indexing requested**; `/projects` was unknown to Google → **indexing requested** (live test passed). Both in Google's priority crawl queue.
+- [x] Phase 6 (local, build passes): `/privacy` page (`src/pages/PrivacyPage.tsx`), pre-rendered, `noindex, follow`, not in sitemap, linked in the footer next to ©. Lists only what the site really does: no cookies/analytics; contact form → WhatsApp (nothing stored); Vercel hosting logs; Google Maps embed; YouTube embeds on project pages; Inter self-hosted, Urdu font from Google Fonts on tracker/staff screens; tracker via Supabase + Cloudinary; staff login via Supabase (session in local storage). Contact details read from `BUSINESS` in `src/seo.ts`. No Impressum (not required in Pakistan). All noindex pages now use `noindex, follow`.
 - [x] Google site-verification TXT exists on the apex (status in Search Console **not verified by me**)
 
 ## Remaining
@@ -123,9 +124,9 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 - [ ] Details used are the ones already published in the Contact section (phone, email, address, hours, founded 2001) — 👤 tell me if any is outdated.
 - [ ] Nice-to-have: make `Contact.tsx` / `Footer.tsx` read phone/email/address from the same source as `BUSINESS` in `src/seo.ts` (currently duplicated).
 
-### Phase 6 — Legal (🤖 drafts, 👤 provides data)
-- [ ] Privacy policy (recommended): Google Fonts, Google Maps, YouTube, WhatsApp hand-off, Supabase/Cloudinary (tracker only). `noindex, follow`, footer link, not in sitemap.
-- [ ] ~~Impressum~~ — not required (Pakistan).
+### Phase 6 — Legal — remaining
+- [ ] 👤 OK to deploy, then verify `/privacy` live (200, `noindex, follow`, footer link).
+- [ ] 👤 Read the policy text once — it's a factual draft of what the site does, not legal advice. Keep it in sync when adding analytics, a real form backend, new embeds, etc. (`src/pages/PrivacyPage.tsx`).
 
 ### Phase 7 — Speed — remaining
 - [ ] Remaining LCP (4.3 s mobile, target < 2.5 s): hero image under a dark overlay could be smaller/AVIF, or the hero headline fade-in removed.
@@ -177,5 +178,6 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 | Favicons, touch icon, share image | `public/` (`favicon.ico`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`, `og-image.png`) |
 | Templates to regenerate them | `scripts/brand/` (`crop.html`, `og.html`, README) |
 | 404 page | `src/pages/NotFound.tsx` |
+| Privacy policy | `src/pages/PrivacyPage.tsx` (route `/privacy`, meta in `src/seo.ts`) |
 | DNS records | Hostinger hPanel → Domains → almadinabuilders.com → DNS Zone |
 | Deploys / domains | Vercel project `almadina-website` |

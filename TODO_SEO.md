@@ -112,6 +112,11 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - Display logo `src/assets/logo-sm.png` (480×153, 70 KB) instead of the 863×275 208 KB original in Header/Footer/Tracker; original `logo-rm.png` kept for `scripts/brand/` templates.
   - Hero photo re-encoded from the original: 1280 px, JPEG q35 → 149 KB (was 252 KB).
   - **Local Lighthouse (mobile, served like Vercel):** 83 → **91**; LCP 4.5 → **3.3 s**; FCP 1.8 s; TBT 0 ms; bytes on load **7.4 MB → 449 KB**. (Removing the hero preload made no difference, so it stays.)
+- [x] Phase 8 — Google Business Profile (28 Sep 2026):
+  - Existing **unclaimed** Maps listing "Al madina al monawara real estate and builders" (5.0★, 2 reviews, Darmangi Garden Street 1) **claimed** with the Almadina Google account (almadinaconstructions260@gmail.com, same as Search Console) and **verified** by 👤. Business Profile Manager: 1 business, 100% verified.
+  - During claim: address set to "Darmangi Garden Street 1, Warsak Road, Peshawar 25000" (matches site/JSON-LD); map pin placed by 👤; Google marketing emails opted out.
+  - Edits saved (pending Google review, ~10 min each): **name → Al-Madina Al-Munawara Builders**; **categories → General Contractor (primary) + Property Developer** (was Estate Agent; "Real estate developer" doesn't exist in PK list); **description** (551 chars, no URLs/phones); **website → https://www.almadinabuilders.com/**.
+  - Brand search already shows the new website as the #1 result.
 - [x] Google site-verification TXT exists on the apex (status in Search Console **not verified by me**)
 
 ## Remaining
@@ -142,11 +147,19 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 - [ ] Optional next steps: AVIF/WebP versions with `<picture>` fallback (sips can write AVIF; no WebP encoder installed); smaller thumbnails for project cards (cards show ~400px, files are 1600px); lazy-load the Contact form (zod + react-hook-form ≈ 250 kB source in the main bundle); drop the 1 s fade-in on the hero headline.
 - [ ] ~20 unused photos in `src/assets` (not shipped, only repo weight) — delete if you don't need them.
 
-### Phase 8 — Content & authority (🤝 / 👤)
+### Phase 8 — Content & authority — remaining
+- [ ] **Google Business Profile — finish when Google unlocks the fields** (verification "processing, up to 5 days" from 28 Sep 2026; phone + hours have no edit pencil until then):
+  - Phone → **+92 333 9221258** (currently 0315 6666550)
+  - Hours → **Sat–Thu 09:00–18:00**, Friday closed (a stuck pending edit "Open with no main hours" from the claim flow is blocking it — if still stuck after 5 days use "Contact support" in the hours panel)
+  - Opening date → 2001 (optional)
+  - Photos: logo + a few project photos from `src/assets/` (need 👤 OK on which)
+  - Check the 4 pending edits went live (name, categories, description, website).
+- [ ] 👤 **Phone consistency:** Facebook page "Al Madina Al Monawara Real Estate" (9.3K followers) and Zameen.com agent listing both show +92 315 6666550. Either update them to +92 333 9221258 or decide on one number everywhere (site, JSON-LD, GBP, Facebook, Zameen).
+- [ ] 👤 Send the Facebook page URL (+ Instagram/YouTube/TikTok if any) → add to GBP "Social profiles" and JSON-LD `sameAs` in `src/seo.ts`.
+- [ ] Link the website from Facebook page ("Website" field + bio) and Zameen profile.
+- [ ] Ask happy clients for Google reviews (GBP → "Get your first reviews" share link).
 - [ ] Separate pages per service / key project (reuse the unrouted `*Page.tsx` files?).
-- [ ] **Google Business Profile** — high value for a local Peshawar contractor.
-- [ ] Link the site from Facebook / Instagram / YouTube / WhatsApp Business profile.
-- [ ] Local directories (Zameen.com, Graana, OLX business listings, etc.).
+- [ ] Local directories (Zameen.com already exists; Graana, OLX business).
 
 ### Phase 9 — Monitoring (👤)
 - [ ] After ~1 week: Search Console Pages / Sitemaps; Bing sitemap processed.

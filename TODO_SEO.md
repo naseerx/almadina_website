@@ -119,6 +119,7 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - Brand search already shows the new website as the #1 result.
 - [x] 👤 28 Sep: `naseer` pushed to GitHub (in sync at `6bf48c5`); admin login confirmed working after the lazy AdminLayout change.
 - [x] Phase 1 (Bing) — 28 Sep 2026: Bing Webmaster Tools (existing Bing account that also has naseer.pk) → **Import from Google Search Console** (👤 approved read-only Google consent with the Almadina account) → site `https://almadinabuilders.com/` imported, no separate verification needed. Sitemap `https://www.almadinabuilders.com/sitemap.xml` **submitted** (Processing, 0 errors/warnings). **URL Submission:** `/` and `/projects` submitted for immediate crawl. (Bing also feeds DuckDuckGo, Yahoo and ChatGPT search.)
+- [x] Phase 8 — **service pages** (local, build passes, not deployed): `/services` hub + 6 pages `/services/{house-construction, commercial-construction, real-estate-development, renovation-interior-design, architecture-3d-design, supervision-joint-projects}`. Content only from what the site already states (Services section, About timeline, stats); related-project galleries, counts and neighbourhoods computed from `src/data/projects.ts` (project list moved there from `AllProjectsList.tsx`). Each page: own title (≤ 59 chars, brand left to Google's site-name line) + description, canonical, `Service` + `BreadcrumbList` JSON-LD, pre-rendered, in sitemap (now 9 URLs). Internal links: home Services cards → "Learn more" + "View all services"; footer "Services" column on every page; related-services cards; breadcrumbs. Header/footer section links now work from sub-pages (`/#about`…). Fixed "Sabz Ali town" typo in project data. Verified locally: 0 hydration errors, unknown slug → HTTP 404, lint + types clean, desktop + mobile screenshots.
 - [x] Google site-verification TXT exists on the apex (status in Search Console **not verified by me**)
 
 ## Remaining
@@ -160,7 +161,9 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 - [ ] Link the website from Facebook page ("Website" field + bio) and Zameen profile.
 - [ ] Ask happy clients for Google reviews (GBP → "Get your first reviews" share link).
 - [ ] ~~Maps Platform "address autocomplete" / map / directions widgets~~ — skipped (👤): site has no address form, needs a billing account, adds a third-party script.
-- [ ] Separate pages per service / key project (reuse the unrouted `*Page.tsx` files?).
+- [ ] 👤 OK to deploy the service pages; then: request indexing for `/services` + the 6 pages in Search Console and Bing URL Submission, Rich Results Test on one page.
+- [ ] 👤 Check the service-page facts (`src/data/services.ts`) — and send real specifics to make the pages stronger: typical project sizes / Marla range, materials or brands you use, typical timelines, whether you publish per-sq-ft rates, areas you work in outside Peshawar, sample 3D designs / floor plans (Architecture page has no photos yet).
+- [ ] Project pages (one per major project) — next content step.
 - [ ] Local directories (Zameen.com already exists; Graana, OLX business).
 
 ### Phase 9 — Monitoring (👤)
@@ -195,6 +198,9 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 | Footer (name, tagline "since 2001", links) | `src/components/Footer.tsx` |
 | WhatsApp floating button | `src/components/WhatsAppButton.tsx` |
 | Projects list (`/projects`) | `src/pages/AllProjects.tsx`, `src/components/AllProjectsList.tsx` |
+| **Project data** (all completed projects, used by /projects + service pages) | `src/data/projects.ts` |
+| **Service pages content** | `src/data/services.ts` |
+| Service pages UI | `src/pages/ServicesPage.tsx` (hub), `src/pages/ServiceDetailPage.tsx`, `src/components/services/serviceUi.tsx` |
 | Home projects section | `src/components/HomeProjects.tsx` |
 | Ongoing projects data (YouTube, coordinates) | `src/data/ongoingProjects.ts` |
 | Logo (source for all icons / brand templates) | `src/assets/logo-rm.png` |

@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo-sm.png";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  // Section links scroll on the home page; elsewhere they navigate to /#section.
+  const onHome = useLocation().pathname === "/";
+  const hrefFor = (href: string) => (onHome ? href : `/${href}`);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,8 +46,9 @@ const Header = () => {
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <a
-            href="#home"
+            href={hrefFor("#home")}
             onClick={(e) => {
+              if (!onHome) return;
               e.preventDefault();
               scrollToSection("#home");
             }}
@@ -58,8 +63,9 @@ const Header = () => {
             {navItems.map((item) => (
               <a
                 key={item.href}
-                href={item.href}
+                href={hrefFor(item.href)}
                 onClick={(e) => {
+                  if (!onHome) return;
                   e.preventDefault();
                   scrollToSection(item.href);
                 }}
@@ -86,8 +92,9 @@ const Header = () => {
             {navItems.map((item) => (
               <a
                 key={item.href}
-                href={item.href}
+                href={hrefFor(item.href)}
                 onClick={(e) => {
+                  if (!onHome) return;
                   e.preventDefault();
                   scrollToSection(item.href);
                 }}

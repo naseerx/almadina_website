@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { SERVICES } from "@/data/services";
 import { MapPin, Phone, Mail } from "lucide-react";
 import logo from "@/assets/logo-sm.png";
 
@@ -14,6 +15,8 @@ const Footer = () => {
     { label: "Contact", href: "#contact" },
   ];
 
+  const onHome = useLocation().pathname === "/";
+
   const scrollToSection = (href: string) => {
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
@@ -21,7 +24,7 @@ const Footer = () => {
   return (
     <footer className="bg-secondary text-white">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
 
           {/* Brand */}
           <div>
@@ -38,12 +41,28 @@ const Footer = () => {
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <a
-                    href={link.href}
-                    onClick={(e) => { e.preventDefault(); scrollToSection(link.href); }}
+                    href={onHome ? link.href : `/${link.href}`}
+                    onClick={(e) => { if (!onHome) return; e.preventDefault(); scrollToSection(link.href); }}
                     className="text-white/60 hover:text-primary transition-colors text-sm"
                   >
                     {link.label}
                   </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Services */}
+          <div>
+            <h4 className="font-semibold text-white mb-4">
+              <Link to="/services" className="hover:text-primary transition-colors">Services</Link>
+            </h4>
+            <ul className="space-y-2">
+              {SERVICES.map((service) => (
+                <li key={service.slug}>
+                  <Link to={`/services/${service.slug}`} className="text-white/60 hover:text-primary transition-colors text-sm">
+                    {service.name}
+                  </Link>
                 </li>
               ))}
             </ul>

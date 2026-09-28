@@ -7,6 +7,7 @@
 // Output (served by Vercel with cleanUrls, see vercel.json):
 //   dist/index.html     → /
 //   dist/projects.html  → /projects
+//   dist/services.html, dist/services/<slug>.html → service pages
 //   dist/404.html       → any unknown URL (served with HTTP 404)
 //   dist/app.html       → empty, noindex shell for client-only routes
 //                         (/admin*, /track/*, /new, /ongoing-project/*)
@@ -47,6 +48,7 @@ const writePage = (meta, file, url) => {
     html = html.replace(EMPTY_ROOT, `<div id="root">${body}</div>`);
   }
   html = html.replace(SEO_BLOCK, head);
+  fs.mkdirSync(path.dirname(path.join(dist, file)), { recursive: true });
   fs.writeFileSync(path.join(dist, file), html);
   console.log(`prerender: ${url ?? "(shell)"} → dist/${file}`);
 };

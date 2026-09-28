@@ -3,7 +3,9 @@
 //     each pre-rendered HTML file and to generate dist/sitemap.xml
 //   - RouteTitle in App.tsx to keep document.title right during client-side
 //     navigation
-// To add an indexable page: add it here AND render it in scripts/prerender.mjs.
+// Every entry in PAGES is pre-rendered and (unless noindex) listed in the sitemap.
+
+import { SERVICES } from "./data/services";
 
 export const SITE = {
   name: "Al-Madina Al-Munawara Builders",
@@ -86,6 +88,54 @@ const HOME_JSON_LD: object[] = [
   },
 ];
 
+const breadcrumbs = (items: { name: string; path: string }[]) => ({
+  "@type": "BreadcrumbList",
+  itemListElement: items.map((item, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: item.name,
+    item: `${SITE.url}${item.path}`,
+  })),
+});
+
+const SERVICES_HUB: PageMeta = {
+  path: "/services",
+  title: "Construction Services in Peshawar — Since 2001",
+  description:
+    "House construction, commercial plazas, real estate development, renovation, architecture & 3D design, and site supervision in Peshawar since 2001.",
+  lastmod: "2026-09-28",
+  jsonLd: [
+    breadcrumbs([
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services" },
+    ]),
+  ],
+};
+
+const SERVICE_PAGES: PageMeta[] = SERVICES.map((service) => ({
+  path: `/services/${service.slug}`,
+  title: service.metaTitle,
+  description: service.metaDescription,
+  lastmod: "2026-09-28",
+  jsonLd: [
+    {
+      "@type": "Service",
+      "@id": `${SITE.url}/services/${service.slug}#service`,
+      name: service.name,
+      serviceType: service.name,
+      description: service.metaDescription,
+      url: `${SITE.url}/services/${service.slug}`,
+      provider: { "@id": BUSINESS_ID },
+      areaServed: { "@type": "City", name: "Peshawar" },
+    },
+    breadcrumbs([
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services" },
+      { name: service.name, path: `/services/${service.slug}` },
+    ]),
+  ],
+}));
+
 export const PAGES: PageMeta[] = [
   {
     path: "/",
@@ -101,6 +151,8 @@ export const PAGES: PageMeta[] = [
       "Homes, commercial plazas, streets and mosques built by Al-Madina Al-Munawara Builders in Peshawar — Sabz Ali Town, Executive Lodges, Khwaja Town and more.",
     lastmod: "2026-09-28",
   },
+  SERVICES_HUB,
+  ...SERVICE_PAGES,
   {
     // Legal page: pre-rendered and linked from the footer, but noindex and
     // therefore left out of the sitemap.

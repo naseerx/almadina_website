@@ -1,4 +1,6 @@
 import { Building, Home, Paintbrush, Ruler, Users, Eye, MessageSquare, Hammer, KeyRound } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 
 const Services = () => {
@@ -6,31 +8,37 @@ const Services = () => {
     {
       icon: Building,
       title: "Construction Services",
+      slug: "house-construction",
       description: "Residential, Commercial, Grey Structure, and Finishing works with a focus on durability.",
     },
     {
       icon: Home,
       title: "Real Estate Development",
+      slug: "real-estate-development",
       description: "Creating modern housing projects and commercial plazas that redefine urban living.",
     },
     {
       icon: Paintbrush,
       title: "Renovation & Design",
+      slug: "renovation-interior-design",
       description: "Transforming spaces with expert remodeling, painting, flooring, and interior design.",
     },
     {
       icon: Ruler,
       title: "Architecture & Design",
+      slug: "architecture-3d-design",
       description: "Innovative floor plans, stunning 3D designs, and sustainable landscaping services.",
     },
     {
       icon: Users,
       title: "Joined Services",
+      slug: "supervision-joint-projects",
       description: "Collaborative project delivery where we partner with clients and contractors for joint execution and shared responsibility.",
     },
     {
       icon: Eye,
       title: "Supervision Only",
+      slug: "supervision-joint-projects",
       description: "Professional site supervision and quality assurance — we oversee execution while you manage procurement and contracting.",
     },
   ];
@@ -79,12 +87,24 @@ const Services = () => {
 
                 <h3 className="text-lg font-bold text-white mb-2">{service.title}</h3>
                 <p className="text-sm text-white/60 leading-relaxed">{service.description}</p>
+                <Link
+                  to={`/services/${service.slug}`}
+                  className="relative inline-flex items-center gap-1 mt-4 text-sm font-medium text-primary hover:underline"
+                >
+                  Learn more <span className="sr-only">about {service.title}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
 
                 {/* Bottom accent line */}
                 <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-primary group-hover:w-full transition-all duration-500" />
               </div>
             );
           })}
+        </div>
+        <div className="text-center -mt-10 mb-16">
+          <Link to="/services" className="inline-flex items-center gap-1 text-white/80 hover:text-primary font-medium">
+            View all services <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
 
         {/* How We Work */}

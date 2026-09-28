@@ -6,7 +6,7 @@ Tracks progress against `SEO_PLAYBOOK.md`. Updated after every phase.
 > (Al-Madina Constructions, Peshawar), so Phase 5 uses a business type (`GeneralContractor` +
 > `WebSite`) instead of `Person`, and Phase 6 follows Pakistani norms (no Impressum).
 
-Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified** (deployed 2026-09-28, commit `969e456`).
+Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) built locally, **not deployed yet**.
 
 Decisions: company name in meta = **"Al-Madina Constructions"** (provisional, until 👤 confirms the official name). This repo is the target (not naseer.pk). `/ongoing-project/:id` and `/new` → `noindex`, not in sitemap (defaults; revisit if the ongoing section comes back).
 
@@ -79,6 +79,12 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - `sitemap.xml` now generated at build from `PAGES` (static `public/sitemap.xml` removed)
   - `RouteTitle` in `App.tsx` updates `document.title` on client-side navigation
   - hreflang: n/a (English only)
+- [x] Phase 4 (local, build passes) — logo crop, rendered with headless Chrome from `scripts/brand/*.html`:
+  - `favicon.ico` (16/32/48, **house-only** crop — the calligraphy is unreadable at that size), rounded white tile
+  - `apple-touch-icon.png` 180×180, `icon-192.png`, `icon-512.png` — **full mark** (house + calligraphy) on white, no transparency
+  - `og-image.png` 1200×630 — full logo, "Construction Company in Peshawar · Since 2001", domain, brand bars
+  - `<head>`: `rel=icon` (ico + 192 png), `rel=apple-touch-icon`; old link to the wide logo PNG removed
+  - `og:image` + width/height/alt, `twitter:card=summary_large_image`, `twitter:image` on every page (`SITE.image` in `src/seo.ts`)
 - [x] Google site-verification TXT exists on the apex (status in Search Console **not verified by me**)
 
 ## Remaining
@@ -90,13 +96,12 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 - [ ] Bing Webmaster Tools → import from Search Console (👤 sign-in + Google consent).
 
 ### Phase 3 — Head tags (🤖) — remaining
-- [ ] Optional: check the WhatsApp/Facebook link preview of `/` once the share image exists.
-- [ ] `og:image` + size + `summary_large_image` → comes with Phase 4 share image (hook marked `TODO(SEO phase 4)` in `src/seo.ts`).
+- [ ] Check WhatsApp/Facebook link preview of `/` after Phase 4 deploy (FB Sharing Debugger / opengraph.xyz).
 
-### Phase 4 — Brand assets (🤖, 👤 picks design)
-- [ ] `favicon.svg` (square mark, not the wide logo), `apple-touch-icon.png` 180×180, `icon-512.png`, real `favicon.ico`.
-- [ ] `og-image.png` 1200×630.
-- [ ] One company name used everywhere (👤 to choose).
+### Phase 4 — Brand assets — remaining
+- [ ] 👤 OK to deploy, then verify live: icons + `og-image.png` return 200; tags on `/`.
+- [ ] 👤 **Pick one official name.** The logo says **"Al-Madina Al-Munawara Builders"** (matches the domain); titles/OG/JSON-LD use "Al-Madina Constructions"; footer says "Al-Madina Al-Munawwara Constructions & Builders"; header alt "Almadina logo". Once chosen: `SITE.name` in `src/seo.ts` + visible copy/alts.
+- [ ] ~~`favicon.svg`~~ — skipped: there's no vector source of the logo (only `logo-rm.png`). Add one if you get an SVG/AI file from the designer.
 
 ### Phase 5 — Structured data (🤖, 👤 confirms facts)
 - [ ] JSON-LD `@graph`: `GeneralContractor` (LocalBusiness) + `WebSite`. Candidate facts **already on the site** (to be confirmed by 👤): phone `+92 333 9221258`, email `almadinaconstructions260@gmail.com`, address "Darmangi Garden Street 1, Warsak Road, Peshawar", hours Sat–Thu 09:00–18:00, founded 2001, area served Peshawar.
@@ -150,7 +155,9 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 | Projects list (`/projects`) | `src/pages/AllProjects.tsx`, `src/components/AllProjectsList.tsx` |
 | Home projects section | `src/components/HomeProjects.tsx` |
 | Ongoing projects data (YouTube, coordinates) | `src/data/ongoingProjects.ts` |
-| Logo | `src/assets/logo-rm.png` |
+| Logo (source for all icons) | `src/assets/logo-rm.png` |
+| Favicons, touch icon, share image | `public/` (`favicon.ico`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`, `og-image.png`) |
+| Templates to regenerate them | `scripts/brand/` (`crop.html`, `og.html`, README) |
 | 404 page | `src/pages/NotFound.tsx` |
 | DNS records | Hostinger hPanel → Domains → almadinabuilders.com → DNS Zone |
 | Deploys / domains | Vercel project `almadina-website` |

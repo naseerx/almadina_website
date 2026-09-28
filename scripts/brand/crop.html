@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;background:transparent}
+</style></head><body>
+<script>
+// ?size=N&bg=white|none&radius=0..0.5&pad=0..0.3
+const q=new URLSearchParams(location.search);
+const size=+q.get('size'), bg=q.get('bg')||'white', r=+(q.get('radius')||0), pad=+(q.get('pad')||0.08);
+// crop box of the house mark inside logo.png (863x275), in source px
+const box={x:+(q.get('cx')||28), y:+(q.get('cy')||10), w:+(q.get('cw')||222), h:+(q.get('ch')||245)};
+const d=document.createElement('div');
+const inner=size*(1-2*pad), scale=inner/Math.max(box.w,box.h);
+Object.assign(d.style,{width:size+'px',height:size+'px',position:'relative',overflow:'hidden',
+  background:bg==='none'?'transparent':bg,borderRadius:(r*size)+'px'});
+const img=document.createElement('img'); img.src="../../src/assets/logo-rm.png";
+Object.assign(img.style,{position:'absolute',width:(863*scale)+'px',
+  left:((size-box.w*scale)/2 - box.x*scale)+'px', top:((size-box.h*scale)/2 - box.y*scale)+'px'});
+// clip everything outside the crop box
+const clip=document.createElement('div');
+Object.assign(clip.style,{position:'absolute',left:((size-box.w*scale)/2)+'px',top:((size-box.h*scale)/2)+'px',
+  width:(box.w*scale)+'px',height:(box.h*scale)+'px',overflow:'hidden'});
+img.style.left=(-box.x*scale)+'px'; img.style.top=(-box.y*scale)+'px';
+clip.appendChild(img); d.appendChild(clip); document.body.appendChild(d);
+</script></body></html>

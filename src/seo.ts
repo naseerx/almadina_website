@@ -9,6 +9,8 @@ export const SITE = {
   name: "Al-Madina Constructions",
   url: "https://www.almadinabuilders.com",
   locale: "en_PK",
+  /** 1200×630 share image in public/ (template: scripts/brand/og.html). */
+  image: { path: "/og-image.png", width: 1200, height: 630 },
 };
 
 export interface PageMeta {
@@ -65,6 +67,8 @@ export function renderHead(meta: PageMeta): string {
   const url = SITE.url + (meta.path === "/" ? "/" : meta.path);
   const title = escapeAttr(meta.title);
   const description = escapeAttr(meta.description);
+  const image = SITE.url + SITE.image.path;
+  const imageAlt = escapeAttr(`${SITE.name} logo — construction company in Peshawar`);
   const tags = [
     `<title>${title}</title>`,
     `<meta name="description" content="${description}" />`,
@@ -83,10 +87,14 @@ export function renderHead(meta: PageMeta): string {
     `<meta property="og:locale" content="${SITE.locale}" />`,
     `<meta property="og:title" content="${title}" />`,
     `<meta property="og:description" content="${description}" />`,
-    // TODO(SEO phase 4): add og:image (1200×630) + width/height and switch to summary_large_image
-    `<meta name="twitter:card" content="summary" />`,
+    `<meta property="og:image" content="${image}" />`,
+    `<meta property="og:image:width" content="${SITE.image.width}" />`,
+    `<meta property="og:image:height" content="${SITE.image.height}" />`,
+    `<meta property="og:image:alt" content="${imageAlt}" />`,
+    `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${title}" />`,
     `<meta name="twitter:description" content="${description}" />`,
+    `<meta name="twitter:image" content="${image}" />`,
   );
   return tags.join("\n    ");
 }

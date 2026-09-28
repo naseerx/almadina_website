@@ -359,7 +359,7 @@ const HomeProjects = ({ limitProjects = true }: ProjectsProps) => {
               <div className="relative w-full">
                 <img
                   src={displayedProjects[selectedProject.projectIndex]?.images[selectedProject.imageIndex]}
-                  alt="Project full view"
+                  alt={`${displayedProjects[selectedProject.projectIndex]?.title} — photo ${selectedProject.imageIndex + 1}`}
                   className="w-full h-auto object-contain max-h-[80vh]"
                 />
 

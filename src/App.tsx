@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -19,32 +20,46 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const App = () => (
+type ChildrenProps = { children: ReactNode };
+
+// Providers shared by the browser entry (main.tsx) and the build-time
+// pre-renderer (entry-server.tsx); each supplies its own router.
+export const AppProviders = ({ children }: ChildrenProps) => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <AuthProvider>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            {/* EXPERIMENTAL home screen preview — delete this line to roll back */}
-            <Route path="/new" element={<IndexExperimental />} />
-            <Route path="/projects" element={<AllProjects />} />
-            <Route path="/ongoing-project/:id" element={<OngoingProjectDetail />} />
-            <Route path="/admin" element={<AdminLogin />} />
-            <Route path="/admin/dashboard" element={<RequireAuth><AdminDashboard /></RequireAuth>} />
-            <Route path="/admin/projects/new" element={<RequireAuth><AdminNewProject /></RequireAuth>} />
-            <Route path="/admin/projects/:id" element={<RequireAuth><AdminProject /></RequireAuth>} />
-            <Route path="/admin/projects/:id/stage/:stageId" element={<RequireAuth><AdminStage /></RequireAuth>} />
-            <Route path="/track/:token" element={<ProjectTracker />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </AuthProvider>
-      </BrowserRouter>
+      {children}
     </TooltipProvider>
   </QueryClientProvider>
+);
+
+export const AppRoutes = () => (
+  <AuthProvider>
+    <Routes>
+      <Route path="/" element={<Index />} />
+      {/* EXPERIMENTAL home screen preview — delete this line to roll back */}
+      <Route path="/new" element={<IndexExperimental />} />
+      <Route path="/projects" element={<AllProjects />} />
+      <Route path="/ongoing-project/:id" element={<OngoingProjectDetail />} />
+      <Route path="/admin" element={<AdminLogin />} />
+      <Route path="/admin/dashboard" element={<RequireAuth><AdminDashboard /></RequireAuth>} />
+      <Route path="/admin/projects/new" element={<RequireAuth><AdminNewProject /></RequireAuth>} />
+      <Route path="/admin/projects/:id" element={<RequireAuth><AdminProject /></RequireAuth>} />
+      <Route path="/admin/projects/:id/stage/:stageId" element={<RequireAuth><AdminStage /></RequireAuth>} />
+      <Route path="/track/:token" element={<ProjectTracker />} />
+      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  </AuthProvider>
+);
+
+const App = () => (
+  <AppProviders>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+  </AppProviders>
 );
 
 export default App;

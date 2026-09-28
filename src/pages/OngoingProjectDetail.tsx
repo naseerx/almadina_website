@@ -181,7 +181,7 @@ const OngoingProjectDetail = () => {
                         </Button>
                     </DialogHeader>
                     {selectedMedia && !isVideo && (
-                        <img src={selectedMedia} alt="Full view" className="w-full h-auto object-contain max-h-[85vh]" />
+                        <img src={selectedMedia} alt={`${project.name} — full view`} className="w-full h-auto object-contain max-h-[85vh]" />
                     )}
                     {selectedMedia && isVideo && (
                         <video controls className="w-full h-auto">

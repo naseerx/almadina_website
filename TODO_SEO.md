@@ -6,7 +6,7 @@ Tracks progress against `SEO_PLAYBOOK.md`. Updated after every phase.
 > (Al-Madina Constructions, Peshawar), so Phase 5 uses a business type (`GeneralContractor` +
 > `WebSite`) instead of `Person`, and Phase 6 follows Pakistani norms (no Impressum).
 
-Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) built + verified locally, **not deployed yet**.
+Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified** (deployed 2026-09-28, commit `969e456`).
 
 Decisions: company name in meta = **"Al-Madina Constructions"** (provisional, until 👤 confirms the official name). This repo is the target (not naseer.pk). `/ongoing-project/:id` and `/new` → `noindex`, not in sitemap (defaults; revisit if the ongoing section comes back).
 
@@ -70,7 +70,7 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - `vercel.json`: catch-all SPA rewrite removed → unknown URLs get Vercel's `404.html` with HTTP 404; `cleanUrls`; client-only routes (`/admin*`, `/track/*`, `/new`, `/ongoing-project/*`) rewrite to an empty `dist/app.html` shell with `<meta name="robots" content="noindex">` + `X-Robots-Tag: noindex` header
   - `/projects` now has an `<h1>` ("Our Projects")
   - Generic lightbox alts replaced with "<project title> — photo N" / "<project> — full view"
-- [x] Phase 3 (local, build passes): per-page head tags generated from `src/seo.ts` by `scripts/prerender.mjs`
+- [x] Phase 3 — live and verified with curl + headless Chrome (titles, descriptions, canonical, OG/Twitter on `/` and `/projects`; noindex on 404 and `/track`; sitemap from `PAGES`): per-page head tags generated from `src/seo.ts` by `scripts/prerender.mjs`
   - `/`: title "Al-Madina Constructions — Construction Company in Peshawar" (58), description 148 chars
   - `/projects`: title "Our Projects in Peshawar — Al-Madina Constructions" (50), description 147 chars
   - canonical + `og:url` (www, no trailing slash except `/`), `og:type/site_name/locale=en_PK/title/description`, `twitter:card/title/description`
@@ -89,8 +89,8 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 - [ ] Request indexing for `/` and `/projects`.
 - [ ] Bing Webmaster Tools → import from Search Console (👤 sign-in + Google consent).
 
-### Phase 3 — Head tags (🤖) — built, awaiting deploy
-- [ ] 👤 OK to deploy, then verify live: `curl` each URL's `<title>`/canonical/OG; share-debug `/` (e.g. opengraph.xyz).
+### Phase 3 — Head tags (🤖) — remaining
+- [ ] Optional: check the WhatsApp/Facebook link preview of `/` once the share image exists.
 - [ ] `og:image` + size + `summary_large_image` → comes with Phase 4 share image (hook marked `TODO(SEO phase 4)` in `src/seo.ts`).
 
 ### Phase 4 — Brand assets (🤖, 👤 picks design)

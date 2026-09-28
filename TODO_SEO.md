@@ -6,7 +6,7 @@ Tracks progress against `SEO_PLAYBOOK.md`. Updated after every phase.
 > (Al-Madina Constructions, Peshawar), so Phase 5 uses a business type (`GeneralContractor` +
 > `WebSite`) instead of `Person`, and Phase 6 follows Pakistani norms (no Impressum).
 
-Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) **live + verified**. Phase 5 (JSON-LD + name) **live + validated**. Phase 7 (speed) **live + measured** (mobile 67 → 82). Phase 1 (Google) done; Bing pending. Phase 6 (privacy page) **live + verified**. Phase 7b (LCP) **live + measured** (Lighthouse mobile on live: 72 → 91).
+Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) **live + verified**. Phase 5 (JSON-LD + name) **live + validated**. Phase 7 (speed) **live + measured** (mobile 67 → 82). Phase 1 (Google + Bing) done. Phase 6 (privacy page) **live + verified**. Phase 7b (LCP) **live + measured** (Lighthouse mobile on live: 72 → 91).
 
 Decisions: official name = **"Al-Madina Al-Munawara Builders"** (👤 2026-09-28); "Al-Madina Constructions" kept only as JSON-LD `alternateName`. This repo is the target (not naseer.pk). `/ongoing-project/:id` and `/new` → `noindex`, not in sitemap (defaults; revisit if the ongoing section comes back).
 
@@ -118,13 +118,14 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - Edits saved (pending Google review, ~10 min each): **name → Al-Madina Al-Munawara Builders**; **categories → General Contractor (primary) + Property Developer** (was Estate Agent; "Real estate developer" doesn't exist in PK list); **description** (551 chars, no URLs/phones); **website → https://www.almadinabuilders.com/**.
   - Brand search already shows the new website as the #1 result.
 - [x] 👤 28 Sep: `naseer` pushed to GitHub (in sync at `6bf48c5`); admin login confirmed working after the lazy AdminLayout change.
+- [x] Phase 1 (Bing) — 28 Sep 2026: Bing Webmaster Tools (existing Bing account that also has naseer.pk) → **Import from Google Search Console** (👤 approved read-only Google consent with the Almadina account) → site `https://almadinabuilders.com/` imported, no separate verification needed. Sitemap `https://www.almadinabuilders.com/sitemap.xml` **submitted** (Processing, 0 errors/warnings). **URL Submission:** `/` and `/projects` submitted for immediate crawl. (Bing also feeds DuckDuckGo, Yahoo and ChatGPT search.)
 - [x] Google site-verification TXT exists on the apex (status in Search Console **not verified by me**)
 
 ## Remaining
 
 ### Phase 1 — Search engines — remaining
 - [ ] Re-check Search Console → Sitemaps in 1–2 days: status was **"Couldn't fetch"** right after submitting (usual first-submission state; the file returns 200 `application/xml`, valid XML, to a Googlebot user agent). If it still fails after 48 h, delete and re-submit it.
-- [ ] 👤 **Bing Webmaster Tools** (28 Sep): Bing account already signed in (has naseer.pk); "Add a site → Import from GSC → Continue" started by Claude — 👤 to pick the Almadina Google account and approve the read-only consent; then Claude selects almadinabuilders.com and checks the sitemap.
+- [ ] Re-check Bing Webmaster Tools → Sitemaps in 1–2 days (status was "Processing").
 - [ ] Optional: give `muhammadnaseer.dev@gmail.com` access (Search Console → Settings → Users and permissions) so both accounts can manage it.
 
 ### Phase 3 — Head tags (🤖) — remaining

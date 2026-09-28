@@ -6,7 +6,7 @@ Tracks progress against `SEO_PLAYBOOK.md`. Updated after every phase.
 > (Al-Madina Constructions, Peshawar), so Phase 5 uses a business type (`GeneralContractor` +
 > `WebSite`) instead of `Person`, and Phase 6 follows Pakistani norms (no Impressum).
 
-Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) built locally, **not deployed yet**.
+Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) **live + verified** (commit `49c3a88`).
 
 Decisions: company name in meta = **"Al-Madina Constructions"** (provisional, until 👤 confirms the official name). This repo is the target (not naseer.pk). `/ongoing-project/:id` and `/new` → `noindex`, not in sitemap (defaults; revisit if the ongoing section comes back).
 
@@ -79,7 +79,7 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - `sitemap.xml` now generated at build from `PAGES` (static `public/sitemap.xml` removed)
   - `RouteTitle` in `App.tsx` updates `document.title` on client-side navigation
   - hreflang: n/a (English only)
-- [x] Phase 4 (local, build passes) — logo crop, rendered with headless Chrome from `scripts/brand/*.html`:
+- [x] Phase 4 — live and verified (all 5 files 200 with correct types, live `og-image.png` byte-identical to repo, icon/OG tags on `/` and `/projects`) — logo crop, rendered with headless Chrome from `scripts/brand/*.html`:
   - `favicon.ico` (16/32/48, **house-only** crop — the calligraphy is unreadable at that size), rounded white tile
   - `apple-touch-icon.png` 180×180, `icon-192.png`, `icon-512.png` — **full mark** (house + calligraphy) on white, no transparency
   - `og-image.png` 1200×630 — full logo, "Construction Company in Peshawar · Since 2001", domain, brand bars
@@ -99,7 +99,6 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 - [ ] Check WhatsApp/Facebook link preview of `/` after Phase 4 deploy (FB Sharing Debugger / opengraph.xyz).
 
 ### Phase 4 — Brand assets — remaining
-- [ ] 👤 OK to deploy, then verify live: icons + `og-image.png` return 200; tags on `/`.
 - [ ] 👤 **Pick one official name.** The logo says **"Al-Madina Al-Munawara Builders"** (matches the domain); titles/OG/JSON-LD use "Al-Madina Constructions"; footer says "Al-Madina Al-Munawwara Constructions & Builders"; header alt "Almadina logo". Once chosen: `SITE.name` in `src/seo.ts` + visible copy/alts.
 - [ ] ~~`favicon.svg`~~ — skipped: there's no vector source of the logo (only `logo-rm.png`). Add one if you get an SVG/AI file from the designer.
 

@@ -50,7 +50,7 @@ const Header = () => {
             className="flex items-center"
             aria-label="Home"
           >
-            <img src={logo} alt="Almadina logo" className="h-8 md:h-10 lg:h-12 object-contain" />
+            <img src={logo} alt="Al-Madina Al-Munawara Builders logo" className="h-8 md:h-10 lg:h-12 object-contain" />
           </a>
 
           {/* Desktop Navigation */}

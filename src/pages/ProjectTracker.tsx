@@ -68,7 +68,7 @@ export default function ProjectTracker() {
           </div>
           <h1 className="text-xl font-bold text-gray-800 mb-2">Link Not Available</h1>
           <p className="text-gray-500 text-sm mb-6">
-            This project link is no longer active. Please contact Al-Madina Constructions for an updated link.
+            This project link is no longer active. Please contact Al-Madina Al-Munawara Builders for an updated link.
           </p>
           <a
             href="tel:+923339221258"
@@ -91,7 +91,7 @@ export default function ProjectTracker() {
       <header className="bg-secondary text-white">
         <div className="container mx-auto px-4 py-5">
           <div className="flex items-center justify-between">
-            <img src={logo} alt="Al-Madina" className="h-9 object-contain" />
+            <img src={logo} alt="Al-Madina Al-Munawara Builders logo" className="h-9 object-contain" />
             <span className="text-xs text-white/50 hidden sm:block">Project Progress Tracker</span>
           </div>
         </div>
@@ -269,8 +269,8 @@ export default function ProjectTracker() {
       {/* ── Footer ── */}
       <footer className="border-t border-gray-200 bg-white mt-6 py-8">
         <div className="container mx-auto px-4 text-center">
-          <img src={logo} alt="Al-Madina" className="h-8 object-contain mx-auto mb-3 opacity-60" />
-          <p className="text-sm text-gray-500">Al-Madina Al-Munawwara Constructions & Builders</p>
+          <img src={logo} alt="Al-Madina Al-Munawara Builders logo" className="h-8 object-contain mx-auto mb-3 opacity-60" />
+          <p className="text-sm text-gray-500">Al-Madina Al-Munawara Builders</p>
           <a href="tel:+923339221258" className="text-sm text-primary hover:underline mt-1 inline-block">
             +92 333 9221258
           </a>

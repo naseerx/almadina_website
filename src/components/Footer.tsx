@@ -24,9 +24,9 @@ const Footer = () => {
 
           {/* Brand */}
           <div>
-            <img src={logo} alt="Al-Madina logo" className="h-12 object-contain mb-4 brightness-0 invert" />
+            <img src={logo} alt="Al-Madina Al-Munawara Builders logo" className="h-12 object-contain mb-4 brightness-0 invert" />
             <p className="text-white/60 text-sm leading-relaxed">
-              Al-Madina Al-Munawwara Constructions & Builders — building quality homes, plazas, and communities across Peshawar since 2001.
+              Al-Madina Al-Munawara Builders — building quality homes, plazas, and communities across Peshawar since 2001.
             </p>
           </div>
 
@@ -74,7 +74,7 @@ const Footer = () => {
 
         <div className="border-t border-white/10 pt-6 text-center">
           <p className="text-white/40 text-sm">
-            © {new Date().getFullYear()} Al-Madina Constructions. All rights reserved.
+            © {new Date().getFullYear()} Al-Madina Al-Munawara Builders. All rights reserved.
           </p>
         </div>
       </div>

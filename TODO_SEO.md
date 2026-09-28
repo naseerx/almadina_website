@@ -6,9 +6,9 @@ Tracks progress against `SEO_PLAYBOOK.md`. Updated after every phase.
 > (Al-Madina Constructions, Peshawar), so Phase 5 uses a business type (`GeneralContractor` +
 > `WebSite`) instead of `Person`, and Phase 6 follows Pakistani norms (no Impressum).
 
-Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) **live + verified** (commit `49c3a88`).
+Last updated: 2026-09-28 — Phase 2 live + verified. Phase 3 (head tags) **live + verified**. Phase 4 (brand assets) **live + verified**. Phase 5 (JSON-LD + name) built locally, **not deployed yet**.
 
-Decisions: company name in meta = **"Al-Madina Constructions"** (provisional, until 👤 confirms the official name). This repo is the target (not naseer.pk). `/ongoing-project/:id` and `/new` → `noindex`, not in sitemap (defaults; revisit if the ongoing section comes back).
+Decisions: official name = **"Al-Madina Al-Munawara Builders"** (👤 2026-09-28); "Al-Madina Constructions" kept only as JSON-LD `alternateName`. This repo is the target (not naseer.pk). `/ongoing-project/:id` and `/new` → `noindex`, not in sitemap (defaults; revisit if the ongoing section comes back).
 
 ---
 
@@ -85,6 +85,10 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - `og-image.png` 1200×630 — full logo, "Construction Company in Peshawar · Since 2001", domain, brand bars
   - `<head>`: `rel=icon` (ico + 192 png), `rel=apple-touch-icon`; old link to the wide logo PNG removed
   - `og:image` + width/height/alt, `twitter:card=summary_large_image`, `twitter:image` on every page (`SITE.image` in `src/seo.ts`)
+- [x] Phase 5 (local, build passes):
+  - Name **"Al-Madina Al-Munawara Builders"** applied to titles, OG, JSON-LD, `<meta name=author>`, About heading/story, footer tagline + ©, Contact address line + map title, logo alts (header/footer/tracker), tracker copy. Left as-is: short "Al-Madina" in prose, client testimonial quotes, street/project names, "Madina Munawwara" references, `/new` (noindex).
+  - Titles: `/` "Al-Madina Al-Munawara Builders — Construction in Peshawar" (57), `/projects` "Our Projects in Peshawar — Al-Madina Al-Munawara Builders" (57)
+  - JSON-LD `@graph` on `/` only: `GeneralContractor` (name, alternateName, url, logo, image, description, telephone, email, foundingDate, PostalAddress, areaServed Peshawar, opening hours Sat–Thu 09–18) + `WebSite` (publisher → business). `<` escaped. Parses as valid JSON.
 - [x] Google site-verification TXT exists on the apex (status in Search Console **not verified by me**)
 
 ## Remaining
@@ -99,13 +103,14 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 - [ ] Check WhatsApp/Facebook link preview of `/` after Phase 4 deploy (FB Sharing Debugger / opengraph.xyz).
 
 ### Phase 4 — Brand assets — remaining
-- [ ] 👤 **Pick one official name.** The logo says **"Al-Madina Al-Munawara Builders"** (matches the domain); titles/OG/JSON-LD use "Al-Madina Constructions"; footer says "Al-Madina Al-Munawwara Constructions & Builders"; header alt "Almadina logo". Once chosen: `SITE.name` in `src/seo.ts` + visible copy/alts.
+- [x] Official name chosen and applied (Phase 5).
 - [ ] ~~`favicon.svg`~~ — skipped: there's no vector source of the logo (only `logo-rm.png`). Add one if you get an SVG/AI file from the designer.
 
-### Phase 5 — Structured data (🤖, 👤 confirms facts)
-- [ ] JSON-LD `@graph`: `GeneralContractor` (LocalBusiness) + `WebSite`. Candidate facts **already on the site** (to be confirmed by 👤): phone `+92 333 9221258`, email `almadinaconstructions260@gmail.com`, address "Darmangi Garden Street 1, Warsak Road, Peshawar", hours Sat–Thu 09:00–18:00, founded 2001, area served Peshawar.
-- [ ] Missing / unconfirmed — **leave out until provided**: exact geo coordinates, postal code, logo URL decision, `sameAs` profiles (Facebook / Instagram / YouTube / TikTok / Google Business Profile), founder name.
-- [ ] Validate with Rich Results Test after deploy.
+### Phase 5 — Structured data — remaining
+- [ ] 👤 OK to deploy, then validate live: Rich Results Test + validator.schema.org on `/`.
+- [ ] 👤 Provide to add later (left out until real): **`sameAs`** profile URLs (Facebook, Instagram, YouTube, TikTok, Google Business Profile), **postal code**, **geo coordinates**.
+- [ ] Details used are the ones already published in the Contact section (phone, email, address, hours, founded 2001) — 👤 tell me if any is outdated.
+- [ ] Nice-to-have: make `Contact.tsx` / `Footer.tsx` read phone/email/address from the same source as `BUSINESS` in `src/seo.ts` (currently duplicated).
 
 ### Phase 6 — Legal (🤖 drafts, 👤 provides data)
 - [ ] Privacy policy (recommended): Google Fonts, Google Maps, YouTube, WhatsApp hand-off, Supabase/Cloudinary (tracker only). `noindex, follow`, footer link, not in sitemap.
@@ -141,7 +146,7 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 | Build-time render entry | `src/entry-server.tsx` |
 | Pre-render script (writes `dist/*.html`) — Phase 3 per-page head tags go here | `scripts/prerender.mjs` |
 | Build pipeline | `package.json` → `build` |
-| **Per-page titles/descriptions, site name/URL, sitemap source** | `src/seo.ts` (`SITE`, `PAGES`) |
+| **Per-page titles/descriptions, site name/URL, sitemap source, JSON-LD business facts** | `src/seo.ts` (`SITE`, `BUSINESS`, `PAGES`) |
 | Sitemap | generated into `dist/sitemap.xml` by `scripts/prerender.mjs` from `PAGES` |
 | robots.txt / static root files | `public/` (`robots.txt`, `favicon.ico`) |
 | Hosting config (cleanUrls, SPA rewrites for client-only routes, noindex headers) | `vercel.json` |

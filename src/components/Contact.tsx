@@ -29,7 +29,7 @@ const Contact = () => {
     {
       icon: MapPin,
       title: "Address",
-      content: "Al Madina Al Monawara real estate and builders Darmangi Garden Street 1 Warsak Road, Peshawar",
+      content: "Al-Madina Al-Munawara Builders, Darmangi Garden Street 1, Warsak Road, Peshawar",
     },
     {
       icon: Phone,
@@ -184,7 +184,7 @@ const Contact = () => {
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Al-Madina Constructions Location - Sabz Ali Town"
+                    title="Al-Madina Al-Munawara Builders location"
                     className="w-full h-full"
                   ></iframe>
                 </div>

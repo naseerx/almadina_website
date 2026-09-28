@@ -117,13 +117,14 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - During claim: address set to "Darmangi Garden Street 1, Warsak Road, Peshawar 25000" (matches site/JSON-LD); map pin placed by 👤; Google marketing emails opted out.
   - Edits saved (pending Google review, ~10 min each): **name → Al-Madina Al-Munawara Builders**; **categories → General Contractor (primary) + Property Developer** (was Estate Agent; "Real estate developer" doesn't exist in PK list); **description** (551 chars, no URLs/phones); **website → https://www.almadinabuilders.com/**.
   - Brand search already shows the new website as the #1 result.
+- [x] 👤 28 Sep: `naseer` pushed to GitHub (in sync at `6bf48c5`); admin login confirmed working after the lazy AdminLayout change.
 - [x] Google site-verification TXT exists on the apex (status in Search Console **not verified by me**)
 
 ## Remaining
 
 ### Phase 1 — Search engines — remaining
 - [ ] Re-check Search Console → Sitemaps in 1–2 days: status was **"Couldn't fetch"** right after submitting (usual first-submission state; the file returns 200 `application/xml`, valid XML, to a Googlebot user agent). If it still fails after 48 h, delete and re-submit it.
-- [ ] 👤 **Bing Webmaster Tools** → sign in → Import from Google Search Console (approve Google consent yourself) — then Claude can check the import / submit the sitemap there.
+- [ ] 👤 **Bing Webmaster Tools** (28 Sep): Bing account already signed in (has naseer.pk); "Add a site → Import from GSC → Continue" started by Claude — 👤 to pick the Almadina Google account and approve the read-only consent; then Claude selects almadinabuilders.com and checks the sitemap.
 - [ ] Optional: give `muhammadnaseer.dev@gmail.com` access (Search Console → Settings → Users and permissions) so both accounts can manage it.
 
 ### Phase 3 — Head tags (🤖) — remaining
@@ -143,7 +144,6 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 
 ### Phase 7 — Speed — remaining
 - [ ] LCP still 3.1 s in simulation (target < 2.5 s): remaining cost is the main JS (149 kB gz) + font + hero sharing the throttled connection. Next options: lazy-load the Contact form's zod/react-hook-form, AVIF hero via `image-set()`.
-- [ ] 👤 Log in to `/admin` once to confirm login still works after the auth layout change (not testable by Claude).
 - [ ] Optional next steps: AVIF/WebP versions with `<picture>` fallback (sips can write AVIF; no WebP encoder installed); smaller thumbnails for project cards (cards show ~400px, files are 1600px); lazy-load the Contact form (zod + react-hook-form ≈ 250 kB source in the main bundle); drop the 1 s fade-in on the hero headline.
 - [ ] ~20 unused photos in `src/assets` (not shipped, only repo weight) — delete if you don't need them.
 
@@ -154,7 +154,7 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
   - Opening date → 2001 (optional)
   - Photos: **logo uploaded** (👤, 28 Sep). Still to upload: cover photo (25 Marla house) + 9 project photos (houses, plazas, street, 3 mosques) — first photo of each home-page project, re-exported at 1600 px q80 from the originals in git (`git show e46f2bb:src/assets/<file>`). Upload is manual (Google's uploader iframe isn't reachable by Claude in Chrome).
   - Check the 4 pending edits went live (name, categories, description, website).
-- [ ] 👤 **Phone consistency:** Facebook page "Al Madina Al Monawara Real Estate" (9.3K followers) and Zameen.com agent listing both show +92 315 6666550. Either update them to +92 333 9221258 or decide on one number everywhere (site, JSON-LD, GBP, Facebook, Zameen).
+- [ ] 👤 **Phone = 0333 9221258 everywhere** (decided 28 Sep). Site + JSON-LD already use it; GBP phone field locked until verification finishes. Still to change by 👤 (needs their logins): Facebook page "Al Madina Al Monawara Real Estate" and Zameen.com agent listing (both show 0315 6666550).
 - [ ] 👤 Send the Facebook page URL (+ Instagram/YouTube/TikTok if any) → add to GBP "Social profiles" and JSON-LD `sameAs` in `src/seo.ts`.
 - [ ] Link the website from Facebook page ("Website" field + bio) and Zameen profile.
 - [ ] Ask happy clients for Google reviews (GBP → "Get your first reviews" share link).

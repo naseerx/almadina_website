@@ -57,7 +57,20 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 
 ---
 
-## Done
+## Check-up 5 Oct 2026 (7 days after launch)
+
+| Area | Status |
+|---|---|
+| Live site | ✅ All 9 indexable URLs 200 with correct `<h1>`; `/nope` 404; `/admin`, `/track`, `/new` noindex header; apex/http → 308 www; JSON-LD, robots, sitemap (9 URLs), icons, font all OK; GSC TXT record still present |
+| Git / deploys | ✅ `naseer` pushed and merged to `main` (PR #21) — no rollback risk |
+| Google sitemap | ✅ **Success** — last read 3 Oct, 9 pages discovered (the earlier "Couldn't fetch" was only the first-submission state) |
+| Google index | ✅ **8 / 9 indexed**: `/` (recrawled 29 Sep, new version), `/projects`, all 6 service pages. ⏳ `/services` hub "unknown to Google" — live test passes (indexable, breadcrumbs valid), just not picked yet |
+| Google search | 106 impressions, 1 click, avg position 8.4 (28 d); position improving since ~2 Oct. Now appearing for "construction companies in peshawar" (37), "peshawar construction company" (36), "interior designer in peshawar" (38); brand queries at 3–10 |
+| Breadcrumbs | ✅ New "Breadcrumbs" enhancement report in Search Console |
+| Bing | ✅ Sitemap Success (crawled 2 Oct, 9 URLs, 0 errors). Home **indexed**, no SEO issues, 2 markup types. ⏳ Service pages "discovered, not crawled" — live test passes, Bing is just slower |
+| Business Profile | ⚠️ **Back to "Unverified — Verification required"** (was "100% verified / processing" on 28 Sep); likely re-verification after name + category change. Only option now: **business video**. Public Maps listing still shows the OLD data (old name, Real estate agency, 0315 phone, closes 8 PM, no website, "Claim this business") — edits go live after verification. 👤 doing the video verification. |
+
+
 
 - [x] Phase 0 — audit (this file)
 - [x] HTTPS + single canonical host (`www`) with 308 redirects (already in place)

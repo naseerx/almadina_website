@@ -57,7 +57,30 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 
 ---
 
-## Done
+## Business Profile — 4 Nov 2026
+
+- ✅ **Re-verified** (👤 video verification). Public panel now shows **Al-Madina Al-Munawara Builders · General contractor in Peshawar**, "You manage this Business Profile", Website button, address "Darmangi Garden Street 1, Warsak Rd, Peshawar 25000", cover photo, 5.0★ (2 reviews), 249 customer interactions. Website is the #1 web result for the brand search.
+- ✅ **Phone → 0333 9221258** — saved and **live** (was 0315 6666550).
+- ✅ **Hours → Sat–Thu 09:00–18:00, Friday closed** — live (Maps shows "Closes 6 PM"; was 09:00–19:00).
+- ⏳ Categories: current = General Contractor (primary) + Estate Agent; a pending edit (removing Estate Agent) "may take up to 7 days". "Property Developer" no longer shows — re-add it **after** the pending review clears (adding now would restart the review).
+- Google Ads "US$400 credit" (spend-match, new advertisers) — **declined by 👤 (4 Nov)**; no ads for now.
+- **Review link:** https://g.page/r/CVZuLC2mqhhgEBM/review (verified: opens the review form for Al-Madina Al-Munawara Builders). WhatsApp message drafted 4 Nov — send to all past clients (no incentives, no only-happy-customers filtering: Google policy).
+- Next on the profile: add Facebook URL under Social profiles (👤 to send), share the review link with past clients, add interior/project photos.
+
+ (7 days after launch)
+
+| Area | Status |
+|---|---|
+| Live site | ✅ All 9 indexable URLs 200 with correct `<h1>`; `/nope` 404; `/admin`, `/track`, `/new` noindex header; apex/http → 308 www; JSON-LD, robots, sitemap (9 URLs), icons, font all OK; GSC TXT record still present |
+| Git / deploys | ✅ `naseer` pushed and merged to `main` (PR #21) — no rollback risk |
+| Google sitemap | ✅ **Success** — last read 3 Oct, 9 pages discovered (the earlier "Couldn't fetch" was only the first-submission state) |
+| Google index | ✅ **8 / 9 indexed**: `/` (recrawled 29 Sep, new version), `/projects`, all 6 service pages. ⏳ `/services` hub "unknown to Google" — live test passes (indexable, breadcrumbs valid), just not picked yet |
+| Google search | 106 impressions, 1 click, avg position 8.4 (28 d); position improving since ~2 Oct. Now appearing for "construction companies in peshawar" (37), "peshawar construction company" (36), "interior designer in peshawar" (38); brand queries at 3–10 |
+| Breadcrumbs | ✅ New "Breadcrumbs" enhancement report in Search Console |
+| Bing | ✅ Sitemap Success (crawled 2 Oct, 9 URLs, 0 errors). Home **indexed**, no SEO issues, 2 markup types. ⏳ Service pages "discovered, not crawled" — live test passes, Bing is just slower |
+| Business Profile | ⚠️ **Back to "Unverified — Verification required"** (was "100% verified / processing" on 28 Sep); likely re-verification after name + category change. Only option now: **business video**. Public Maps listing still shows the OLD data (old name, Real estate agency, 0315 phone, closes 8 PM, no website, "Claim this business") — edits go live after verification. 👤 doing the video verification. |
+
+
 
 - [x] Phase 0 — audit (this file)
 - [x] HTTPS + single canonical host (`www`) with 308 redirects (already in place)

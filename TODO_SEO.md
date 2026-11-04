@@ -63,6 +63,7 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 - ✅ **Phone → 0333 9221258** — saved and **live** (was 0315 6666550).
 - ⏳ **Hours → Sat–Thu 09:00–18:00, Friday closed** — saved, pending review (was 09:00–19:00).
 - ⏳ Categories: current = General Contractor (primary) + Estate Agent; a pending edit (removing Estate Agent) "may take up to 7 days". "Property Developer" no longer shows — re-add it **after** the pending review clears (adding now would restart the review).
+- Google Ads "US$400 credit" (spend-match, new advertisers) — **declined by 👤 (4 Nov)**; no ads for now.
 - Next on the profile: add Facebook URL under Social profiles (👤 to send), share the review link with past clients, add interior/project photos.
 
  (7 days after launch)

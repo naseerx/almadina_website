@@ -61,9 +61,10 @@ Unrouted page files exist (`AboutPage`, `ServicesPage`, `TeamPage`, `ContactPage
 
 - ✅ **Re-verified** (👤 video verification). Public panel now shows **Al-Madina Al-Munawara Builders · General contractor in Peshawar**, "You manage this Business Profile", Website button, address "Darmangi Garden Street 1, Warsak Rd, Peshawar 25000", cover photo, 5.0★ (2 reviews), 249 customer interactions. Website is the #1 web result for the brand search.
 - ✅ **Phone → 0333 9221258** — saved and **live** (was 0315 6666550).
-- ⏳ **Hours → Sat–Thu 09:00–18:00, Friday closed** — saved, pending review (was 09:00–19:00).
+- ✅ **Hours → Sat–Thu 09:00–18:00, Friday closed** — live (Maps shows "Closes 6 PM"; was 09:00–19:00).
 - ⏳ Categories: current = General Contractor (primary) + Estate Agent; a pending edit (removing Estate Agent) "may take up to 7 days". "Property Developer" no longer shows — re-add it **after** the pending review clears (adding now would restart the review).
 - Google Ads "US$400 credit" (spend-match, new advertisers) — **declined by 👤 (4 Nov)**; no ads for now.
+- **Review link:** https://g.page/r/CVZuLC2mqhhgEBM/review (verified: opens the review form for Al-Madina Al-Munawara Builders). WhatsApp message drafted 4 Nov — send to all past clients (no incentives, no only-happy-customers filtering: Google policy).
 - Next on the profile: add Facebook URL under Social profiles (👤 to send), share the review link with past clients, add interior/project photos.
 
  (7 days after launch)
